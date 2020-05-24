@@ -1,0 +1,21 @@
+{
+  "name": "node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node bot.js"
+  },
+  "engines":{
+    "node": "12.16.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ddynikov"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "telegraf": "^3.32.0"
+  }
+}

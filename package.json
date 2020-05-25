@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node bot.js"
   },
-  "engines":{
+  "engines": {
     "node": "12.16.1"
   },
   "repository": {
@@ -16,6 +16,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.19.2",
     "telegraf": "^3.32.0"
   }
 }

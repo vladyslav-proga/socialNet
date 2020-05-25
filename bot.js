@@ -1,6 +1,6 @@
 'use strict'
 const Telegraf = require('telegraf');
-const bot = new Telegraf(TOKEN);
+const bot = new Telegraf('1145790511:AAFx6ggzoezwJBr7WJ4DLGSGsEkmhM00DK4');
 const axios = require('axios');
 
 //сделать заполнение анализов автоматическим
@@ -212,8 +212,8 @@ async function getData() {
 // });
 
 
-bot.telegram.setWebhook(`${BOT_URL}/bot${TOKEN}`);
-bot.startWebhook(`/bot${TOKEN}`, null, process.env.PORT)
+bot.telegram.setWebhook(`/bot${'1145790511:AAFx6ggzoezwJBr7WJ4DLGSGsEkmhM00DK4'}`);
+bot.startWebhook(null, process.env.PORT)
 
 
 

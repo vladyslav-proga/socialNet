@@ -1,7 +1,7 @@
 'use strict'
 
 const Telegraf = require('telegraf');
-const bot = new Telegraf(TOKEN);
+const bot = new Telegraf(process.env.TOKEN);
 const axios = require('axios');
 
 //сделать заполнение анализов автоматическим

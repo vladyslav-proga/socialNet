@@ -214,9 +214,4 @@ async function getData() {
 
 
 
-bot.telegram.setWebhook(`${BOT_URL}/bot${TOKEN}`);
-bot.startWebhook(`/bot${TOKEN}`, null, process.env.PORT)
-
-
-
 bot.launch();

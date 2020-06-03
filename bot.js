@@ -3,21 +3,21 @@ const Telegraf = require('telegraf');
 const bot = new Telegraf('1145790511:AAFx6ggzoezwJBr7WJ4DLGSGsEkmhM00DK4');
 const axios = require('axios');
 
-//сделать заполнение анализов автоматическим
+//автоматизировать выдачу анализов из бота(парсить сайт) или подконектить бд
 //сделать заполнение данных про таблетки
-//сделать рандомные факты
-//раскидать функции по модулям
+//исправить генерацию рандомных фактов
+//научиться парсить сайт через аксиос, дабы узнать
 //исправить говнокод
 
 bot.use(async (ctx, next) => {
-    axios.get('https://patient-docs.com/')
-        .then(function (response) {
-            //console.log(response.data);
-            //console.log(response.status);
-            //console.log(response.statusText);
-            // console.log(response.headers);
-            // console.log(response.config);
-        });
+    // axios.get('https://patient-docs.com/')
+    //     .then(function (response) {
+    //         //console.log(response.data);
+    //         //console.log(response.status);
+    //         //console.log(response.statusText);
+    //         // console.log(response.headers);
+    //         // console.log(response.config);
+    //     });
     if (ctx.updateSubTypes[0] == 'text') {
         bot.telegram.sendMessage(-498566951, ctx.from.username + ' написал: ' + ctx.message.text);
     } else if (ctx.updateType == 'callback_query') {
@@ -31,12 +31,10 @@ bot.use(async (ctx, next) => {
 
 function sendStartMessage(ctx) {
     let startMessage = `Здравствуй, этот бот служит личным дневником Дани, в нём записаны все анализы и количество таблеток которое он выпил на протяжении какого то времени`;
-
     if (ctx.from.username === "ddynikov") {
         startMessage = `Привет хозяин`;
 
     }
-
     bot.telegram.sendMessage(ctx.chat.id, startMessage,
         {
             reply_markup: {
@@ -93,6 +91,9 @@ bot.action('analyzes', (ctx) => {
             inline_keyboard: [
                 [
                     { text: 'Гормоны 22-05-2020', callback_data: 'gor1' },
+
+                ],
+                [
                     { text: 'Гормоны 01-04-2020', callback_data: 'gor2' },
 
                 ],
@@ -136,6 +137,7 @@ bot.action('user', (ctx) => {
 
     })
 })
+
 let factStore = [];
 
 bot.action('fact', ctx => {
@@ -201,9 +203,7 @@ async function getData() {
     } catch (err) {
         console.log(err);
         throw new Error;
-
     }
-
 }
 
 
@@ -212,8 +212,8 @@ async function getData() {
 // });
 
 
-bot.telegram.setWebhook(`/bot${'1145790511:AAFx6ggzoezwJBr7WJ4DLGSGsEkmhM00DK4'}`);
-bot.startWebhook(null, process.env.PORT)
+// bot.telegram.setWebhook(`/bot${'1145790511:AAFx6ggzoezwJBr7WJ4DLGSGsEkmhM00DK4'}`);
+// bot.startWebhook(null, process.env.PORT)
 
 
 

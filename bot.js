@@ -172,8 +172,16 @@ bot.action('start', ctx => {
     sendStartMessage(ctx);
 })
 
+const initial = {
+    first: '22-05-20',
+    second: '01-04-2020',
+    third: '30-10-2019',
+    fourth: '29-08-2019',
+
+}
+
 for (let i = 1; i <= 4; i++) {
-    let date = '22-05-20';
+    let date = initial.first;
 
     bot.action(`gor${i}`, ctx => {
         bot.telegram.sendPhoto(ctx.chat.id, {
@@ -181,13 +189,11 @@ for (let i = 1; i <= 4; i++) {
         })
     });
     if (i === 2) {
-        date = '01-04-2020';
-    }
-    if (i === 3) {
-        date = '30-10-2019';
-    }
-    if (i === 4) {
-        date = '29-08-2019';
+        date = initial.second;
+    } else if (i === 3) {
+        date = initial.third;
+    } else if (i === 4) {
+        date = initial.fourth;
     }
 }
 

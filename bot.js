@@ -5,14 +5,16 @@ const bot = new Telegraf(process.env.BOT_TOKEN);
 const axios = require('axios');
 
 
-//автоматизировать выдачу анализов из бота(парсить сайт) или подконектить бд
-//сделать заполнение анализов автоматическим
-//сделать заполнение данных про таблетки
+//автоматизировать выдачу анализов из бота: парсить сайт или подконектить бд и начать с ней работу в этом боте(что б бот считывал данные с My SQL и передавал их, а не кидал скриншоты анализов)
+//автоматизировать всю эту байду с анализами(сделать так, что б после сдачи, я сразу смог посмотреть эти данные в боте, задача не из лёгких...)
+//сделать заполнение данных про таблетки(что б в личной группе с ботом, я мог писать какое к-во таблеток я пью на данный момент)
 //исправить генерацию рандомных фактов
-//научиться парсить сайт через аксиос, дабы узнать
-//исправить говнокод
+//изменить структуру кода
 
+
+//функция которая отвечает за мою личную группу бота с логами(он туда отправялет всё, что пишут ему другие юзеры, я в этой группе вижу их ник, и что они написали, если же они нажали кнопку, я вижу что они её нажали)
 bot.use(async (ctx, next) => {
+    // мои бренные попытки парсить сайт с анализами
     // axios.get('https://patient-docs.com/')
     //     .then(function (response) {
     //         //console.log(response.data);
@@ -31,7 +33,7 @@ bot.use(async (ctx, next) => {
     next();
 })
 
-
+//функция которая отвечает за первое сообщение, это пишет бот, когда Вы пишите /start
 function sendStartMessage(ctx) {
     let startMessage = `Здравствуй, этот бот служит личным дневником Дани, в нём записаны все анализы и количество таблеток которое он выпил на протяжении какого то времени`;
     if (ctx.from.username === "ddynikov") {
@@ -56,14 +58,33 @@ function sendStartMessage(ctx) {
         })
 }
 
+//кривая генерация выплёвывания рандомных фактов
+async function getData() {
+    try {
+        let res = await axios('https://spreadsheets.google.com/feeds/cells/1JBUpCCPwOpUOFyPCmeqhUZmbvDoTc_Hytb52RRv_vhE/1/public/full?alt=json');
+        let data = res.data.feed.entry;
+        factStore = [];
+        data.forEach(item => {
+            factStore.push({
+                row: item.gs$cell.row,
+                col: item.gs$cell.col,
+                val: item.gs$cell.inputValue,
+            })
+        })
+    } catch (err) {
+        console.log(err);
+        throw new Error;
+    }
+}
 
+//сама команда старт
 bot.command('start', ctx => {
     sendStartMessage(ctx);
 })
 
 
 
-
+//появления новых кнопок, при нажатии кнопки "Я эндокринолог"
 bot.action('doc', ctx => {
     let infoMessage = `Узнать информацию. Выберите, что хотите узнать`;
     ctx.deleteMessage();
@@ -86,6 +107,7 @@ bot.action('doc', ctx => {
 
 })
 
+//появление нового диалогового окна с кнопками после нажатия кнопки "Прошлые анализы"
 bot.action('analyzes', (ctx) => {
     let infoMessage = `Какая дата сдачи Вас интересует?`;
     ctx.deleteMessage();
@@ -117,6 +139,7 @@ bot.action('analyzes', (ctx) => {
 
 })
 
+//появление нового диалогового окна с кнопками после нажатия кнопки "Я не доктор"
 bot.action('user', (ctx) => {
     let infoMessage = `Вся суть этого бота в том, что он хранит в себе данные анализов и количество таблеток которые Даня выпил на протяжении, но ты можешь прочитать рандомный факт х)`;
     bot.telegram.sendMessage(ctx.chat.id, infoMessage, {
@@ -141,6 +164,7 @@ bot.action('user', (ctx) => {
     })
 })
 
+//кривой выводрандомных фактов, пока что их пять, эта часть кода в ранней стадии разработки, работает через одно место
 let factStore = [];
 
 bot.action('fact', ctx => {
@@ -157,6 +181,7 @@ bot.action('fact', ctx => {
     ctx.reply(message)
 })
 
+//комманда после которой обнавляется гугл табличка в которой хранятся все факты, и по нажатию кнопки "Рандомный факт", нам должно выплёвывать один из пяти фактов которые хранятся в гугл табличке(пока не работает из-за ошибки с промисами)
 bot.command('update', async ctx => {
     try {
         await getData();
@@ -172,6 +197,7 @@ bot.action('start', ctx => {
     sendStartMessage(ctx);
 })
 
+//обьект в котором хранятся даты сдачи моих анализов(в папке analyzes они все подписаны и с помощью фор цыкла я выплёвываю те, которые запросит пользователь)
 const initial = {
     first: '22-05-20',
     second: '01-04-2020',
@@ -197,23 +223,6 @@ for (let i = 1; i <= 4; i++) {
     }
 }
 
-async function getData() {
-    try {
-        let res = await axios('https://spreadsheets.google.com/feeds/cells/1JBUpCCPwOpUOFyPCmeqhUZmbvDoTc_Hytb52RRv_vhE/1/public/full?alt=json');
-        let data = res.data.feed.entry;
-        factStore = [];
-        data.forEach(item => {
-            factStore.push({
-                row: item.gs$cell.row,
-                col: item.gs$cell.col,
-                val: item.gs$cell.inputValue,
-            })
-        })
-    } catch (err) {
-        console.log(err);
-        throw new Error;
-    }
-}
 
 
 // bot.command('/info', (ctx) => {

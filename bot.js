@@ -1,9 +1,12 @@
 'use strict'
+
 const Telegraf = require('telegraf');
-const bot = new Telegraf('1145790511:AAFx6ggzoezwJBr7WJ4DLGSGsEkmhM00DK4');
+const bot = new Telegraf(process.env.TOKEN);
 const axios = require('axios');
 
+
 //автоматизировать выдачу анализов из бота(парсить сайт) или подконектить бд
+//сделать заполнение анализов автоматическим
 //сделать заполнение данных про таблетки
 //исправить генерацию рандомных фактов
 //научиться парсить сайт через аксиос, дабы узнать
@@ -210,11 +213,6 @@ async function getData() {
 // bot.command('/info', (ctx) => {
 //     ctx.reply('123')
 // });
-
-
-// bot.telegram.setWebhook(`/bot${'1145790511:AAFx6ggzoezwJBr7WJ4DLGSGsEkmhM00DK4'}`);
-// bot.startWebhook(null, process.env.PORT)
-
 
 
 bot.launch();

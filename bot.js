@@ -1,7 +1,7 @@
 'use strict'
 
-const Telegraf = require('telegraf');
-const bot = new Telegraf(process.env.TOKEN);
+const { Telegraf } = require('telegraf');
+const bot = new Telegraf(process.env.BOT_TOKEN);
 const axios = require('axios');
 
 
@@ -215,4 +215,5 @@ async function getData() {
 // });
 
 
-bot.launch();
+bot.telegram.setWebhook(`${process.env.BOT_URL}/bot${process.env.BOT_TOKEN}`);
+bot.startWebhook(`/bot${process.env.BOT_TOKEN}`, null, process.env.PORT)

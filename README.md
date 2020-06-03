@@ -1,6 +1,6 @@
 ﻿[![Build Status]]
 # Medical help bot welcomes you! 👋
-*CBT* This bot serves as personal diary for me, to controll my healthy state
+This bot serves as personal diary for me, to controll my healthy state
 
 
 # Test me now 🥴

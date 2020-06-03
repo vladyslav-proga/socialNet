@@ -180,15 +180,18 @@ bot.action('fact', async ctx => {
 и по нажатию кнопки "Рандомный факт",
 нам должно выплёвывать один из пяти фактов которые хранятся
 в гугл табличке(пока не работает из-за ошибки с промисами)*/
-// bot.command('update', async ctx => {
-//   try {
-//     await getData();
-//     ctx.reply('updated');
-//   } catch (err) {
-//     console.log(err);
-//     ctx.reply('ERROR');
-//   }
-// });
+bot.command('update', async ctx => {
+  try {
+    ctx.reply('updated');
+  } catch (err) {
+    console.log(err);
+    ctx.reply('ERROR');
+  }
+});
+
+bot.command('start', ctx => {
+  sendStartMessage(ctx);
+});
 
 bot.action('start', ctx => {
   ctx.deleteMessage();

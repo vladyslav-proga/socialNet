@@ -280,9 +280,9 @@ bot.on('callback_query', ctx => {
 и по нажатию кнопки "Рандомный факт",
 нам должно выплёвывать один из пяти фактов которые хранятся
 в гугл табличке(пока не работает из-за ошибки с промисами)*/
-bot.command('pills', ctx => {
+// bot.command('pills', ctx => {
 
-})
+// })
 
 bot.command('start', ctx => {
   sendStartMessage(ctx);

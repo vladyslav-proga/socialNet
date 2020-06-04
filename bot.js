@@ -260,22 +260,38 @@ bot.action('user', ctx => {
 
 
 bot.action('fact', async ctx => {
-  console.log(6);
-  const factStore = await getData();
-  console.log(5, factStore);
-  factStore.shift();
-  console.log(7, factStore);
+  new Promise((resolve, reject) => {
+    const factStore = getData();
+    resolve(factStore);
+
+  })
+  .then( result => {
+    const nothing = result;
+    result.shift();
+    const k = Math.floor(Math.random() * nothing.length);
+    console.log(8, k);
+    const fact = nothing[k];
+    console.log(9, fact)
+    const message = `${fact.val}`;
+    console.log(10, message);
+    ctx.reply(message);
+  } )
+  // console.log(6);
+  // const factStore = await getData();
+  // console.log(5, factStore);
+  // factStore.shift();
+  // console.log(7, factStore);
 
 
 
-  const k = Math.floor(Math.random() * factStore.length);
-  console.log(8, k);
-  const fact = factStore[k];
-  console.log(9, fact)
-  const message = `${fact.val}`;
-  console.log(10, message);
+  // const k = Math.floor(Math.random() * factStore.length);
+  // console.log(8, k);
+  // const fact = factStore[k];
+  // console.log(9, fact)
+  // const message = `${fact.val}`;
+  // console.log(10, message);
 
-  ctx.reply(message);
+  // ctx.reply(message);
 });
 
 

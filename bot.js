@@ -120,7 +120,33 @@ bot.action('doc', ctx => {
 
 //появление нового диалогового окна с кнопками после нажатия кнопки "Прошлые анализы"
 bot.action('analyzes', ctx => {
-  const infoMessage = 'Какая дата сдачи Вас интересует?';
+  const infoMessage = 'Какие именно анализы Вас интересуют?';
+  ctx.deleteMessage();
+  bot.telegram.sendMessage(ctx.chat.id, infoMessage, {
+    reply_markup: {
+      inline_keyboard: [
+        [
+          { text: 'Гормональные', callback_data: 'gormons' },
+
+        ],
+        [
+          { text: 'Общий анализ крови', callback_data: 'general' },
+        ],
+        [
+          { text: 'Химия', callback_data: 'chemist' },
+        ],
+        [
+          { text: 'Вернуться назад', callback_data: 'doc' },
+        ],
+      ]
+    }
+
+  });
+
+});
+
+bot.action('gormons', ctx => {
+  const infoMessage = 'Какие именно анализы Вас интересуют?';
   ctx.deleteMessage();
   bot.telegram.sendMessage(ctx.chat.id, infoMessage, {
     reply_markup: {
@@ -141,14 +167,60 @@ bot.action('analyzes', ctx => {
 
         ],
         [
-          { text: 'Вернуться назад', callback_data: 'doc' },
+          { text: 'Вернуться назад', callback_data: 'analyzes' },
         ]
       ]
     }
 
   });
-
 });
+
+bot.action('general', ctx => {
+  const infoMessage = 'Выберите дату';
+  ctx.deleteMessage();
+  bot.telegram.sendMessage(ctx.chat.id, infoMessage, {
+    reply_markup: {
+      inline_keyboard: [
+        [
+          { text: 'Общий анализ крови 22-05-2020', callback_data: 'general1' },
+
+        ],
+        [
+          { text: 'Общий анализ крови 01-04-2020', callback_data: 'general2' },
+
+        ],
+        [
+          { text: 'Общий анализ крови 30-10-2019', callback_data: 'general3' },
+        ],
+        [
+          { text: 'Вернуться назад', callback_data: 'analyzes' },
+        ]
+      ]
+    }
+
+  });
+})
+
+bot.action('chemist', ctx => {
+  const infoMessage = 'Выберите дату';
+  ctx.deleteMessage();
+  bot.telegram.sendMessage(ctx.chat.id, infoMessage, {
+    reply_markup: {
+      inline_keyboard: [
+        [
+          { text: 'Химия 01-04-2020', callback_data: 'chemist1' },
+
+        ],
+        [
+          { text: 'Вернуться назад', callback_data: 'analyzes' },
+        ]
+      ]
+    }
+
+  });
+})
+
+
 
 //появление нового диалогового окна с кнопками после нажатия кнопки "Я не доктор"
 bot.action('user', ctx => {
@@ -220,29 +292,61 @@ bot.action('start', ctx => {
 (в папке analyzes они все подписаны и с помощью фор цыкла я выплёвываю те,
 которые запросит пользователь); */
 const initial = {
-  first: '22-05-20',
-  second: '01-04-2020',
-  third: '30-10-2019',
-  fourth: '29-08-2019',
-
+  firstgor: '22-05-20',
+  secondgor: '01-04-2020',
+  thirdgor: '30-10-2019',
+  fourthgor: '29-08-2019',
+  firstgeneral: '22-05-2020',
+  secondgeneral: '01-04-2020',
+  thirdgeneral: '30-10-2019',
+  firstchemist: '01-04-2020',
 };
 
 for (let i = 1; i <= 4; i++) {
-  let date = initial.first;
+  let dategor = initial.firstgor;
 
   bot.action(`gor${i}`, ctx => {
     bot.telegram.sendPhoto(ctx.chat.id, {
-      source: `analyzes/gor${date}.jpg`
+      source: `analyzes/gor${dategor}.jpg`
     });
   });
   if (i === 2) {
-    date = initial.second;
+    dategor = initial.secondgor;
   } else if (i === 3) {
-    date = initial.third;
+    dategor = initial.thirdgor;
   } else if (i === 4) {
-    date = initial.fourth;
+    dategor = initial.fourthgor;
   }
 }
+
+for (let i = 1; i <= 3; i++) {
+  let dategeneral = initial.firstgeneral;
+  bot.action(`general${i}`, ctx => {
+    bot.telegram.sendPhoto(ctx.chat.id, {
+      source: `analyzes/general${dategeneral}.jpg`
+    });
+  });
+  if (i === 2) {
+    dategeneral = initial.secondgeneral;
+  } else if (i === 3) {
+    dategeneral = initial.thirdgeneral;
+  }
+}
+
+for (let i = 1; i <= 3; i++) {
+  let datechemist = initial.firstchemist;
+  bot.action(`chemist${i}`, ctx => {
+    bot.telegram.sendPhoto(ctx.chat.id, {
+      source: `analyzes/chemist${datechemist}.jpg`
+    });
+  });
+  if (i === 2) {
+    datechemist = initial.secondchemist;
+  } else if (i === 3) {
+    datechemist = initial.thirdchemist;
+  }
+}
+
 
 
 

@@ -46,6 +46,7 @@ bot.use(async (ctx, next) => {
 
 //функция которая отвечает за первое сообщение, это пишет бот, когда Вы пишите /start
 function sendStartMessage(ctx) {
+  ctx.deleteMessage();
   let startMessage = 'Здравствуй, этот бот служит личным дневником Дани, в нём записаны все анализы и количество таблеток которое он выпил на протяжении какого то времени';
   if (ctx.from.username === 'ddynikov') {
     startMessage = 'Привет хозяин';

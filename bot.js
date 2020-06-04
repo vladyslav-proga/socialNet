@@ -231,7 +231,6 @@ for (let i = 1; i <= 4; i++) {
   let date = initial.first;
 
   bot.action(`gor${i}`, ctx => {
-    ctx.deleteMessage();
     bot.telegram.sendPhoto(ctx.chat.id, {
       source: `analyzes/gor${date}.jpg`
     });

@@ -91,8 +91,8 @@ const getData = async () => {
 
 //появления новых кнопок, при нажатии кнопки "Я эндокринолог"
 bot.action('doc', ctx => {
-  const infoMessage = 'Узнать информацию. Выберите, что хотите узнать';
   ctx.deleteMessage();
+  const infoMessage = 'Узнать информацию. Выберите, что хотите узнать';
   bot.telegram.sendMessage(ctx.chat.id, infoMessage, {
     reply_markup: {
       inline_keyboard: [
@@ -276,10 +276,7 @@ bot.on('callback_query', ctx => {
 });
 
 
-/*комманда после которой обнавляется гугл табличка в которой хранятся все факты,
-и по нажатию кнопки "Рандомный факт",
-нам должно выплёвывать один из пяти фактов которые хранятся
-в гугл табличке(пока не работает из-за ошибки с промисами)*/
+
 // bot.command('pills', ctx => {
 
 // })
@@ -294,7 +291,7 @@ bot.action('start', ctx => {
 });
 
 /*обьект в котором хранятся даты сдачи моих анализов
-(в папке analyzes они все подписаны и с помощью фор цыкла я выплёвываю те,
+(в папке analyzes они все подписаны и с помощью цыкла я выплёвываю те,
 которые запросит пользователь); */
 const initial = {
   firstgor: '22-05-20',
@@ -351,14 +348,6 @@ for (let i = 1; i <= 3; i++) {
     datechemist = initial.thirdchemist;
   }
 }
-
-
-
-
-// bot.command('/info', (ctx) => {
-//     ctx.reply('123')
-// });
-
 
 bot.telegram.setWebhook(`${process.env.BOT_URL}/bot${process.env.BOT_TOKEN}`);
 bot.startWebhook(`/bot${process.env.BOT_TOKEN}`, null, process.env.PORT);

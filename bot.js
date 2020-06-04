@@ -71,11 +71,8 @@ function sendStartMessage(ctx) {
 
 //кривая генерация выплёвывания рандомных фактов
 const getData = async () => {
-  console.log(1);
   const json = await axios('https://spreadsheets.google.com/feeds/cells/1JBUpCCPwOpUOFyPCmeqhUZmbvDoTc_Hytb52RRv_vhE/1/public/full?alt=json');
-  console.log(2, json);
   const data = json.data.feed.entry;
-  console.log(3, data);
   const factStore = [];
   data.forEach(item => {
     factStore.push({
@@ -84,7 +81,6 @@ const getData = async () => {
       val: item.gs$cell.inputValue,
     });
   });
-  console.log(4, factStore);
   return (factStore);
 };
 
@@ -259,11 +255,10 @@ bot.action('user', ctx => {
 
 
 bot.on('callback_query', ctx => {
-  console.log('callback');
   const data = ctx.update.callback_query.data;
   if (data === 'fact') {
     console.log('fact');
-    new Promise((resolve, reject) => {
+    new Promise((resolve) => {
       const factStore = getData();
       resolve(factStore);
 
@@ -272,52 +267,13 @@ bot.on('callback_query', ctx => {
         const nothing = result;
         result.shift();
         const k = Math.floor(Math.random() * nothing.length);
-        console.log(8, k);
         const fact = nothing[k];
-        console.log(9, fact)
         const message = `${fact.val}`;
-        console.log(10, message);
         const chatID = ctx.update.callback_query.message.chat.id;
         bot.telegram.sendMessage(chatID, message, null);
       })
   }
 });
-
-
-// bot.action('fact', async ctx => {
-//   new Promise((resolve, reject) => {
-//     const factStore = getData();
-//     resolve(factStore);
-
-//   })
-//   .then( result => {
-//     const nothing = result;
-//     result.shift();
-//     const k = Math.floor(Math.random() * nothing.length);
-//     console.log(8, k);
-//     const fact = nothing[k];
-//     console.log(9, fact)
-//     const message = `${fact.val}`;
-//     console.log(10, message);
-//     ctx.reply(message);
-//   } )
-// console.log(6);
-// const factStore = await getData();
-// console.log(5, factStore);
-// factStore.shift();
-// console.log(7, factStore);
-
-
-
-// const k = Math.floor(Math.random() * factStore.length);
-// console.log(8, k);
-// const fact = factStore[k];
-// console.log(9, fact)
-// const message = `${fact.val}`;
-// console.log(10, message);
-
-// ctx.reply(message);
-// });
 
 
 /*комманда после которой обнавляется гугл табличка в которой хранятся все факты,

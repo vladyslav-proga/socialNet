@@ -71,9 +71,11 @@ function sendStartMessage(ctx) {
 
 //кривая генерация выплёвывания рандомных фактов
 const getData = async () => {
-
+  console.log(1);
   const json = await axios('https://spreadsheets.google.com/feeds/cells/1JBUpCCPwOpUOFyPCmeqhUZmbvDoTc_Hytb52RRv_vhE/1/public/full?alt=json');
+  console.log(2, json);
   const data = json.data.feed.entry;
+  console.log(3, data);
   const factStore = [];
   data.forEach(item => {
     factStore.push({
@@ -82,6 +84,7 @@ const getData = async () => {
       val: item.gs$cell.inputValue,
     });
   });
+  console.log(4, factStore);
   return (factStore);
 };
 
@@ -257,8 +260,11 @@ bot.action('user', ctx => {
 
 
 bot.action('fact', async ctx => {
+  console.log(6);
   const factStore = await getData();
+  console.log(5, factStore);
   factStore.shift();
+
 
 
   const k = Math.floor(Math.random() * factStore.length);

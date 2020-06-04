@@ -14,7 +14,10 @@ const axios = require('axios');
 (сделать так, что б после сдачи,
 я сразу смог посмотреть эти данные в боте, задача не из лёгких...)
 -сделать заполнение данных про таблетки
--исправить генерацию рандомных фактов*/
+-исправить генерацию рандомных фактов
+-добавить комманду /stop
+-пофиксить спам кнопок, что б бот автоматически удалял их при появлении новых удалял их
+-исправить калечные цыклы внизу, сделать всё более интересно*/
 
 
 /*функция которая отвечает за мою личную группу бота с логами
@@ -120,8 +123,8 @@ bot.action('doc', ctx => {
 
 //появление нового диалогового окна с кнопками после нажатия кнопки "Прошлые анализы"
 bot.action('analyzes', ctx => {
-  const infoMessage = 'Какие именно анализы Вас интересуют?';
   ctx.deleteMessage();
+  const infoMessage = 'Какие именно анализы Вас интересуют?';
   bot.telegram.sendMessage(ctx.chat.id, infoMessage, {
     reply_markup: {
       inline_keyboard: [
@@ -146,8 +149,8 @@ bot.action('analyzes', ctx => {
 });
 
 bot.action('gormons', ctx => {
-  const infoMessage = 'Какие именно анализы Вас интересуют?';
   ctx.deleteMessage();
+  const infoMessage = 'Какие именно анализы Вас интересуют?';
   bot.telegram.sendMessage(ctx.chat.id, infoMessage, {
     reply_markup: {
       inline_keyboard: [
@@ -176,8 +179,8 @@ bot.action('gormons', ctx => {
 });
 
 bot.action('general', ctx => {
-  const infoMessage = 'Выберите дату';
   ctx.deleteMessage();
+  const infoMessage = 'Выберите дату';
   bot.telegram.sendMessage(ctx.chat.id, infoMessage, {
     reply_markup: {
       inline_keyboard: [
@@ -199,11 +202,11 @@ bot.action('general', ctx => {
     }
 
   });
-})
+});
 
 bot.action('chemist', ctx => {
-  const infoMessage = 'Выберите дату';
   ctx.deleteMessage();
+  const infoMessage = 'Выберите дату';
   bot.telegram.sendMessage(ctx.chat.id, infoMessage, {
     reply_markup: {
       inline_keyboard: [
@@ -218,14 +221,14 @@ bot.action('chemist', ctx => {
     }
 
   });
-})
+});
 
 
 
 //появление нового диалогового окна с кнопками после нажатия кнопки "Я не доктор"
 bot.action('user', ctx => {
-  const infoMessage = 'Вся суть этого бота в том, что он хранит в себе данные анализов и количество таблеток которые Даня пьёт на данный момент, но ты можешь прочитать рандомный факт х)';
   ctx.deleteMessage();
+  const infoMessage = 'Вся суть этого бота в том, что он хранит в себе данные анализов и количество таблеток которые Даня пьёт на данный момент, но ты можешь прочитать рандомный факт х)';
   bot.telegram.sendMessage(ctx.chat.id, infoMessage, {
     reply_markup: {
       inline_keyboard: [

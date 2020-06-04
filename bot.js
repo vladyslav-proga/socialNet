@@ -1,7 +1,7 @@
 'use strict';
 
 const { Telegraf } = require('telegraf');
-const bot = new Telegraf(process.env.BOT_TOKEN);
+const bot = new Telegraf('1145790511:AAFx6ggzoezwJBr7WJ4DLGSGsEkmhM00DK4');
 const axios = require('axios');
 
 /* -ДОБАВИТЬ ДЕЙСТВИЯ КНОПКЕ ТАБЛЕТКИ,
@@ -253,3 +253,5 @@ for (let i = 1; i <= 4; i++) {
 
 bot.telegram.setWebhook(`${process.env.BOT_URL}/bot${process.env.BOT_TOKEN}`);
 bot.startWebhook(`/bot${process.env.BOT_TOKEN}`, null, process.env.PORT);
+
+bot.launch();

@@ -277,7 +277,8 @@ bot.on('callback_query', ctx => {
         console.log(9, fact)
         const message = `${fact.val}`;
         console.log(10, message);
-        ctx.reply(message);
+        const chatID = ctx.update.callback_query.message.chat.id;
+        bot.telegram.sendMessage(chatID, message, null);
       })
   }
 });

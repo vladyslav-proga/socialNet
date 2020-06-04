@@ -150,7 +150,7 @@ bot.action('analyzes', ctx => {
 
 bot.action('gormons', ctx => {
   ctx.deleteMessage();
-  const infoMessage = 'Какие именно анализы Вас интересуют?';
+  const infoMessage = 'Выберите дату';
   bot.telegram.sendMessage(ctx.chat.id, infoMessage, {
     reply_markup: {
       inline_keyboard: [

@@ -264,12 +264,16 @@ bot.action('fact', async ctx => {
   const factStore = await getData();
   console.log(5, factStore);
   factStore.shift();
+  console.log(7, factStore);
 
 
 
   const k = Math.floor(Math.random() * factStore.length);
+  console.log(8, k);
   const fact = factStore[k];
+  console.log(9, fact)
   const message = `${fact.val}`;
+  console.log(10, message);
 
   ctx.reply(message);
 });

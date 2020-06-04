@@ -1,7 +1,7 @@
 {
   "name": "node",
   "version": "1.0.0",
-  "description": "",
+  "description": "[![Build Status](https://api.travis-ci.com/ddynikov/medical-help-bot.svg?branch=master)](https://travis-ci.com/ddynikov/medical-help-bot)\r # Medical help bot welcomes you! 👋\r This bot serves as personal diary for me, to controll my healthy state",
   "main": "index.js",
   "scripts": {
     "test": "eslint .",
@@ -20,5 +20,6 @@
     "axios": "^0.19.2",
     "eslint": "^7.1.0",
     "telegraf": "^3.38.0"
-  }
+  },
+  "devDependencies": {}
 }

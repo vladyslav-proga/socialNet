@@ -65,8 +65,8 @@ const getData = async () => {
 };
 
 //появления новых кнопок, при нажатии кнопки "Я эндокринолог"
-bot.action('doc', async ctx => {
-  await ctx.deleteMessage();
+bot.action('doc', ctx => {
+  ctx.deleteMessage();
   const infoMessage = 'Узнать информацию. Выберите, что хотите узнать';
   bot.telegram.sendMessage(ctx.chat.id, infoMessage, {
     reply_markup: {
@@ -121,8 +121,8 @@ bot.action('analyzes', async ctx => {
 
 
 //появление нового диалогового окна с кнопками после нажатия кнопки "Я не доктор"
-bot.action('user', async ctx => {
-  await ctx.deleteMessage();
+bot.action('user', ctx => {
+  ctx.deleteMessage();
   const infoMessage = 'Тут находятся информация для Даниного доктора, но ты можешь посмотреть интересный факт из медицины';
   bot.telegram.sendMessage(ctx.chat.id, infoMessage, {
     reply_markup: {

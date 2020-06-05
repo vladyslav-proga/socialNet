@@ -91,7 +91,6 @@ const getData = async () => {
 
 //появления новых кнопок, при нажатии кнопки "Я эндокринолог"
 bot.action('doc', ctx => {
-  deleteMessage(ctx);
   const infoMessage = 'Узнать информацию. Выберите, что хотите узнать';
   bot.telegram.sendMessage(ctx.chat.id, infoMessage, {
     reply_markup: {
@@ -122,7 +121,6 @@ bot.action('doc', ctx => {
 
 //появление нового диалогового окна с кнопками после нажатия кнопки "Прошлые анализы"
 bot.action('analyzes', ctx => {
-  deleteMessage(ctx);
   const infoMessage = 'Какие именно анализы Вас интересуют?';
   bot.telegram.sendMessage(ctx.chat.id, infoMessage, {
     reply_markup: {
@@ -148,7 +146,6 @@ bot.action('analyzes', ctx => {
 });
 
 bot.action('gormons', ctx => {
-  deleteMessage(ctx);
   const infoMessage = 'Выберите дату';
   bot.telegram.sendMessage(ctx.chat.id, infoMessage, {
     reply_markup: {
@@ -178,7 +175,6 @@ bot.action('gormons', ctx => {
 });
 
 bot.action('general', ctx => {
-  deleteMessage(ctx);
   const infoMessage = 'Выберите дату';
   bot.telegram.sendMessage(ctx.chat.id, infoMessage, {
     reply_markup: {
@@ -204,7 +200,6 @@ bot.action('general', ctx => {
 });
 
 bot.action('chemist', ctx => {
-  deleteMessage(ctx);
   const infoMessage = 'Выберите дату';
   bot.telegram.sendMessage(ctx.chat.id, infoMessage, {
     reply_markup: {
@@ -226,7 +221,6 @@ bot.action('chemist', ctx => {
 
 //появление нового диалогового окна с кнопками после нажатия кнопки "Я не доктор"
 bot.action('user', ctx => {
-  deleteMessage(ctx);
   const infoMessage = 'Вся суть этого бота в том, что он хранит в себе данные анализов и количество таблеток которые Даня пьёт на данный момент, но ты можешь посмотреть интересный факт из медицины!';
   bot.telegram.sendMessage(ctx.chat.id, infoMessage, {
     reply_markup: {
@@ -285,7 +279,7 @@ bot.command('start', ctx => {
 });
 
 bot.action('start', ctx => {
-  deleteMessage(ctx);
+  ctx.deleteMessage();
   sendStartMessage(ctx);
 });
 

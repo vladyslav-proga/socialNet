@@ -100,7 +100,7 @@ bot.action('doc', ctx => {
           { text: 'Прошлые анализы', callback_data: 'analyzes' },
         ],
         [
-          { text: 'Таблетки', callback_data: 'pills' },
+          { text: 'Таблетки(В РАЗРАБОТКЕ)', callback_data: 'pills' },
         ],
         [
           { text: 'Вернуться в меню', callback_data: 'back' },
@@ -237,7 +237,7 @@ bot.action('user', ctx => {
 
         ],
         [
-          { text: 'Информация о болезне', callback_data: 'info' },
+          { text: 'Информация о болезне(В РАЗРАБОТКЕ)', callback_data: 'info' },
         ],
         [
           { text: 'Вернуться назад', callback_data: 'back' },

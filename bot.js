@@ -46,8 +46,9 @@ bot.use(async (ctx, next) => {
 
 //функция которая отвечает за первое сообщение, это пишет бот, когда Вы пишите /start
 function sendStartMessage(ctx) {
-  ctx.deleteMessage();
+  ctx.reply
   let startMessage = 'Здравствуй, этот бот служит личным дневником Дани, в нём записаны все анализы и количество таблеток которое он выпил на протяжении какого то времени';
+  deleteMessage(ctx);
   if (ctx.from.username === 'ddynikov') {
     startMessage = 'Привет хозяин';
 
@@ -228,7 +229,7 @@ bot.action('chemist', ctx => {
 //появление нового диалогового окна с кнопками после нажатия кнопки "Я не доктор"
 bot.action('user', ctx => {
   ctx.deleteMessage();
-  const infoMessage = 'Вся суть этого бота в том, что он хранит в себе данные анализов и количество таблеток которые Даня пьёт на данный момент, но ты можешь прочитать рандомный факт х)';
+  const infoMessage = 'Вся суть этого бота в том, что он хранит в себе данные анализов и количество таблеток которые Даня пьёт на данный момент, но ты можешь посмотреть интересный факт из медицины!';
   bot.telegram.sendMessage(ctx.chat.id, infoMessage, {
     reply_markup: {
       inline_keyboard: [
@@ -287,7 +288,7 @@ bot.command('start', ctx => {
 });
 
 bot.action('start', ctx => {
-  ctx.deleteMessage();
+  deleteMessage(ctx);
   sendStartMessage(ctx);
 });
 

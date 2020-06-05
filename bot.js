@@ -183,6 +183,7 @@ bot.action('back', ctx => {
 // })
 
 bot.command('start', ctx => {
+  ctx.deleteMessage();
   sendStartMessage(ctx);
 });
 

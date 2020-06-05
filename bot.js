@@ -299,7 +299,7 @@ bot.command('start', ctx => {
 (в папке analyzes они все подписаны и с помощью цыкла я выплёвываю те,
 которые запросит пользователь); */
 const initial = {
-  firstgor: '22-05-2020',
+  firstgor: '22-05-20',
   secondgor: '01-04-2020',
   thirdgor: '30-10-2019',
   fourthgor: '29-08-2019',

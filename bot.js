@@ -27,7 +27,7 @@ bot.use(async (ctx, next) => {
 
 //функция которая отвечает за первое сообщение, это отвечает бот, когда Вы пишите /start
 function sendStartMessage(ctx) {
-  let startMessage = 'Здравствуй, этот бот служит личным дневником Дани, в нём записаны все анализы и количество таблеток которое он выпил на протяжении какого то времени';
+  let startMessage = 'Здравствуй, этот бот служит личным дневником Дани, в нём записаны все анализы и количество таблеток, которое он выпил на протяжении какого-то времени';
   if (ctx.from.username === 'ddynikov') {
     startMessage = 'Привет хозяин';
 
@@ -39,7 +39,7 @@ function sendStartMessage(ctx) {
       reply_markup: {
         inline_keyboard: [
           [
-            { text: 'Я эндокренолог', callback_data: 'doc' }
+            { text: 'Я эндокринолог', callback_data: 'doc' }
           ],
           [
             { text: 'Я не доктор', callback_data: 'user' }

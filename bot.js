@@ -276,6 +276,20 @@ bot.on('callback_query', ctx => {
         const chatID = ctx.update.callback_query.message.chat.id;
         bot.telegram.sendMessage(chatID, message, null);
       });
+    bot.telegram.sendMessage(ctx.chat.id, {
+      reply_markup: {
+        inline_keyboard: [
+          [
+            { text: 'Ещё факт!', callback_data: 'fact' },
+
+          ],
+          [
+            { text: 'Вернуться назад', callback_data: 'back' },
+          ]
+        ]
+      }
+
+    });
   } else if (data === 'back') {
     ctx.deleteMessage();
     sendStartMessage(ctx);

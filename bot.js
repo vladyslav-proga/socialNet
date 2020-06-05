@@ -178,6 +178,7 @@ bot.action('gormons', ctx => {
 });
 
 bot.action('gor1', ctx => {
+  console.log('test');
   bot.telegram.sendPhoto(ctx.chat.id, {
     source: `analyzes/gor${1}.jpg`
   });
@@ -331,6 +332,7 @@ for (let i = 1; i <= 4; i++) {
   let dategor = initial.firstgor;
 
   bot.action(`gor${i}`, ctx => {
+    console.log('debug');
     bot.telegram.sendPhoto(ctx.chat.id, {
       source: `analyzes/gor${dategor}.jpg`
     });
@@ -347,6 +349,7 @@ for (let i = 1; i <= 4; i++) {
 for (let i = 1; i <= 3; i++) {
   let dategeneral = initial.firstgeneral;
   bot.action(`general${i}`, ctx => {
+    console.log('debug2')
     bot.telegram.sendPhoto(ctx.chat.id, {
       source: `analyzes/general${dategeneral}.jpg`
     });
@@ -361,6 +364,7 @@ for (let i = 1; i <= 3; i++) {
 for (let i = 1; i <= 3; i++) {
   let datechemist = initial.firstchemist;
   bot.action(`chemist${i}`, ctx => {
+    console.log('debug3')
     bot.telegram.sendPhoto(ctx.chat.id, {
       source: `analyzes/chemist${datechemist}.jpg`
     });

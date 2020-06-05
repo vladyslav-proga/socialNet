@@ -25,7 +25,7 @@ const axios = require('axios');
 я в этой группе вижу их ник,
 и что они написали, если же они нажали кнопку, я вижу что они её нажали)*/
 bot.use(async (ctx, next) => {
-  // мои бренные попытки парсить сайт с анализами
+  // мои бренные попытки парсить сайт(скорее всего буду юзать бд, нафиг парсинг)
   // await axios.get('https://patient-docs.com/')
   //     .then(function (response) {
   //         //console.log(response.data);
@@ -46,9 +46,7 @@ bot.use(async (ctx, next) => {
 
 //функция которая отвечает за первое сообщение, это пишет бот, когда Вы пишите /start
 function sendStartMessage(ctx) {
-  ctx.reply
   let startMessage = 'Здравствуй, этот бот служит личным дневником Дани, в нём записаны все анализы и количество таблеток которое он выпил на протяжении какого то времени';
-  deleteMessage(ctx);
   if (ctx.from.username === 'ddynikov') {
     startMessage = 'Привет хозяин';
 
@@ -93,7 +91,7 @@ const getData = async () => {
 
 //появления новых кнопок, при нажатии кнопки "Я эндокринолог"
 bot.action('doc', ctx => {
-  ctx.deleteMessage();
+  deleteMessage(ctx);
   const infoMessage = 'Узнать информацию. Выберите, что хотите узнать';
   bot.telegram.sendMessage(ctx.chat.id, infoMessage, {
     reply_markup: {
@@ -124,7 +122,7 @@ bot.action('doc', ctx => {
 
 //появление нового диалогового окна с кнопками после нажатия кнопки "Прошлые анализы"
 bot.action('analyzes', ctx => {
-  ctx.deleteMessage();
+  deleteMessage(ctx);
   const infoMessage = 'Какие именно анализы Вас интересуют?';
   bot.telegram.sendMessage(ctx.chat.id, infoMessage, {
     reply_markup: {
@@ -150,7 +148,7 @@ bot.action('analyzes', ctx => {
 });
 
 bot.action('gormons', ctx => {
-  ctx.deleteMessage();
+  deleteMessage(ctx);
   const infoMessage = 'Выберите дату';
   bot.telegram.sendMessage(ctx.chat.id, infoMessage, {
     reply_markup: {
@@ -180,7 +178,7 @@ bot.action('gormons', ctx => {
 });
 
 bot.action('general', ctx => {
-  ctx.deleteMessage();
+  deleteMessage(ctx);
   const infoMessage = 'Выберите дату';
   bot.telegram.sendMessage(ctx.chat.id, infoMessage, {
     reply_markup: {
@@ -206,7 +204,7 @@ bot.action('general', ctx => {
 });
 
 bot.action('chemist', ctx => {
-  ctx.deleteMessage();
+  deleteMessage(ctx);
   const infoMessage = 'Выберите дату';
   bot.telegram.sendMessage(ctx.chat.id, infoMessage, {
     reply_markup: {
@@ -228,7 +226,7 @@ bot.action('chemist', ctx => {
 
 //появление нового диалогового окна с кнопками после нажатия кнопки "Я не доктор"
 bot.action('user', ctx => {
-  ctx.deleteMessage();
+  deleteMessage(ctx);
   const infoMessage = 'Вся суть этого бота в том, что он хранит в себе данные анализов и количество таблеток которые Даня пьёт на данный момент, но ты можешь посмотреть интересный факт из медицины!';
   bot.telegram.sendMessage(ctx.chat.id, infoMessage, {
     reply_markup: {
@@ -259,7 +257,6 @@ bot.action('user', ctx => {
 bot.on('callback_query', ctx => {
   const data = ctx.update.callback_query.data;
   if (data === 'fact') {
-    console.log('fact');
     new Promise(resolve => {
       const factStore = getData();
       resolve(factStore);
@@ -284,11 +281,11 @@ bot.on('callback_query', ctx => {
 // })
 
 bot.command('start', ctx => {
+  deleteMessage(ctx);
   sendStartMessage(ctx);
 });
 
 bot.action('start', ctx => {
-  deleteMessage(ctx);
   sendStartMessage(ctx);
 });
 

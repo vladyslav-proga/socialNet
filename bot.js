@@ -264,6 +264,7 @@ bot.action('user', ctx => {
 bot.on('callback_query', ctx => {
   const data = ctx.update.callback_query.data;
   if (data === 'fact') {
+    ctx.deleteMessage();
     new Promise(resolve => {
       const factStore = getData();
       resolve(factStore);

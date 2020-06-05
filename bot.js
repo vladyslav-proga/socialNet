@@ -278,8 +278,15 @@ bot.command('start', ctx => {
   sendStartMessage(ctx);
 });
 
-bot.action('back', ctx => {
-  sendStartMessage(ctx);
+// bot.action('back', ctx => {
+//   sendStartMessage(ctx);
+// });
+
+bot.on('callback_query', ctx => {
+  const data = ctx.update.callback_query.data;
+  if (data === 'back') {
+    sendStartMessage(ctx);
+  }
 });
 
 /*обьект в котором хранятся даты сдачи моих анализов

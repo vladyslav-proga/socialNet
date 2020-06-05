@@ -11,7 +11,8 @@ const axios = require('axios');
 (что б бот считывал данные с My SQL и передавал их,
 а не кидал скриншоты анализов)
 -пофиксить спам кнопок, что б бот автоматически удалял их при появлении новых удалял их
--исправить калечные цыклы внизу, сделать всё более интересно */
+-исправить калечные цыклы внизу, сделать всё более интересно 
+-сделать так, что б с помощью комманды я смог загружать в боту фотографии моих анализов*/
 
 
 /*функция которая отвечает за мою личную группу бота с логами
@@ -298,7 +299,7 @@ bot.command('start', ctx => {
 (в папке analyzes они все подписаны и с помощью цыкла я выплёвываю те,
 которые запросит пользователь); */
 const initial = {
-  firstgor: '22-05-20',
+  firstgor: 'https://i.imgur.com/AYCv547.jpg',
   secondgor: '01-04-2020',
   thirdgor: '30-10-2019',
   fourthgor: '29-08-2019',
@@ -307,28 +308,27 @@ const initial = {
   thirdgeneral: '30-10-2019',
   firstchemist: '01-04-2020',
 };
+bot.action(`gor1`, ctx => ctx.replyWithPhoto({ url: initial.firstgor }));
 
-for (let i = 1; i <= 4; i++) {
-  console.log(1, i);
-  let dategor = initial.firstgor;
+// for (let i = 1; i <= 4; i++) {
+//   console.log(1, i);
+//   let dategor = initial.firstgor;
 
-  bot.action(`gor${i}`, ctx => ctx.replyWithPhoto({
-    source: `analyzes/gor${dategor}.jpg`
-  }));
-  // bot.action(`gor${i}`, ctx => {
-  //   console.log('debug');
-  //   bot.telegram.sendPhoto(ctx.chat.id, {
-  //     source: `analyzes/gor${dategor}.jpg`
-  //   });
-  // });
-  if (i === 2) {
-    dategor = initial.secondgor;
-  } else if (i === 3) {
-    dategor = initial.thirdgor;
-  } else if (i === 4) {
-    dategor = initial.fourthgor;
-  }
-}
+//   bot.action(`gor${i}`, ctx => ctx.replyWithPhoto({ url: initial.firstgor }));
+//   // bot.action(`gor${i}`, ctx => {
+//   //   console.log('debug');
+//   //   bot.telegram.sendPhoto(ctx.chat.id, {
+//   //     source: `analyzes/gor${dategor}.jpg`
+//   //   });
+//   // });
+//   if (i === 2) {
+//     dategor = initial.secondgor;
+//   } else if (i === 3) {
+//     dategor = initial.thirdgor;
+//   } else if (i === 4) {
+//     dategor = initial.fourthgor;
+//   }
+// }
 
 for (let i = 1; i <= 3; i++) {
   let dategeneral = initial.firstgeneral;

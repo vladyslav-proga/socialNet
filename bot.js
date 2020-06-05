@@ -122,13 +122,13 @@ bot.action('analyzes', async ctx => {
   const keyboard = [];
   photos.forEach(photo => {
     keyboard.push([{ text: photo.slice(0, photo.length - 4), callback_data: photo }]);
-    bot.action(photo, async ctx => {
-      await bot.telegram.sendPhoto(ctx.chat.id, { source: `./analyzes/${photo}` });
+    bot.action(photo, ctx => {
+      bot.telegram.sendPhoto(ctx.chat.id, { source: `./analyzes/${photo}` });
     });
   });
   keyboard.push([{ text: 'Вернуться назад', callback_data: 'doc' }]);
   photos.forEach
-  await bot.telegram.sendMessage(ctx.chat.id, infoMessage, {
+  bot.telegram.sendMessage(ctx.chat.id, infoMessage, {
     reply_markup: {
       inline_keyboard: keyboard
     }

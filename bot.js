@@ -299,7 +299,7 @@ bot.command('start', ctx => {
 (в папке analyzes они все подписаны и с помощью цыкла я выплёвываю те,
 которые запросит пользователь); */
 const initial = {
-  firstgor: 'https://i.imgur.com/AYCv547.jpg',
+  firstgor: '22-05-2020',
   secondgor: '01-04-2020',
   thirdgor: '30-10-2019',
   fourthgor: '29-08-2019',
@@ -311,11 +311,12 @@ const initial = {
 // bot.action(`gor1`, ctx => ctx.replyWithPhoto({ url: initial.firstgor }));
 bot.on('callback_query', ctx => {
   const data = ctx.update.callback_query.data;
+  let dategor = initial.firstgor;
   if (data === 'gor1') {
-    ctx.replyWithPhoto({ url: initial.firstgor });
-    //  bot.telegram.sendPhoto(ctx.chat.id, {
-    //  source: `analyzes/gor${dategor}.jpg`
-    //  });
+    // ctx.replyWithPhoto({ url: initial.firstgor });
+    bot.telegram.sendPhoto(ctx.chat.id, {
+      source: `analyzes/gor${dategor}.jpg`
+    });
   }
 });
 

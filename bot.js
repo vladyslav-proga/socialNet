@@ -1,8 +1,9 @@
 'use strict';
 
 const { Telegraf } = require('telegraf');
-const bot = new Telegraf(process.env.BOT_TOKEN);
+const bot = new Telegraf('1145790511:AAHr6G8dCBetSuuGBL0ycZZFi8HVgV0coUg');
 const axios = require('axios');
+const fs = require('fs');
 
 /* -ДОБАВИТЬ ДЕЙСТВИЯ КНОПКЕ ТАБЛЕТКИ,
 СДЕЛАТЬ ТАК, ЧТО Б ДАННЫЕ МОЖНО БЫЛО ИЗМЕНЯТЬ ЧЕРЕЗ ЛОГИ.
@@ -11,7 +12,7 @@ const axios = require('axios');
 (что б бот считывал данные с My SQL и передавал их,
 а не кидал скриншоты анализов)
 -пофиксить спам кнопок, что б бот автоматически удалял их при появлении новых удалял их
--исправить калечные цыклы внизу, сделать всё более интересно 
+-исправить калечные цыклы внизу, сделать всё более интересно
 -сделать так, что б с помощью комманды я смог загружать в боту фотографии моих анализов*/
 
 
@@ -81,13 +82,6 @@ const getData = async () => {
   return (factStore);
 };
 
-
-
-
-
-
-
-
 //появления новых кнопок, при нажатии кнопки "Я эндокринолог"
 bot.action('doc', ctx => {
   ctx.deleteMessage();
@@ -108,7 +102,6 @@ bot.action('doc', ctx => {
     }
 
   });
-
 });
 
 // bot.command('pills', ctx => {
@@ -122,50 +115,26 @@ bot.action('doc', ctx => {
 //появление нового диалогового окна с кнопками после нажатия кнопки "Прошлые анализы"
 
 
-bot.action('analyzes', ctx => {
-  ctx.deleteMessage();
+bot.action('analyzes', async ctx => {
+  await ctx.deleteMessage();
+  const photos = await fs.promises.readdir('./analyzes');
   const infoMessage = 'Какие именно анализы Вас интересуют?';
+  const keyboard = [];
+  photos.forEach(photo => {
+    keyboard.push([{ text: photo.slice(0, photo.length - 4), callback_data: photo }]);
+    bot.action(photo, ctx => {
+      bot.telegram.sendPhoto(ctx.chat.id, { source: `./analyzes/${photo}` });
+    });
+  });
+  keyboard.push([{ text: 'Вернуться назад', callback_data: 'doc' }]);
+  photos.forEach
   bot.telegram.sendMessage(ctx.chat.id, infoMessage, {
     reply_markup: {
-      inline_keyboard: [
-        [
-          { text: 'Гормоны 22-05-2020', callback_data: 'gor1' },
-
-        ],
-        [
-          { text: 'Гормоны 01-04-2020', callback_data: 'gor2' },
-
-        ],
-        [
-          { text: 'Гормоны 30-10-2019', callback_data: 'gor3' },
-        ],
-        [
-          { text: 'Гормоны 29-08-2019', callback_data: 'gor4' },
-
-        ],
-        [
-          { text: 'Общий анализ крови 22-05-2020', callback_data: 'general1' },
-
-        ],
-        [
-          { text: 'Общий анализ крови 01-04-2020', callback_data: 'general2' },
-
-        ],
-        [
-          { text: 'Общий анализ крови 30-10-2019', callback_data: 'general3' },
-        ],
-        [
-          { text: 'Химия 01-04-2020', callback_data: 'chemist1' },
-
-        ],
-        [
-          { text: 'Вернуться назад', callback_data: 'analyzes' },
-        ],
-      ]
+      inline_keyboard: keyboard
     }
-
   });
 });
+
 
 
 
@@ -192,43 +161,39 @@ bot.action('user', ctx => {
   });
 });
 
-
-bot.on('callback_query', ctx => {
-  const data = ctx.update.callback_query.data;
-  if (data === 'fact') {
-    new Promise(resolve => {
-      const factStore = getData();
-      ctx.deleteMessage();
-      resolve(factStore);
-    })
-      .then(result => {
-        const nothing = result;
-        result.shift();
-        const k = Math.floor(Math.random() * nothing.length);
-        const fact = nothing[k];
-        const message = `${fact.val}`;
-        const chatID = ctx.update.callback_query.message.chat.id;
-        bot.telegram.sendMessage(chatID, message, {
-          reply_markup: {
-            inline_keyboard: [
-              [
-                { text: 'Ещё факт!', callback_data: 'fact' },
-
-              ],
-              [
-                { text: 'Вернуться назад', callback_data: 'back' },
-              ]
-            ]
-          }
-
-        });
-      });
-  } else if (data === 'back') {
+bot.action('fact', ctx => {
+  new Promise(resolve => {
+    const factStore = getData();
     ctx.deleteMessage();
-    sendStartMessage(ctx);
-  }
+    resolve(factStore);
+  })
+    .then(result => {
+      const nothing = result;
+      result.shift();
+      const k = Math.floor(Math.random() * nothing.length);
+      const fact = nothing[k];
+      const message = `${fact.val}`;
+      const chatID = ctx.update.callback_query.message.chat.id;
+      bot.telegram.sendMessage(chatID, message, {
+        reply_markup: {
+          inline_keyboard: [
+            [
+              { text: 'Ещё факт!', callback_data: 'fact' },
+
+            ],
+            [
+              { text: 'Вернуться назад', callback_data: 'back' },
+            ]
+          ]
+        }
+      });
+    });
 });
 
+bot.action('back', ctx => {
+  ctx.deleteMessage();
+  sendStartMessage(ctx);
+});
 
 
 // bot.command('pills', ctx => {
@@ -240,82 +205,6 @@ bot.command('start', ctx => {
 });
 
 
-/*обьект в котором хранятся даты сдачи моих анализов
-(в папке analyzes они все подписаны и с помощью цыкла я выплёвываю те,
-которые запросит пользователь); */
-const initial = {
-  firstgor: '22-05-20',
-  secondgor: '01-04-2020',
-  thirdgor: '30-10-2019',
-  fourthgor: '29-08-2019',
-  firstgeneral: '22-05-2020',
-  secondgeneral: '01-04-2020',
-  thirdgeneral: '30-10-2019',
-  firstchemist: '01-04-2020',
-};
-// bot.action(`gor1`, ctx => ctx.replyWithPhoto({ url: initial.firstgor }));
-// bot.on('callback_query', ctx => {
-//   const data = ctx.update.callback_query.data;
-//   let dategor = initial.firstgor;
-//   if (data === 'gor1') {
-//     // ctx.replyWithPhoto({ url: initial.firstgor });
-//     bot.telegram.sendPhoto(ctx.chat.id, {
-//       source: `analyzes/gor${dategor}.jpg`
-//     });
-//   }
-// });
 
-for (let i = 1; i <= 4; i++) {
 
-  let dategor = initial.firstgor;
-
-  // bot.action(`gor${i}`, ctx => ctx.replyWithPhoto({ url: initial.firstgor }));
-  bot.action(`gor${i}`, ctx => {
-    console.log(1, i);
-    console.log('debug');
-    bot.telegram.sendPhoto(ctx.chat.id, {
-      source: `analyzes/gor${dategor}.jpg`
-    });
-  });
-  if (i === 2) {
-    dategor = initial.secondgor;
-  } else if (i === 3) {
-    dategor = initial.thirdgor;
-  } else if (i === 4) {
-    dategor = initial.fourthgor;
-  }
-}
-
-for (let i = 1; i <= 3; i++) {
-  let dategeneral = initial.firstgeneral;
-  bot.action(`general${i}`, ctx => {
-    console.log(2, i);
-    bot.telegram.sendPhoto(ctx.chat.id, {
-      source: `analyzes/general${dategeneral}.jpg`
-    });
-  });
-  if (i === 2) {
-    dategeneral = initial.secondgeneral;
-  } else if (i === 3) {
-    dategeneral = initial.thirdgeneral;
-  }
-}
-
-for (let i = 1; i <= 3; i++) {
-  console.log(3, i);
-  let datechemist = initial.firstchemist;
-  bot.action(`chemist${i}`, ctx => {
-
-    bot.telegram.sendPhoto(ctx.chat.id, {
-      source: `analyzes/chemist${datechemist}.jpg`
-    });
-  });
-  if (i === 2) {
-    datechemist = initial.secondchemist;
-  } else if (i === 3) {
-    datechemist = initial.thirdchemist;
-  }
-}
-
-bot.telegram.setWebhook(`${process.env.BOT_URL}/bot${process.env.BOT_TOKEN}`);
-bot.startWebhook(`/bot${process.env.BOT_TOKEN}`, null, process.env.PORT);
+bot.launch();

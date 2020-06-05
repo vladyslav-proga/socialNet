@@ -254,12 +254,13 @@ bot.action('user', ctx => {
 /*кривой выводрандомных фактов, пока что их пять,
 эта часть кода в ранней стадии разработки, работает через одно место*/
 
-
+//ВСТАВИТЬ КУДА ТО ДЕЛИТ МЕССЕДЖ
 bot.on('callback_query', ctx => {
   const data = ctx.update.callback_query.data;
   if (data === 'fact') {
     new Promise(resolve => {
       const factStore = getData();
+      ctx.deleteMessage();
       resolve(factStore);
     })
       .then(result => {
@@ -269,7 +270,6 @@ bot.on('callback_query', ctx => {
         const fact = nothing[k];
         const message = `${fact.val}`;
         const chatID = ctx.update.callback_query.message.chat.id;
-        ctx.deleteMessage();
         bot.telegram.sendMessage(chatID, message, {
           reply_markup: {
             inline_keyboard: [

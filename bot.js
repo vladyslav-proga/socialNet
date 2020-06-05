@@ -258,7 +258,6 @@ bot.action('user', ctx => {
 bot.on('callback_query', ctx => {
   const data = ctx.update.callback_query.data;
   if (data === 'fact') {
-    ctx.deleteMessage();
     new Promise(resolve => {
       const factStore = getData();
       resolve(factStore);
@@ -270,6 +269,7 @@ bot.on('callback_query', ctx => {
         const fact = nothing[k];
         const message = `${fact.val}`;
         const chatID = ctx.update.callback_query.message.chat.id;
+        ctx.deleteMessage();
         bot.telegram.sendMessage(chatID, message, {
           reply_markup: {
             inline_keyboard: [

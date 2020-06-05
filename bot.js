@@ -50,6 +50,8 @@ function sendStartMessage(ctx) {
   if (ctx.from.username === 'ddynikov') {
     startMessage = 'Привет хозяин';
 
+  } else if (ctx.from.username === 'tshemsedinov') {
+    startMessage = 'Здравствуйте преподователь! Рад Вам представить мою курсовую работу'
   }
   bot.telegram.sendMessage(ctx.chat.id, startMessage,
     {

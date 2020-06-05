@@ -102,7 +102,7 @@ bot.action('doc', ctx => {
           { text: 'Таблетки', callback_data: 'pills' },
         ],
         [
-          { text: 'Вернуться в меню', callback_data: 'start' },
+          { text: 'Вернуться в меню', callback_data: 'back' },
         ]
       ]
     }
@@ -236,7 +236,7 @@ bot.action('user', ctx => {
           { text: 'Таблетки', callback_data: 'pills' },
         ],
         [
-          { text: 'Вернуться назад', callback_data: 'start' },
+          { text: 'Вернуться назад', callback_data: 'back' },
         ]
       ]
     }
@@ -278,7 +278,7 @@ bot.command('start', ctx => {
   sendStartMessage(ctx);
 });
 
-bot.action('start', ctx => {
+bot.action('back', ctx => {
   sendStartMessage(ctx);
 });
 

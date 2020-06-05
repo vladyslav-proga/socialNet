@@ -278,17 +278,19 @@ bot.command('start', ctx => {
   sendStartMessage(ctx);
 });
 
-// bot.action('back', ctx => {
-//   sendStartMessage(ctx);
-// });
-
-bot.on('callback_query', ctx => {
-  const data = ctx.update.callback_query.data;
-  console.log(data);
-  if (data === 'back') {
-    sendStartMessage(ctx);
-  }
+bot.action('back', ctx => {
+  console.log(1);
+  sendStartMessage();
+  sendStartMessage(ctx);
 });
+
+// bot.on('callback_query', ctx => {
+//   const data = ctx.update.callback_query.data;
+//   console.log(data);
+//   if (data === 'back') {
+//     sendStartMessage(ctx);
+//   }
+// });
 
 /*обьект в котором хранятся даты сдачи моих анализов
 (в папке analyzes они все подписаны и с помощью цыкла я выплёвываю те,

@@ -228,7 +228,7 @@ bot.action('chemist', ctx => {
 //появление нового диалогового окна с кнопками после нажатия кнопки "Я не доктор"
 bot.action('user', ctx => {
   ctx.deleteMessage();
-  const infoMessage = 'Вся суть этого бота в том, что он хранит в себе данные анализов и количество таблеток которые Даня пьёт на данный момент, но ты можешь посмотреть интересный факт из медицины!';
+  const infoMessage = 'Привет, тут находятся информация для Даниного доктора, но ты можешь посмотреть интересный факт из медицины';
   bot.telegram.sendMessage(ctx.chat.id, infoMessage, {
     reply_markup: {
       inline_keyboard: [
@@ -237,10 +237,7 @@ bot.action('user', ctx => {
 
         ],
         [
-          { text: 'Всё таки посмотреть анализы', callback_data: 'analyzes' },
-        ],
-        [
-          { text: 'Таблетки', callback_data: 'pills' },
+          { text: 'Информация о болезне', callback_data: 'info' },
         ],
         [
           { text: 'Вернуться назад', callback_data: 'back' },

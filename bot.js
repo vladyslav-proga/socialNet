@@ -24,25 +24,25 @@ const axios = require('axios');
 (он туда отправялет всё, что пишут ему другие юзеры,
 я в этой группе вижу их ник,
 и что они написали, если же они нажали кнопку, я вижу что они её нажали)*/
-bot.use(async (ctx, next) => {
-  // мои бренные попытки парсить сайт(скорее всего буду юзать бд, нафиг парсинг)
-  // await axios.get('https://patient-docs.com/')
-  //     .then(function (response) {
-  //         //console.log(response.data);
-  //         //console.log(response.status);
-  //         //console.log(response.statusText);
-  //         // console.log(response.headers);
-  //         // console.log(response.config);
-  //     });
-  if (ctx.updateSubTypes[0] === 'text') {
-    bot.telegram.sendMessage(-498566951, ctx.from.username + ' написал: ' + ctx.message.text);
-  } else if (ctx.updateType === 'callback_query') {
-    bot.telegram.sendMessage(-498566951, ctx.from.username + ' тыкнул кнопку');
-  } else {
-    bot.telegram.sendMessage(-498566951, ctx.from.username + ' написал: ' + ctx.updateSubTypes[0]);
-  }
-  next();
-});
+// bot.use(async (ctx, next) => {
+//   // мои бренные попытки парсить сайт(скорее всего буду юзать бд, нафиг парсинг)
+//   // await axios.get('https://patient-docs.com/')
+//   //     .then(function (response) {
+//   //         //console.log(response.data);
+//   //         //console.log(response.status);
+//   //         //console.log(response.statusText);
+//   //         // console.log(response.headers);
+//   //         // console.log(response.config);
+//   //     });
+//   if (ctx.updateSubTypes[0] === 'text') {
+//     bot.telegram.sendMessage(-498566951, ctx.from.username + ' написал: ' + ctx.message.text);
+//   } else if (ctx.updateType === 'callback_query') {
+//     bot.telegram.sendMessage(-498566951, ctx.from.username + ' тыкнул кнопку');
+//   } else {
+//     bot.telegram.sendMessage(-498566951, ctx.from.username + ' написал: ' + ctx.updateSubTypes[0]);
+//   }
+//   next();
+// });
 
 //функция которая отвечает за первое сообщение, это пишет бот, когда Вы пишите /start
 function sendStartMessage(ctx) {

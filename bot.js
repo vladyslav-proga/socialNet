@@ -44,7 +44,7 @@ const axios = require('axios');
 //   next();
 // });
 
-//функция которая отвечает за первое сообщение, это пишет бот, когда Вы пишите /start
+//функция которая отвечает за первое сообщение, это отвечает бот, когда Вы пишите /start
 function sendStartMessage(ctx) {
   let startMessage = 'Здравствуй, этот бот служит личным дневником Дани, в нём записаны все анализы и количество таблеток которое он выпил на протяжении какого то времени';
   if (ctx.from.username === 'ddynikov') {
@@ -69,7 +69,7 @@ function sendStartMessage(ctx) {
     });
 }
 
-//кривая генерация выплёвывания рандомных фактов
+//генерация выплёвывания рандомных фактов
 const getData = async () => {
   const json = await axios('https://spreadsheets.google.com/feeds/cells/1JBUpCCPwOpUOFyPCmeqhUZmbvDoTc_Hytb52RRv_vhE/1/public/full?alt=json');
   const data = json.data.feed.entry;
@@ -248,8 +248,6 @@ bot.action('user', ctx => {
   });
 });
 
-/*кривой выводрандомных фактов, пока что их пять,
-эта часть кода в ранней стадии разработки, работает через одно место*/
 
 bot.on('callback_query', ctx => {
   const data = ctx.update.callback_query.data;
@@ -297,13 +295,6 @@ bot.command('start', ctx => {
   sendStartMessage(ctx);
 });
 
-// bot.on('callback_query', ctx => {
-//   const data = ctx.update.callback_query.data;
-//   console.log(data);
-//   if (data === 'back') {
-//     sendStartMessage(ctx);
-//   }
-// });
 
 /*обьект в котором хранятся даты сдачи моих анализов
 (в папке analyzes они все подписаны и с помощью цыкла я выплёвываю те,

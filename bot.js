@@ -1,7 +1,7 @@
 'use strict';
 
 const { Telegraf } = require('telegraf');
-const bot = new Telegraf(process.env.BOT_TOKEN);
+const bot = new Telegraf('1145790511:AAEngkPt9CZio886GTLus_oo_Oogsno_qaQ');
 const axios = require('axios');
 const fs = require('fs');
 const PORT = process.env.PORT;
@@ -53,7 +53,7 @@ function sendStartMessage(ctx) {
 }
 
 //генерация выплёвывания рандомных фактов
-const getData = async () => {
+const getFact = async () => {
   const json = await axios('https://spreadsheets.google.com/feeds/cells/1JBUpCCPwOpUOFyPCmeqhUZmbvDoTc_Hytb52RRv_vhE/1/public/full?alt=json');
   const data = json.data.feed.entry;
   const factStore = [];
@@ -67,6 +67,46 @@ const getData = async () => {
   return (factStore);
 };
 
+
+const getDose = async () => {
+  const json = await axios('https://spreadsheets.google.com/feeds/cells/1JBUpCCPwOpUOFyPCmeqhUZmbvDoTc_Hytb52RRv_vhE/1/public/full?alt=json');
+  const data = json.data.feed.entry;
+  // console.log(data);
+  const doseStore = [];
+  data.forEach(item => {
+    doseStore.push({
+      row: item.gs$cell.row,
+      col: item.gs$cell.col,
+      val: item.gs$cell.inputValue,
+    });
+  });
+  return (doseStore)
+};
+
+bot.action('pills', ctx => {
+  new Promise(resolve => {
+    const doseStore = getDose();
+    ctx.deleteMessage();
+    resolve(doseStore);
+  })
+    .then(result => {
+      const nothing = result;
+      result.unshift();
+      const dose = nothing[0];
+      const message = `${dose.val}`;
+      const chatID = ctx.update.callback_query.message.chat.id;
+      bot.telegram.sendMessage(chatID, message, {
+        reply_markup: {
+          inline_keyboard: [
+            [
+              { text: 'Вернуться назад', callback_data: 'doc' },
+            ],
+          ]
+        }
+      });
+    });
+});
+
 //появления новых кнопок, при нажатии кнопки "Я эндокринолог"
 bot.action('doc', ctx => {
   ctx.deleteMessage();
@@ -78,7 +118,7 @@ bot.action('doc', ctx => {
           { text: 'Прошлые анализы', callback_data: 'analyzes' },
         ],
         [
-          { text: 'Таблетки(В РАЗРАБОТКЕ)', callback_data: 'pills' },
+          { text: 'Таблетки', callback_data: 'pills' },
         ],
         [
           { text: 'Вернуться в меню', callback_data: 'back' },
@@ -112,7 +152,6 @@ bot.action('analyzes', async ctx => {
     });
   });
   keyboard.push([{ text: 'Вернуться назад', callback_data: 'doc' }]);
-  photos.forEach
   bot.telegram.sendMessage(ctx.chat.id, infoMessage, {
     reply_markup: {
       inline_keyboard: keyboard
@@ -148,7 +187,7 @@ bot.action('user', ctx => {
 
 bot.action('fact', ctx => {
   new Promise(resolve => {
-    const factStore = getData();
+    const factStore = getFact();
     ctx.deleteMessage();
     resolve(factStore);
   })
@@ -180,10 +219,6 @@ bot.action('back', ctx => {
   sendStartMessage(ctx);
 });
 
-
-// bot.command('pills', ctx => {
-
-// })
 
 bot.command('start', ctx => {
   ctx.deleteMessage();

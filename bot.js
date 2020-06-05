@@ -51,7 +51,7 @@ function sendStartMessage(ctx) {
     startMessage = 'Привет хозяин';
 
   } else if (ctx.from.username === 'tshemsedinov') {
-    startMessage = 'Здравствуйте преподователь! Рад Вам представить мою курсовую работу'
+    startMessage = 'Здравствуйте преподователь! Рад Вам представить мою курсовую работу';
   }
   bot.telegram.sendMessage(ctx.chat.id, startMessage,
     {
@@ -333,7 +333,7 @@ for (let i = 1; i <= 4; i++) {
 for (let i = 1; i <= 3; i++) {
   let dategeneral = initial.firstgeneral;
   bot.action(`general${i}`, ctx => {
-    console.log('debug2')
+    console.log('debug2');
     bot.telegram.sendPhoto(ctx.chat.id, {
       source: `analyzes/general${dategeneral}.jpg`
     });
@@ -348,7 +348,7 @@ for (let i = 1; i <= 3; i++) {
 for (let i = 1; i <= 3; i++) {
   let datechemist = initial.firstchemist;
   bot.action(`chemist${i}`, ctx => {
-    console.log('debug3')
+    console.log('debug3');
     bot.telegram.sendPhoto(ctx.chat.id, {
       source: `analyzes/chemist${datechemist}.jpg`
     });

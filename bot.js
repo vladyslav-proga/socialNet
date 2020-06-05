@@ -10,39 +10,33 @@ const axios = require('axios');
 парсить сайт или подконектить бд и начать с ней работу в этом боте
 (что б бот считывал данные с My SQL и передавал их,
 а не кидал скриншоты анализов)
--автоматизировать всю эту байду с анализами
-(сделать так, что б после сдачи,
-я сразу смог посмотреть эти данные в боте, задача не из лёгких...)
--сделать заполнение данных про таблетки
--исправить генерацию рандомных фактов
--добавить комманду /stop
 -пофиксить спам кнопок, что б бот автоматически удалял их при появлении новых удалял их
--исправить калечные цыклы внизу, сделать всё более интересно*/
+-исправить калечные цыклы внизу, сделать всё более интересно */
 
 
 /*функция которая отвечает за мою личную группу бота с логами
 (он туда отправялет всё, что пишут ему другие юзеры,
 я в этой группе вижу их ник,
 и что они написали, если же они нажали кнопку, я вижу что они её нажали)*/
-// bot.use(async (ctx, next) => {
-//   // мои бренные попытки парсить сайт(скорее всего буду юзать бд, нафиг парсинг)
-//   // await axios.get('https://patient-docs.com/')
-//   //     .then(function (response) {
-//   //         //console.log(response.data);
-//   //         //console.log(response.status);
-//   //         //console.log(response.statusText);
-//   //         // console.log(response.headers);
-//   //         // console.log(response.config);
-//   //     });
-//   if (ctx.updateSubTypes[0] === 'text') {
-//     bot.telegram.sendMessage(-498566951, ctx.from.username + ' написал: ' + ctx.message.text);
-//   } else if (ctx.updateType === 'callback_query') {
-//     bot.telegram.sendMessage(-498566951, ctx.from.username + ' тыкнул кнопку');
-//   } else {
-//     bot.telegram.sendMessage(-498566951, ctx.from.username + ' написал: ' + ctx.updateSubTypes[0]);
-//   }
-//   next();
-// });
+bot.use(async (ctx, next) => {
+  // мои бренные попытки парсить сайт(скорее всего буду юзать бд, нафиг парсинг)
+  // await axios.get('https://patient-docs.com/')
+  //     .then(function (response) {
+  //         //console.log(response.data);
+  //         //console.log(response.status);
+  //         //console.log(response.statusText);
+  //         // console.log(response.headers);
+  //         // console.log(response.config);
+  //     });
+  if (ctx.updateSubTypes[0] === 'text') {
+    bot.telegram.sendMessage(-498566951, ctx.from.username + ' написал: ' + ctx.message.text);
+  } else if (ctx.updateType === 'callback_query') {
+    bot.telegram.sendMessage(-498566951, ctx.from.username + ' тыкнул кнопку');
+  } else {
+    bot.telegram.sendMessage(-498566951, ctx.from.username + ' написал: ' + ctx.updateSubTypes[0]);
+  }
+  next();
+});
 
 //функция которая отвечает за первое сообщение, это отвечает бот, когда Вы пишите /start
 function sendStartMessage(ctx) {
@@ -85,6 +79,8 @@ const getData = async () => {
   });
   return (factStore);
 };
+
+
 
 
 
@@ -313,14 +309,18 @@ const initial = {
 };
 
 for (let i = 1; i <= 4; i++) {
+  console.log(1, i);
   let dategor = initial.firstgor;
 
-  bot.action(`gor${i}`, ctx => {
-    console.log('debug');
-    bot.telegram.sendPhoto(ctx.chat.id, {
-      source: `analyzes/gor${dategor}.jpg`
-    });
-  });
+  bot.action(`gor${i}`, ctx => ctx.replyWithPhoto({
+    source: `analyzes/gor${dategor}.jpg`
+  }));
+  // bot.action(`gor${i}`, ctx => {
+  //   console.log('debug');
+  //   bot.telegram.sendPhoto(ctx.chat.id, {
+  //     source: `analyzes/gor${dategor}.jpg`
+  //   });
+  // });
   if (i === 2) {
     dategor = initial.secondgor;
   } else if (i === 3) {
@@ -333,7 +333,7 @@ for (let i = 1; i <= 4; i++) {
 for (let i = 1; i <= 3; i++) {
   let dategeneral = initial.firstgeneral;
   bot.action(`general${i}`, ctx => {
-    console.log('debug2');
+    console.log(2, i);
     bot.telegram.sendPhoto(ctx.chat.id, {
       source: `analyzes/general${dategeneral}.jpg`
     });
@@ -346,9 +346,10 @@ for (let i = 1; i <= 3; i++) {
 }
 
 for (let i = 1; i <= 3; i++) {
+  console.log(3, i);
   let datechemist = initial.firstchemist;
   bot.action(`chemist${i}`, ctx => {
-    console.log('debug3');
+
     bot.telegram.sendPhoto(ctx.chat.id, {
       source: `analyzes/chemist${datechemist}.jpg`
     });

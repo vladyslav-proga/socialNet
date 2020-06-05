@@ -308,7 +308,14 @@ const initial = {
   thirdgeneral: '30-10-2019',
   firstchemist: '01-04-2020',
 };
-bot.action(`gor1`, ctx => ctx.replyWithPhoto({ url: initial.firstgor }));
+// bot.action(`gor1`, ctx => ctx.replyWithPhoto({ url: initial.firstgor }));
+bot.on('callback_query', ctx => {
+  const data = ctx.update.callback_query.data;
+  if (data === 'gor1') {
+    const resault = ctx.replyWithPhoto({ url: initial.firstgor });
+    return resault;
+  }
+});
 
 // for (let i = 1; i <= 4; i++) {
 //   console.log(1, i);
@@ -330,36 +337,36 @@ bot.action(`gor1`, ctx => ctx.replyWithPhoto({ url: initial.firstgor }));
 //   }
 // }
 
-for (let i = 1; i <= 3; i++) {
-  let dategeneral = initial.firstgeneral;
-  bot.action(`general${i}`, ctx => {
-    console.log(2, i);
-    bot.telegram.sendPhoto(ctx.chat.id, {
-      source: `analyzes/general${dategeneral}.jpg`
-    });
-  });
-  if (i === 2) {
-    dategeneral = initial.secondgeneral;
-  } else if (i === 3) {
-    dategeneral = initial.thirdgeneral;
-  }
-}
+// for (let i = 1; i <= 3; i++) {
+//   let dategeneral = initial.firstgeneral;
+//   bot.action(`general${i}`, ctx => {
+//     console.log(2, i);
+//     bot.telegram.sendPhoto(ctx.chat.id, {
+//       source: `analyzes/general${dategeneral}.jpg`
+//     });
+//   });
+//   if (i === 2) {
+//     dategeneral = initial.secondgeneral;
+//   } else if (i === 3) {
+//     dategeneral = initial.thirdgeneral;
+//   }
+// }
 
-for (let i = 1; i <= 3; i++) {
-  console.log(3, i);
-  let datechemist = initial.firstchemist;
-  bot.action(`chemist${i}`, ctx => {
+// for (let i = 1; i <= 3; i++) {
+//   console.log(3, i);
+//   let datechemist = initial.firstchemist;
+//   bot.action(`chemist${i}`, ctx => {
 
-    bot.telegram.sendPhoto(ctx.chat.id, {
-      source: `analyzes/chemist${datechemist}.jpg`
-    });
-  });
-  if (i === 2) {
-    datechemist = initial.secondchemist;
-  } else if (i === 3) {
-    datechemist = initial.thirdchemist;
-  }
-}
+//     bot.telegram.sendPhoto(ctx.chat.id, {
+//       source: `analyzes/chemist${datechemist}.jpg`
+//     });
+//   });
+//   if (i === 2) {
+//     datechemist = initial.secondchemist;
+//   } else if (i === 3) {
+//     datechemist = initial.thirdchemist;
+//   }
+// }
 
 bot.telegram.setWebhook(`${process.env.BOT_URL}/bot${process.env.BOT_TOKEN}`);
 bot.startWebhook(`/bot${process.env.BOT_TOKEN}`, null, process.env.PORT);

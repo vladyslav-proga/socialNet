@@ -6,30 +6,12 @@ const axios = require('axios');
 const fs = require('fs');
 
 /* -ДОБАВИТЬ ДЕЙСТВИЯ КНОПКЕ ТАБЛЕТКИ,
-СДЕЛАТЬ ТАК, ЧТО Б ДАННЫЕ МОЖНО БЫЛО ИЗМЕНЯТЬ ЧЕРЕЗ ЛОГИ.
--автоматизировать выдачу анализов из бота:
-парсить сайт или подконектить бд и начать с ней работу в этом боте
-(что б бот считывал данные с My SQL и передавал их,
-а не кидал скриншоты анализов)
--пофиксить спам кнопок, что б бот автоматически удалял их при появлении новых удалял их
--исправить калечные цыклы внизу, сделать всё более интересно
--сделать так, что б с помощью комманды я смог загружать в боту фотографии моих анализов*/
-
-
+СДЕЛАТЬ ТАК, ЧТО Б ДАННЫЕ МОЖНО БЫЛО ИЗМЕНЯТЬ ЧЕРЕЗ ЛОГИ.*/
 /*функция которая отвечает за мою личную группу бота с логами
 (он туда отправялет всё, что пишут ему другие юзеры,
 я в этой группе вижу их ник,
 и что они написали, если же они нажали кнопку, я вижу что они её нажали)*/
 bot.use(async (ctx, next) => {
-  // мои бренные попытки парсить сайт(скорее всего буду юзать бд, нафиг парсинг)
-  // await axios.get('https://patient-docs.com/')
-  //     .then(function (response) {
-  //         //console.log(response.data);
-  //         //console.log(response.status);
-  //         //console.log(response.statusText);
-  //         // console.log(response.headers);
-  //         // console.log(response.config);
-  //     });
   if (ctx.updateSubTypes[0] === 'text') {
     bot.telegram.sendMessage(-498566951, ctx.from.username + ' написал: ' + ctx.message.text);
   } else if (ctx.updateType === 'callback_query') {
@@ -116,7 +98,7 @@ bot.action('doc', ctx => {
 
 
 bot.action('analyzes', async ctx => {
-  await ctx.deleteMessage();
+  ctx.deleteMessage();
   const photos = await fs.promises.readdir('./analyzes');
   const infoMessage = 'Какие именно анализы Вас интересуют?';
   const keyboard = [];

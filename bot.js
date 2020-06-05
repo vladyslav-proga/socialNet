@@ -251,7 +251,6 @@ bot.action('user', ctx => {
 /*кривой выводрандомных фактов, пока что их пять,
 эта часть кода в ранней стадии разработки, работает через одно место*/
 
-//ВСТАВИТЬ КУДА ТО ДЕЛИТ МЕССЕДЖ
 bot.on('callback_query', ctx => {
   const data = ctx.update.callback_query.data;
   if (data === 'fact') {

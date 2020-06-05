@@ -312,8 +312,10 @@ const initial = {
 bot.on('callback_query', ctx => {
   const data = ctx.update.callback_query.data;
   if (data === 'gor1') {
-    const resault = ctx.replyWithPhoto({ url: initial.firstgor });
-    return resault;
+    ctx.replyWithPhoto({ url: initial.firstgor });
+    //  bot.telegram.sendPhoto(ctx.chat.id, {
+    //  source: `analyzes/gor${dategor}.jpg`
+    //  });
   }
 });
 

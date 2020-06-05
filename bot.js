@@ -4,6 +4,9 @@ const { Telegraf } = require('telegraf');
 const bot = new Telegraf(process.env.BOT_TOKEN);
 const axios = require('axios');
 const fs = require('fs');
+const PORT = process.env.PORT;
+const http = require('http');
+
 
 /* -ДОБАВИТЬ ДЕЙСТВИЯ КНОПКЕ ТАБЛЕТКИ,
 СДЕЛАТЬ ТАК, ЧТО Б ДАННЫЕ МОЖНО БЫЛО ИЗМЕНЯТЬ ЧЕРЕЗ ЛОГИ.*/
@@ -164,7 +167,7 @@ bot.action('fact', ctx => {
 
             ],
             [
-              { text: 'Вернуться назад', callback_data: 'back' },
+              { text: 'Вернуться назад', callback_data: 'user' },
             ]
           ]
         }
@@ -187,5 +190,12 @@ bot.command('start', ctx => {
   sendStartMessage(ctx);
 });
 
-bot.telegram.setWebhook(`${process.env.BOT_URL}/bot${process.env.BOT_TOKEN}`);
-bot.startWebhook(`/bot${process.env.BOT_TOKEN}`, null, process.env.PORT);
+http.createServer((req, res) => {
+  res.writeHead(200);
+  res.end('I am medical-help-bot');
+}).listen(PORT);
+
+// bot.telegram.setWebhook(`${process.env.BOT_URL}/bot${process.env.BOT_TOKEN}`);
+// bot.startWebhook(`/bot${process.env.BOT_TOKEN}`, null, process.env.PORT);
+
+bot.launch();

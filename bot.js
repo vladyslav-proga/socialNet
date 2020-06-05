@@ -1,7 +1,7 @@
 'use strict';
 
 const { Telegraf } = require('telegraf');
-const bot = new Telegraf('1145790511:AAHr6G8dCBetSuuGBL0ycZZFi8HVgV0coUg');
+const bot = new Telegraf(process.env.BOT_TOKEN);
 const axios = require('axios');
 const fs = require('fs');
 
@@ -203,8 +203,5 @@ bot.action('back', ctx => {
 bot.command('start', ctx => {
   sendStartMessage(ctx);
 });
-
-
-
 
 bot.launch();

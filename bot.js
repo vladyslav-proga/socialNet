@@ -281,11 +281,11 @@ bot.on('callback_query', ctx => {
 // })
 
 bot.command('start', ctx => {
-  deleteMessage(ctx);
   sendStartMessage(ctx);
 });
 
 bot.action('start', ctx => {
+  deleteMessage(ctx);
   sendStartMessage(ctx);
 });
 

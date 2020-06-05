@@ -177,12 +177,6 @@ bot.action('gormons', ctx => {
   });
 });
 
-bot.action('gor1', ctx => {
-  console.log('test');
-  bot.telegram.sendPhoto(ctx.chat.id, {
-    source: `analyzes/gor${1}.jpg`
-  });
-});
 
 bot.action('general', ctx => {
   ctx.deleteMessage();

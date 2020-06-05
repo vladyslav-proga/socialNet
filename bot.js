@@ -235,7 +235,7 @@ bot.action('user', ctx => {
     reply_markup: {
       inline_keyboard: [
         [
-          { text: 'Рандомный факт', callback_data: 'fact' },
+          { text: 'Интересные факты о медицине', callback_data: 'fact' },
 
         ],
         [

@@ -284,6 +284,7 @@ bot.command('start', ctx => {
 
 bot.on('callback_query', ctx => {
   const data = ctx.update.callback_query.data;
+  console.log(data);
   if (data === 'back') {
     sendStartMessage(ctx);
   }

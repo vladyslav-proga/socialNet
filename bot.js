@@ -279,9 +279,27 @@ bot.command('start', ctx => {
 });
 
 bot.action('back', ctx => {
-  console.log(1);
-  sendStartMessage();
-  sendStartMessage(ctx);
+  let startMessage = 'Здравствуй, этот бот служит личным дневником Дани, в нём записаны все анализы и количество таблеток которое он выпил на протяжении какого то времени';
+  if (ctx.from.username === 'ddynikov') {
+    startMessage = 'Привет хозяин';
+
+  }
+  bot.telegram.sendMessage(ctx.chat.id, startMessage,
+    {
+      reply_markup: {
+        inline_keyboard: [
+          [
+            { text: 'Я эндокренолог', callback_data: 'doc' }
+          ],
+          [
+            { text: 'Я не доктор', callback_data: 'user' }
+          ],
+          [
+            { text: 'Информация о болезне', callback_data: 'info' }
+          ]
+        ]
+      }
+    });
 });
 
 // bot.on('callback_query', ctx => {

@@ -91,6 +91,7 @@ const getData = async () => {
 
 //появления новых кнопок, при нажатии кнопки "Я эндокринолог"
 bot.action('doc', ctx => {
+  ctx.deleteMessage();
   const infoMessage = 'Узнать информацию. Выберите, что хотите узнать';
   bot.telegram.sendMessage(ctx.chat.id, infoMessage, {
     reply_markup: {
@@ -121,6 +122,7 @@ bot.action('doc', ctx => {
 
 //появление нового диалогового окна с кнопками после нажатия кнопки "Прошлые анализы"
 bot.action('analyzes', ctx => {
+  ctx.deleteMessage();
   const infoMessage = 'Какие именно анализы Вас интересуют?';
   bot.telegram.sendMessage(ctx.chat.id, infoMessage, {
     reply_markup: {
@@ -146,6 +148,7 @@ bot.action('analyzes', ctx => {
 });
 
 bot.action('gormons', ctx => {
+  ctx.deleteMessage();
   const infoMessage = 'Выберите дату';
   bot.telegram.sendMessage(ctx.chat.id, infoMessage, {
     reply_markup: {
@@ -175,6 +178,7 @@ bot.action('gormons', ctx => {
 });
 
 bot.action('general', ctx => {
+  ctx.deleteMessage();
   const infoMessage = 'Выберите дату';
   bot.telegram.sendMessage(ctx.chat.id, infoMessage, {
     reply_markup: {
@@ -200,6 +204,7 @@ bot.action('general', ctx => {
 });
 
 bot.action('chemist', ctx => {
+  ctx.deleteMessage();
   const infoMessage = 'Выберите дату';
   bot.telegram.sendMessage(ctx.chat.id, infoMessage, {
     reply_markup: {
@@ -221,6 +226,7 @@ bot.action('chemist', ctx => {
 
 //появление нового диалогового окна с кнопками после нажатия кнопки "Я не доктор"
 bot.action('user', ctx => {
+  ctx.deleteMessage();
   const infoMessage = 'Вся суть этого бота в том, что он хранит в себе данные анализов и количество таблеток которые Даня пьёт на данный момент, но ты можешь посмотреть интересный факт из медицины!';
   bot.telegram.sendMessage(ctx.chat.id, infoMessage, {
     reply_markup: {
@@ -254,7 +260,6 @@ bot.on('callback_query', ctx => {
     new Promise(resolve => {
       const factStore = getData();
       resolve(factStore);
-
     })
       .then(result => {
         const nothing = result;
@@ -265,6 +270,9 @@ bot.on('callback_query', ctx => {
         const chatID = ctx.update.callback_query.message.chat.id;
         bot.telegram.sendMessage(chatID, message, null);
       });
+  } else if (data === 'back') {
+    ctx.deleteMessage();
+    sendStartMessage(ctx);
   }
 });
 
@@ -276,30 +284,6 @@ bot.on('callback_query', ctx => {
 
 bot.command('start', ctx => {
   sendStartMessage(ctx);
-});
-
-bot.action('back', ctx => {
-  let startMessage = 'Здравствуй, этот бот служит личным дневником Дани, в нём записаны все анализы и количество таблеток которое он выпил на протяжении какого то времени';
-  if (ctx.from.username === 'ddynikov') {
-    startMessage = 'Привет хозяин';
-
-  }
-  bot.telegram.sendMessage(ctx.chat.id, startMessage,
-    {
-      reply_markup: {
-        inline_keyboard: [
-          [
-            { text: 'Я эндокренолог', callback_data: 'doc' }
-          ],
-          [
-            { text: 'Я не доктор', callback_data: 'user' }
-          ],
-          [
-            { text: 'Информация о болезне', callback_data: 'info' }
-          ]
-        ]
-      }
-    });
 });
 
 // bot.on('callback_query', ctx => {

@@ -279,7 +279,6 @@ bot.command('start', ctx => {
 });
 
 bot.action('start', ctx => {
-  ctx.deleteMessage();
   sendStartMessage(ctx);
 });
 

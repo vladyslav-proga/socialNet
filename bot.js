@@ -44,9 +44,6 @@ function sendStartMessage(ctx) {
           [
             { text: 'Я не доктор', callback_data: 'user' }
           ],
-          [
-            { text: 'Информация о болезне', callback_data: 'info' }
-          ]
         ]
       }
     });
@@ -95,6 +92,9 @@ bot.action('pills', ctx => {
       const dose = nothing[0];
       const message = `${dose.val}`;
       const chatID = ctx.update.callback_query.message.chat.id;
+      bot.command('pills', ctx => {
+
+      })
       bot.telegram.sendMessage(chatID, message, {
         reply_markup: {
           inline_keyboard: [
@@ -165,16 +165,13 @@ bot.action('analyzes', async ctx => {
 //появление нового диалогового окна с кнопками после нажатия кнопки "Я не доктор"
 bot.action('user', ctx => {
   ctx.deleteMessage();
-  const infoMessage = 'Тут находятся информация для Даниного доктора, но ты можешь посмотреть интересный факт из медицины';
+  const infoMessage = 'Тут находятся информация для Даниного доктора, но ты можешь посмотреть интересный факт из медицины!';
   bot.telegram.sendMessage(ctx.chat.id, infoMessage, {
     reply_markup: {
       inline_keyboard: [
         [
           { text: 'Интересные факты о медицине', callback_data: 'fact' },
 
-        ],
-        [
-          { text: 'Информация о болезне(В РАЗРАБОТКЕ)', callback_data: 'info' },
         ],
         [
           { text: 'Вернуться назад', callback_data: 'back' },

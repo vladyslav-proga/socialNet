@@ -77,7 +77,7 @@ const getDose = async () => {
       val: item.gs$cell.inputValue,
     });
   });
-  return (doseStore)
+  return (doseStore);
 };
 
 bot.action('pills', ctx => {
@@ -92,9 +92,9 @@ bot.action('pills', ctx => {
       const dose = nothing[0];
       const message = `${dose.val}`;
       const chatID = ctx.update.callback_query.message.chat.id;
-      bot.command('pills', ctx => {
+      // bot.command('pills', ctx => {
 
-      })
+      // })
       bot.telegram.sendMessage(chatID, message, {
         reply_markup: {
           inline_keyboard: [

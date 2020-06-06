@@ -1,15 +1,13 @@
 'use strict';
 
 const { Telegraf } = require('telegraf');
-const bot = new Telegraf('1145790511:AAEngkPt9CZio886GTLus_oo_Oogsno_qaQ');
+const bot = new Telegraf(process.env.BOT_TOKEN);
 const axios = require('axios');
 const fs = require('fs');
 const PORT = process.env.PORT;
 const http = require('http');
 
 
-/* -ДОБАВИТЬ ДЕЙСТВИЯ КНОПКЕ ТАБЛЕТКИ,
-СДЕЛАТЬ ТАК, ЧТО Б ДАННЫЕ МОЖНО БЫЛО ИЗМЕНЯТЬ ЧЕРЕЗ ЛОГИ.*/
 /*функция которая отвечает за мою личную группу бота с логами
 (он туда отправялет всё, что пишут ему другие юзеры,
 я в этой группе вижу их ник,

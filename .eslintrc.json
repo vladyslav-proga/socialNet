@@ -32,6 +32,9 @@
             "error",
             "always"
         ],
+        "camelcase": [
+            "error"
+        ],
         "eqeqeq": [
             "error",
             "always"
@@ -88,7 +91,7 @@
         "max-len": [
             "error",
             {
-                "code": 187,
+                "code": 80,
                 "ignoreUrls": true
             }
         ],

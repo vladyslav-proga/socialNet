@@ -14,33 +14,41 @@ const http = require('http');
 и что они написали, если же они нажали кнопку, я вижу что они её нажали)*/
 bot.use(async (ctx, next) => {
   if (ctx.updateSubTypes[0] === 'text') {
-    bot.telegram.sendMessage(-498566951, ctx.from.username + ' написал: ' + ctx.message.text);
+    bot.telegram.sendMessage(-498566951,
+      ctx.from.username + ' написал: ' + ctx.message.text);
   } else if (ctx.updateType === 'callback_query') {
-    bot.telegram.sendMessage(-498566951, ctx.from.username + ' тыкнул кнопку');
+    bot.telegram.sendMessage(-498566951,
+      ctx.from.username + ' тыкнул кнопку');
   } else {
-    bot.telegram.sendMessage(-498566951, ctx.from.username + ' написал: ' + ctx.updateSubTypes[0]);
+    bot.telegram.sendMessage(-498566951,
+      ctx.from.username + ' написал: ' + ctx.updateSubTypes[0]);
   }
   next();
 });
 
-//функция которая отвечает за первое сообщение, это отвечает бот, когда Вы пишите /start
+/*функция которая отвечает за первое сообщение,
+это отвечает бот, когда Вы пишите /start*/
 function sendStartMessage(ctx) {
-  let startMessage = 'Здравствуй, этот бот служит личным дневником Дани, в нём записаны все анализы и количество таблеток, которое он выпил на протяжении какого-то времени';
+  let startMessage = `Здравствуй,
+   этот бот служит личным дневником Дани,
+   в нём записаны все анализы и количество таблеток,
+    которое он выпил на протяжении какого-то времени`;
   if (ctx.from.username === 'ddynikov') {
     startMessage = 'Привет хозяин';
 
   } else if (ctx.from.username === 'tshemsedinov') {
-    startMessage = 'Здравствуйте преподователь! Рад Вам представить мою курсовую работу';
+    startMessage = `Здравствуйте преподователь!
+     Рад Вам представить мою курсовую работу`;
   }
   bot.telegram.sendMessage(ctx.chat.id, startMessage,
     {
-      reply_markup: {
-        inline_keyboard: [
+      'reply_markup': {
+        'inline_keyboard': [
           [
-            { text: 'Я эндокринолог', callback_data: 'doc' }
+            { text: 'Я эндокринолог', 'callback_data': 'doc' }
           ],
           [
-            { text: 'Я не доктор', callback_data: 'user' }
+            { text: 'Я не доктор', 'callback_data': 'user' }
           ],
         ]
       }
@@ -94,10 +102,10 @@ bot.action('pills', ctx => {
 
       // })
       bot.telegram.sendMessage(chatID, message, {
-        reply_markup: {
-          inline_keyboard: [
+        'reply_markup': {
+          'inline_keyboard': [
             [
-              { text: 'Вернуться назад', callback_data: 'doc' },
+              { text: 'Вернуться назад', 'callback_data': 'doc' },
             ],
           ]
         }
@@ -110,16 +118,16 @@ bot.action('doc', ctx => {
   ctx.deleteMessage();
   const infoMessage = 'Узнать информацию. Выберите, что хотите узнать';
   bot.telegram.sendMessage(ctx.chat.id, infoMessage, {
-    reply_markup: {
-      inline_keyboard: [
+    'reply_markup': {
+      'inline_keyboard': [
         [
-          { text: 'Прошлые анализы', callback_data: 'analyzes' },
+          { text: 'Прошлые анализы', 'callback_data': 'analyzes' },
         ],
         [
-          { text: 'Таблетки', callback_data: 'pills' },
+          { text: 'Таблетки', 'callback_data': 'pills' },
         ],
         [
-          { text: 'Вернуться в меню', callback_data: 'back' },
+          { text: 'Вернуться в меню', 'callback_data': 'back' },
         ]
       ]
     }
@@ -135,7 +143,8 @@ bot.action('doc', ctx => {
 
 // })
 
-//появление нового диалогового окна с кнопками после нажатия кнопки "Прошлые анализы"
+/*появление нового диалогового окна
+с кнопками после нажатия кнопки "Прошлые анализы"*/
 
 
 bot.action('analyzes', async ctx => {
@@ -144,15 +153,18 @@ bot.action('analyzes', async ctx => {
   const infoMessage = 'Какие именно анализы Вас интересуют?';
   const keyboard = [];
   photos.forEach(photo => {
-    keyboard.push([{ text: photo.slice(0, photo.length - 4), callback_data: photo }]);
+    keyboard.push([{
+      text: photo.slice(0, photo.length - 4),
+      'callback_data': photo
+    }]);
     bot.action(photo, ctx => {
       bot.telegram.sendPhoto(ctx.chat.id, { source: `./analyzes/${photo}` });
     });
   });
-  keyboard.push([{ text: 'Вернуться назад', callback_data: 'doc' }]);
+  keyboard.push([{ text: 'Вернуться назад', 'callback_data': 'doc' }]);
   bot.telegram.sendMessage(ctx.chat.id, infoMessage, {
-    reply_markup: {
-      inline_keyboard: keyboard
+    'reply_markup': {
+      'inline_keyboard': keyboard
     }
   });
 });
@@ -160,19 +172,21 @@ bot.action('analyzes', async ctx => {
 
 
 
-//появление нового диалогового окна с кнопками после нажатия кнопки "Я не доктор"
+/*появление нового диалогового окна
+ с кнопками после нажатия кнопки "Я не доктор" */
 bot.action('user', ctx => {
   ctx.deleteMessage();
-  const infoMessage = 'Тут находятся информация для Даниного доктора, но ты можешь посмотреть интересный факт из медицины!';
+  const infoMessage = `Тут находятся информация для Даниного доктора,
+   но ты можешь посмотреть интересный факт из медицины!`;
   bot.telegram.sendMessage(ctx.chat.id, infoMessage, {
-    reply_markup: {
-      inline_keyboard: [
+    'reply_markup': {
+      'inline_keyboard': [
         [
-          { text: 'Интересные факты о медицине', callback_data: 'fact' },
+          { text: 'Интересные факты о медицине', 'callback_data': 'fact' },
 
         ],
         [
-          { text: 'Вернуться назад', callback_data: 'back' },
+          { text: 'Вернуться назад', 'callback_data': 'back' },
         ]
       ]
     }
@@ -194,14 +208,14 @@ bot.action('fact', ctx => {
       const message = `${fact.val}`;
       const chatID = ctx.update.callback_query.message.chat.id;
       bot.telegram.sendMessage(chatID, message, {
-        reply_markup: {
-          inline_keyboard: [
+        'reply_markup': {
+          'inline_keyboard': [
             [
-              { text: 'Ещё факт!', callback_data: 'fact' },
+              { text: 'Ещё факт!', 'callback_data': 'fact' },
 
             ],
             [
-              { text: 'Вернуться назад', callback_data: 'user' },
+              { text: 'Вернуться назад', 'callback_data': 'user' },
             ]
           ]
         }
@@ -224,8 +238,5 @@ http.createServer((req, res) => {
   res.writeHead(200);
   res.end('I am medical-help-bot');
 }).listen(PORT);
-
-// bot.telegram.setWebhook(`${process.env.BOT_URL}/bot${process.env.BOT_TOKEN}`);
-// bot.startWebhook(`/bot${process.env.BOT_TOKEN}`, null, process.env.PORT);
 
 bot.launch();

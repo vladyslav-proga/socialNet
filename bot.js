@@ -29,10 +29,9 @@ bot.use(async (ctx, next) => {
 /*функция которая отвечает за первое сообщение,
 это отвечает бот, когда Вы пишите /start*/
 function sendStartMessage(ctx) {
-  let startMessage = `    Здравствуй!
+  let startMessage = `Здравствуйте!
   Этот бот служит личным дневником Дани,
-  в нём записаны все анализы и количество таблеток,
-  которое он выпил на протяжении какого-то времени`;
+  в нём записаны все анализы и дозировка таблеток`;
   if (ctx.from.username === 'ddynikov') {
     startMessage = 'Привет хозяин';
 
@@ -45,10 +44,10 @@ function sendStartMessage(ctx) {
       'reply_markup': {
         'inline_keyboard': [
           [
-            { text: 'Я эндокринолог', 'callback_data': 'doc' }
+            { text: 'Просмотреть анализы и дозировку', 'callback_data': 'doc' }
           ],
           [
-            { text: 'Я не доктор', 'callback_data': 'user' }
+            { text: 'Интересные факты о медицине', 'callback_data': 'fact' }
           ],
         ]
       }
@@ -169,30 +168,6 @@ bot.action('analyzes', async ctx => {
   });
 });
 
-
-
-
-/*появление нового диалогового окна
- с кнопками после нажатия кнопки "Я не доктор" */
-bot.action('user', ctx => {
-  ctx.deleteMessage();
-  const infoMessage = `Тут находятся информация для Даниного доктора,
-  но ты можешь посмотреть интересный факт из медицины!`;
-  bot.telegram.sendMessage(ctx.chat.id, infoMessage, {
-    'reply_markup': {
-      'inline_keyboard': [
-        [
-          { text: 'Интересные факты о медицине', 'callback_data': 'fact' },
-
-        ],
-        [
-          { text: 'Вернуться назад', 'callback_data': 'back' },
-        ]
-      ]
-    }
-
-  });
-});
 
 bot.action('fact', ctx => {
   new Promise(resolve => {

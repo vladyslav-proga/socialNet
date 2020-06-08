@@ -29,16 +29,16 @@ bot.use(async (ctx, next) => {
 /*функция которая отвечает за первое сообщение,
 это отвечает бот, когда Вы пишите /start*/
 function sendStartMessage(ctx) {
-  let startMessage = `Здравствуй,
-   этот бот служит личным дневником Дани,
-   в нём записаны все анализы и количество таблеток,
-    которое он выпил на протяжении какого-то времени`;
+  let startMessage = `    Здравствуй!
+  Этот бот служит личным дневником Дани,
+  в нём записаны все анализы и количество таблеток,
+  которое он выпил на протяжении какого-то времени`;
   if (ctx.from.username === 'ddynikov') {
     startMessage = 'Привет хозяин';
 
   } else if (ctx.from.username === 'tshemsedinov') {
     startMessage = `Здравствуйте преподователь!
-     Рад Вам представить мою курсовую работу`;
+    Рад Вам представить мою курсовую работу`;
   }
   bot.telegram.sendMessage(ctx.chat.id, startMessage,
     {
@@ -177,7 +177,7 @@ bot.action('analyzes', async ctx => {
 bot.action('user', ctx => {
   ctx.deleteMessage();
   const infoMessage = `Тут находятся информация для Даниного доктора,
-   но ты можешь посмотреть интересный факт из медицины!`;
+  но ты можешь посмотреть интересный факт из медицины!`;
   bot.telegram.sendMessage(ctx.chat.id, infoMessage, {
     'reply_markup': {
       'inline_keyboard': [

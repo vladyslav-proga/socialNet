@@ -30,8 +30,8 @@ bot.use(async (ctx, next) => {
 это отвечает бот, когда Вы пишите /start*/
 function sendStartMessage(ctx) {
   let startMessage = `Здравствуйте!
-  Этот бот служит личным дневником Дани,
-  в нём записаны все анализы и дозировка таблеток`;
+Этот бот служит личным дневником Дани,
+в нём записаны все анализы и дозировка таблеток`;
   if (ctx.from.username === 'ddynikov') {
     startMessage = 'Привет хозяин';
 
@@ -190,7 +190,7 @@ bot.action('fact', ctx => {
 
             ],
             [
-              { text: 'Вернуться назад', 'callback_data': 'user' },
+              { text: 'Вернуться назад', 'callback_data': 'back' },
             ]
           ]
         }

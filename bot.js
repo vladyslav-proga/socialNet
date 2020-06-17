@@ -13,18 +13,17 @@ const http = require('http');
 я в этой группе вижу их ник,
 и что они написали, если же они нажали кнопку, я вижу что они её нажали)*/
 bot.use(async (ctx, next) => {
-  console.log(ctx.chat);
-  // if (ctx.updateSubTypes[0] === 'text') {
-  //   bot.telegram.sendMessage(-498566951,
-  //     ctx.from.username + ' написал: ' + ctx.message.text);
-  // } else if (ctx.updateType === 'callback_query') {
-  //   bot.telegram.sendMessage(-498566951,
-  //     ctx.from.username + ' тыкнул кнопку');
-  // } else {
-  //   bot.telegram.sendMessage(-498566951,
-  //     ctx.from.username + ' написал: ' + ctx.updateSubTypes[0]);
-  // }
-  // next();
+  if (ctx.updateSubTypes[0] === 'text') {
+    bot.telegram.sendMessage(-1001120268273,
+      ctx.from.username + ' написал: ' + ctx.message.text);
+  } else if (ctx.updateType === 'callback_query') {
+    bot.telegram.sendMessage(-1001120268273,
+      ctx.from.username + ' тыкнул кнопку');
+  } else {
+    bot.telegram.sendMessage(-1001120268273,
+      ctx.from.username + ' написал: ' + ctx.updateSubTypes[0]);
+  }
+  next();
 });
 
 /*функция которая отвечает за первое сообщение,

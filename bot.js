@@ -57,7 +57,7 @@ function sendStartMessage(ctx) {
 const start = ctx => {
   ctx.deleteMessage();
   sendStartMessage(ctx);
-}
+};
 
 //генерация выплёвывания рандомных фактов
 const getFact = async () => {

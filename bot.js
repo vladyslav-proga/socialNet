@@ -139,7 +139,7 @@ bot.action('doc', ctx => {
 bot.action('analyzes', async ctx => {
   ctx.deleteMessage();
   const photos = await fs.promises.readdir('./analyzes');
-  const infoMessage = 'Какие именно анализы Вас интересуют? (внизу самые свежие)';
+  const infoMessage = 'Какие анализы Вас интересуют?(внизу самые свежие)';
   const keyboard = [];
   photos.forEach(photo => {
     keyboard.push([{

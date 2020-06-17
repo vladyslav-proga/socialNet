@@ -30,14 +30,14 @@ bot.use(async (ctx, next) => {
 это отвечает бот, когда Вы пишите /start*/
 function sendStartMessage(ctx) {
   let startMessage = `Здравствуйте!
-Этот бот служит личным дневником Дани,
-в нём записаны все анализы и дозировка таблеток`;
+    Этот бот служит личным дневником Дани,
+    в нём записаны все анализы и дозировка таблеток`;
   if (ctx.from.username === 'ddynikov') {
     startMessage = 'Привет хозяин';
 
   } else if (ctx.from.username === 'tshemsedinov') {
     startMessage = `Здравствуйте преподователь!
-    Рад Вам представить мою курсовую работу`;
+      Рад Вам представить мою курсовую работу`;
   }
   bot.telegram.sendMessage(ctx.chat.id, startMessage,
     {
@@ -54,9 +54,14 @@ function sendStartMessage(ctx) {
     });
 }
 
+const start = ctx => {
+  ctx.deleteMessage();
+  sendStartMessage(ctx);
+}
+
 //генерация выплёвывания рандомных фактов
 const getFact = async () => {
-  const json = await axios('https://spreadsheets.google.com/feeds/cells/1JBUpCCPwOpUOFyPCmeqhUZmbvDoTc_Hytb52RRv_vhE/1/public/full?alt=json');
+  const json = await axios(process.env.GOOGLE_SHEET);
   const data = json.data.feed.entry;
   const factStore = [];
   data.forEach(item => {
@@ -66,12 +71,12 @@ const getFact = async () => {
       val: item.gs$cell.inputValue,
     });
   });
-  return (factStore);
+  return factStore;
 };
 
 
 const getDose = async () => {
-  const json = await axios('https://spreadsheets.google.com/feeds/cells/1JBUpCCPwOpUOFyPCmeqhUZmbvDoTc_Hytb52RRv_vhE/1/public/full?alt=json');
+  const json = await axios(process.env.GOOGLE_SHEET);
   const data = json.data.feed.entry;
   // console.log(data);
   const doseStore = [];
@@ -82,7 +87,7 @@ const getDose = async () => {
       val: item.gs$cell.inputValue,
     });
   });
-  return (doseStore);
+  return doseStore;
 };
 
 bot.action('pills', ctx => {
@@ -92,9 +97,9 @@ bot.action('pills', ctx => {
     resolve(doseStore);
   })
     .then(result => {
-      const nothing = result;
+      const cells = result;
       result.unshift();
-      const dose = nothing[0];
+      const dose = cells[0];
       const message = `${dose.val}`;
       const chatID = ctx.update.callback_query.message.chat.id;
 
@@ -166,10 +171,10 @@ bot.action('fact', ctx => {
     resolve(factStore);
   })
     .then(result => {
-      const nothing = result;
+      const cells = result;
       result.shift();
-      const k = Math.floor(Math.random() * nothing.length);
-      const fact = nothing[k];
+      const k = Math.floor(Math.random() * cells.length);
+      const fact = cells[k];
       const message = `${fact.val}`;
       const chatID = ctx.update.callback_query.message.chat.id;
       bot.telegram.sendMessage(chatID, message, {
@@ -188,16 +193,10 @@ bot.action('fact', ctx => {
     });
 });
 
-bot.action('back', ctx => {
-  ctx.deleteMessage();
-  sendStartMessage(ctx);
-});
+bot.action('back', ctx => start(ctx));
 
 
-bot.command('start', ctx => {
-  ctx.deleteMessage();
-  sendStartMessage(ctx);
-});
+bot.command('start', ctx => start(ctx));
 
 http.createServer((req, res) => {
   res.writeHead(200);

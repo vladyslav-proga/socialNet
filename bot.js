@@ -97,9 +97,7 @@ bot.action('pills', ctx => {
       const dose = nothing[0];
       const message = `${dose.val}`;
       const chatID = ctx.update.callback_query.message.chat.id;
-      // bot.command('pills', ctx => {
 
-      // })
       bot.telegram.sendMessage(chatID, message, {
         'reply_markup': {
           'inline_keyboard': [
@@ -133,14 +131,6 @@ bot.action('doc', ctx => {
 
   });
 });
-
-// bot.command('pills', ctx => {
-
-// })
-
-// bot.action('pills', ctx => {
-
-// })
 
 /*появление нового диалогового окна
 с кнопками после нажатия кнопки "Прошлые анализы"*/

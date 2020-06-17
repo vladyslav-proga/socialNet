@@ -1,7 +1,7 @@
 'use strict';
 
 const { Telegraf } = require('telegraf');
-const bot = new Telegraf("1147285184:AAEYX-LePgXm-EAzidToswcWPUIs5pnECeM");
+const bot = new Telegraf(process.env.BOT_TOKEN);
 const axios = require('axios');
 const fs = require('fs');
 const PORT = process.env.PORT;

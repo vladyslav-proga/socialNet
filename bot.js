@@ -6,7 +6,7 @@ const axios = require('axios');
 const fs = require('fs');
 const PORT = process.env.PORT;
 const http = require('http');
-
+const groupID = -1001120268273;
 
 /*функция которая отвечает за мою личную группу бота с логами
 (он туда отправялет всё, что пишут ему другие юзеры,
@@ -14,13 +14,13 @@ const http = require('http');
 и что они написали, если же они нажали кнопку, я вижу что они её нажали)*/
 bot.use(async (ctx, next) => {
   if (ctx.updateSubTypes[0] === 'text') {
-    bot.telegram.sendMessage(-1001120268273,
+    bot.telegram.sendMessage(groupID,
       ctx.from.username + ' написал: ' + ctx.message.text);
   } else if (ctx.updateType === 'callback_query') {
-    bot.telegram.sendMessage(-1001120268273,
+    bot.telegram.sendMessage(groupID,
       ctx.from.username + ' тыкнул кнопку');
   } else {
-    bot.telegram.sendMessage(-1001120268273,
+    bot.telegram.sendMessage(groupID,
       ctx.from.username + ' написал: ' + ctx.updateSubTypes[0]);
   }
   next();
@@ -73,7 +73,6 @@ const getFact = async () => {
   });
   return factStore;
 };
-
 
 const getDose = async () => {
   const json = await axios(process.env.GOOGLE_SHEET);
@@ -139,8 +138,6 @@ bot.action('doc', ctx => {
 
 /*появление нового диалогового окна
 с кнопками после нажатия кнопки "Прошлые анализы"*/
-
-
 bot.action('analyzes', async ctx => {
   ctx.deleteMessage();
   const photos = await fs.promises.readdir('./analyzes');
@@ -162,7 +159,6 @@ bot.action('analyzes', async ctx => {
     }
   });
 });
-
 
 bot.action('fact', ctx => {
   new Promise(resolve => {
@@ -194,8 +190,6 @@ bot.action('fact', ctx => {
 });
 
 bot.action('back', ctx => start(ctx));
-
-
 bot.command('start', ctx => start(ctx));
 
 http.createServer((req, res) => {

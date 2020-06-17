@@ -1,7 +1,7 @@
 'use strict';
 
 const { Telegraf } = require('telegraf');
-const bot = new Telegraf(process.env.BOT_TOKEN);
+const bot = new Telegraf("1147285184:AAEYX-LePgXm-EAzidToswcWPUIs5pnECeM");
 const axios = require('axios');
 const fs = require('fs');
 const PORT = process.env.PORT;
@@ -139,7 +139,7 @@ bot.action('doc', ctx => {
 bot.action('analyzes', async ctx => {
   ctx.deleteMessage();
   const photos = await fs.promises.readdir('./analyzes');
-  const infoMessage = 'Какие именно анализы Вас интересуют?';
+  const infoMessage = 'Какие именно анализы Вас интересуют? (внизу самые свежие)';
   const keyboard = [];
   photos.forEach(photo => {
     keyboard.push([{

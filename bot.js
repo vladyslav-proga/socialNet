@@ -60,24 +60,9 @@ const start = (ctx) => {
   sendStartMessage(ctx);
 };
 
-const getDose = async () => {
-  const json = await axios(process.env.GOOGLE_SHEET);
-  const data = json.data.feed.entry;
-  // console.log(data);
-  const doseStore = [];
-  data.forEach(item => {
-    doseStore.push({
-      row: item.gs$cell.row,
-      col: item.gs$cell.col,
-      val: item.gs$cell.inputValue,
-    });
-  });
-  return doseStore;
-};
-
 bot.action('pills', ctx => {
   new Promise(resolve => {
-    const doseStore = getDose();
+    const doseStore = FUNCTIONS.getDose();
     ctx.deleteMessage();
     resolve(doseStore);
   })

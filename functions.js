@@ -17,6 +17,5 @@ const getFact = async () => {
 };
 
 module.exports = {
-    sendStartMessage,
     getFact,
 };

@@ -31,7 +31,35 @@ const getDose = async () => {
   return doseStore;
 };
 
+/*функция которая отвечает за первое сообщение,
+это отвечает бот, когда Вы пишите /start*/
+function sendStartMessage(ctx, bot) {
+  let startMessage = `Здравствуйте!
+    Этот бот служит личным дневником Дани,
+    в нём хранятся все анализы и дозировка таблеток`;
+  if (ctx.from.username === 'ddynikov') {
+    startMessage = 'Привет хозяин';
+  } else if (ctx.from.username === 'tshemsedinov') {
+    startMessage = `Здравствуйте преподователь!
+      Рад Вам представить мою курсовую работу`;
+  }
+  bot.telegram.sendMessage(ctx.chat.id, startMessage,
+    {
+      'reply_markup': {
+        'inline_keyboard': [
+          [
+            { text: 'Просмотреть анализы и дозировку', 'callback_data': 'doc' }
+          ],
+          [
+            { text: 'Интересные факты о медицине', 'callback_data': 'fact' }
+          ],
+        ]
+      }
+    });
+}
+
 module.exports = {
   getFact,
   getDose,
+  sendStartMessage,
 };

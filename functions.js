@@ -36,7 +36,8 @@ const getDose = async () => {
 function sendStartMessage(ctx, bot) {
   let startMessage = `Здравствуйте!
     Этот бот служит личным дневником Дани,
-    в нём хранятся все анализы и дозировка таблеток`;
+    в нём хранятся все анализы и дозировка таблеток, 
+    так же можно посмотреть рандомный факт из медицины `;
   if (ctx.from.username === 'ddynikov') {
     startMessage = 'Привет хозяин';
   } else if (ctx.from.username === 'tshemsedinov') {

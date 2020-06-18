@@ -27,9 +27,9 @@ bot.use(async (ctx, next) => {
   next();
 });
 
-const start = ctx => {
+const start = (ctx, bot) => {
   ctx.deleteMessage();
-  FUNCTIONS.sendStartMessage(ctx);
+  FUNCTIONS.sendStartMessage(ctx, bot);
 };
 
 const getDose = async () => {

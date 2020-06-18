@@ -6,6 +6,7 @@ const axios = require('axios');
 const fs = require('fs');
 const PORT = process.env.PORT;
 const http = require('http');
+const FUNCTIONS = require('./functions.js');
 const groupID = -1001120268273;
 
 /*функция которая отвечает за мою личную группу бота с логами
@@ -26,52 +27,9 @@ bot.use(async (ctx, next) => {
   next();
 });
 
-/*функция которая отвечает за первое сообщение,
-это отвечает бот, когда Вы пишите /start*/
-function sendStartMessage(ctx) {
-  let startMessage = `Здравствуйте!
-    Этот бот служит личным дневником Дани,
-    в нём записаны все анализы и дозировка таблеток`;
-  if (ctx.from.username === 'ddynikov') {
-    startMessage = 'Привет хозяин';
-
-  } else if (ctx.from.username === 'tshemsedinov') {
-    startMessage = `Здравствуйте преподователь!
-      Рад Вам представить мою курсовую работу`;
-  }
-  bot.telegram.sendMessage(ctx.chat.id, startMessage,
-    {
-      'reply_markup': {
-        'inline_keyboard': [
-          [
-            { text: 'Просмотреть анализы и дозировку', 'callback_data': 'doc' }
-          ],
-          [
-            { text: 'Интересные факты о медицине', 'callback_data': 'fact' }
-          ],
-        ]
-      }
-    });
-}
-
 const start = ctx => {
   ctx.deleteMessage();
-  sendStartMessage(ctx);
-};
-
-//генерация выплёвывания рандомных фактов
-const getFact = async () => {
-  const json = await axios(process.env.GOOGLE_SHEET);
-  const data = json.data.feed.entry;
-  const factStore = [];
-  data.forEach(item => {
-    factStore.push({
-      row: item.gs$cell.row,
-      col: item.gs$cell.col,
-      val: item.gs$cell.inputValue,
-    });
-  });
-  return factStore;
+  FUNCTIONS.sendStartMessage(ctx);
 };
 
 const getDose = async () => {
@@ -162,7 +120,7 @@ bot.action('analyzes', async ctx => {
 
 bot.action('fact', ctx => {
   new Promise(resolve => {
-    const factStore = getFact();
+    const factStore = FUNCTIONS.getFact();
     ctx.deleteMessage();
     resolve(factStore);
   })

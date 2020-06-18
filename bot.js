@@ -9,6 +9,34 @@ const http = require('http');
 const FUNCTIONS = require('./functions.js');
 const groupID = -1001120268273;
 
+/*функция которая отвечает за первое сообщение,
+это отвечает бот, когда Вы пишите /start*/
+function sendStartMessage(ctx) {
+  let startMessage = `Здравствуйте!
+    Этот бот служит личным дневником Дани,
+    в нём записаны все анализы и дозировка таблеток`;
+  if (ctx.from.username === 'ddynikov') {
+    startMessage = 'Привет хозяин';
+
+  } else if (ctx.from.username === 'tshemsedinov') {
+    startMessage = `Здравствуйте преподователь!
+      Рад Вам представить мою курсовую работу`;
+  }
+  bot.telegram.sendMessage(ctx.chat.id, startMessage,
+    {
+      'reply_markup': {
+        'inline_keyboard': [
+          [
+            { text: 'Просмотреть анализы и дозировку', 'callback_data': 'doc' }
+          ],
+          [
+            { text: 'Интересные факты о медицине', 'callback_data': 'fact' }
+          ],
+        ]
+      }
+    });
+};
+
 /*функция которая отвечает за мою личную группу бота с логами
 (он туда отправялет всё, что пишут ему другие юзеры,
 я в этой группе вижу их ник,
@@ -27,9 +55,9 @@ bot.use(async (ctx, next) => {
   next();
 });
 
-const start = (ctx, bot) => {
+const start = (ctx) => {
   ctx.deleteMessage();
-  FUNCTIONS.sendStartMessage(ctx, bot);
+  sendStartMessage(ctx);
 };
 
 const getDose = async () => {

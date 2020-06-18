@@ -12,7 +12,7 @@ const FUNCTIONS = require('./functions.js');
 function sendStartMessage(ctx) {
   let startMessage = `Здравствуйте!
     Этот бот служит личным дневником Дани,
-    в нём записаны все анализы и дозировка таблеток`;
+    в нём хранятся все анализы и дозировка таблеток`;
   if (ctx.from.username === 'ddynikov') {
     startMessage = 'Привет хозяин';
   } else if (ctx.from.username === 'tshemsedinov') {

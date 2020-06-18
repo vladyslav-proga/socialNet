@@ -2,12 +2,10 @@
 
 const { Telegraf } = require('telegraf');
 const bot = new Telegraf(process.env.BOT_TOKEN);
-const axios = require('axios');
 const fs = require('fs');
 const PORT = process.env.PORT;
 const http = require('http');
 const FUNCTIONS = require('./functions.js');
-const groupID = -1001120268273;
 
 /*функция которая отвечает за первое сообщение,
 это отвечает бот, когда Вы пишите /start*/
@@ -41,6 +39,7 @@ function sendStartMessage(ctx) {
 (он туда отправялет всё, что пишут ему другие юзеры,
 я в этой группе вижу их ник,
 и что они написали, если же они нажали кнопку, я вижу что они её нажали)*/
+const groupID = -1001120268273;
 bot.use(async (ctx, next) => {
   if (ctx.updateSubTypes[0] === 'text') {
     bot.telegram.sendMessage(groupID,

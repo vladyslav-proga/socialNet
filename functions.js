@@ -2,7 +2,6 @@
 
 const axios = require('axios');
 
-
 //генерация выплёвывания рандомных фактов
 const getFact = async () => {
     const json = await axios(process.env.GOOGLE_SHEET);
@@ -35,5 +34,4 @@ const getDose = async () => {
 module.exports = {
     getFact,
     getDose,
-
 };

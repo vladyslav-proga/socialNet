@@ -6,7 +6,6 @@ const fs = require('fs');
 const http = require('http');
 const PORT = process.env.PORT;
 const FUNCTIONS = require('./functions.js');
-const CONSTANTS = require('./constants.js');
 
 /*функция которая отвечает за первое сообщение,
 это отвечает бот, когда Вы пишите /start*/
@@ -39,15 +38,16 @@ function sendStartMessage(ctx) {
 (он туда отправялет всё, что пишут ему другие юзеры,
 я в этой группе вижу их ник,
 и что они написали, если же они нажали кнопку, я вижу что они её нажали)*/
+const groupID = -1001120268273;
 bot.use(async (ctx, next) => {
   if (ctx.updateSubTypes[0] === 'text') {
-    bot.telegram.sendMessage(CONSTANTS.groupID,
+    bot.telegram.sendMessage(groupID,
       ctx.from.username + ' написал: ' + ctx.message.text);
   } else if (ctx.updateType === 'callback_query') {
-    bot.telegram.sendMessage(CONSTANTS.groupID,
+    bot.telegram.sendMessage(groupID,
       ctx.from.username + ' тыкнул кнопку');
   } else {
-    bot.telegram.sendMessage(CONSTANTS.groupID,
+    bot.telegram.sendMessage(groupID,
       ctx.from.username + ' написал: ' + ctx.updateSubTypes[0]);
   }
   next();

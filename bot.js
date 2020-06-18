@@ -3,8 +3,8 @@
 const { Telegraf } = require('telegraf');
 const bot = new Telegraf(process.env.BOT_TOKEN);
 const fs = require('fs');
-const PORT = process.env.PORT;
 const http = require('http');
+const PORT = process.env.PORT;
 const FUNCTIONS = require('./functions.js');
 const CONSTANTS = require('./constants.js');
 
@@ -53,7 +53,7 @@ bot.use(async (ctx, next) => {
   next();
 });
 
-const start = (ctx) => {
+const start = ctx => {
   ctx.deleteMessage();
   sendStartMessage(ctx);
 };

@@ -1,5 +1,7 @@
 'use strict';
 
+const axios = require('axios');
+
 
 //генерация выплёвывания рандомных фактов
 const getFact = async () => {

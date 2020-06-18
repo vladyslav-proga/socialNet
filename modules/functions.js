@@ -2,7 +2,7 @@
 
 const axios = require('axios');
 
-//генерация выплёвывания рандомных фактов
+//generating random facts
 const getFact = async () => {
   const json = await axios(process.env.GOOGLE_SHEET);
   const data = json.data.feed.entry;
@@ -31,8 +31,6 @@ const getDose = async () => {
   return doseStore;
 };
 
-/*функция которая отвечает за первое сообщение,
-это отвечает бот, когда Вы пишите /start*/
 function sendStartMessage(ctx, bot) {
   let startMessage = `Здравствуйте!
     Этот бот служит личным дневником Дани,

@@ -7,11 +7,7 @@ const http = require('http');
 const PORT = process.env.PORT;
 const FUNCTIONS = require('./modules/functions.js');
 
-/*функция которая отвечает за мою личную группу бота с логами
-(он туда отправялет всё, что пишут ему другие юзеры,
-я в этой группе вижу их ник,
-и что они написали, если же они нажали кнопку, я вижу что они её нажали)*/
-const groupID = -1001120268273;
+const groupID = -1001120268273; //logs function
 bot.use(async (ctx, next) => {
   if (ctx.updateSubTypes[0] === 'text') {
     bot.telegram.sendMessage(groupID,
@@ -56,7 +52,6 @@ bot.action('pills', ctx => {
     });
 });
 
-//появления новых кнопок, при нажатии кнопки "Я эндокринолог"
 bot.action('doc', ctx => {
   ctx.deleteMessage();
   const infoMessage = 'Узнать информацию. Выберите, что хотите узнать';
@@ -78,8 +73,7 @@ bot.action('doc', ctx => {
   });
 });
 
-/*появление нового диалогового окна
-с кнопками после нажатия кнопки "Прошлые анализы"*/
+
 bot.action('analyzes', async ctx => {
   ctx.deleteMessage();
   const photos = await fs.promises.readdir('./analyzes');

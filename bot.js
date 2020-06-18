@@ -5,7 +5,7 @@ const bot = new Telegraf(process.env.BOT_TOKEN);
 const fs = require('fs');
 const http = require('http');
 const PORT = process.env.PORT;
-const FUNCTIONS = require('./functions.js');
+const FUNCTIONS = require('./modules/functions.js');
 
 /*функция которая отвечает за мою личную группу бота с логами
 (он туда отправялет всё, что пишут ему другие юзеры,

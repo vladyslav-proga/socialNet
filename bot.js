@@ -6,6 +6,7 @@ const fs = require('fs');
 const http = require('http');
 const PORT = process.env.PORT;
 const FUNCTIONS = require('./modules/functions.js');
+// const analyzes = require('./analyzes/analyzes.js');
 
 const groupID = -1001120268273; //logs function
 bot.use(async (ctx, next) => {
@@ -76,6 +77,7 @@ bot.action('doc', ctx => {
 
 bot.action('analyzes', async ctx => {
   ctx.deleteMessage();
+  //  ctx.answerCbQuery();
   const photos = await fs.promises.readdir('./analyzes');
   const infoMessage = 'Какие анализы Вас интересуют?';
   const keyboard = [];

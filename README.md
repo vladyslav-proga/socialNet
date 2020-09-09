@@ -7,4 +7,4 @@
 
 Склипис Владислав:https://github.com/vladyslav-proga
 
-Небелица Никита:https://github.com/HohenzoIIern
+Небилиця Микола:https://github.com/HohenzoIIern

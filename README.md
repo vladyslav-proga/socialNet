@@ -1,7 +1,7 @@
 # socialNet
 Авторы:
 
-Диников Данил:https://github.com/ddynikov
+Дыников Данил:https://github.com/ddynikov
 
 Петрук Петро:https://github.com/17etro
 

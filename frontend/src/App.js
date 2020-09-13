@@ -1,9 +1,21 @@
 import React from 'react';
-import './App.css';
+import { Switch, Route } from 'react-router-dom';
+
+import Layout from './hoc/Layout/Layout';
 
 function App() {
+
+  const routes = (
+    <Switch>
+      <Route path="/"/>
+    </Switch>
+  );
+
   return (
-    <div className="App">
+    <div>
+      <Layout>
+        {routes}
+      </Layout>
     </div>
   );
 }

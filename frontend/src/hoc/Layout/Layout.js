@@ -1,22 +1,17 @@
 import React from 'react';
 
 import classes from './Layout.module.css';
-import { NavLink } from 'react-router-dom';
+
+import NavigationItems from '../../components/Navigation/NavigationItems/NavigationItems';
+import Logo from '../../components/Logo/Logo';
 
 const layout = ( props ) => {
     return (
         <>
             <header className={classes.Layout}>
-                <nav>
-                    <NavLink to="/auth">
-                        auth
-                    </NavLink>
-                    <NavLink to="/main-page">
-                        Main Page
-                    </NavLink>
-                    <NavLink to="/something">
-                        something
-                    </NavLink>
+                <Logo />
+                <nav style={{marginLeft: "auto"}}>
+                   <NavigationItems /> 
                 </nav>
             </header>
             <main className={classes.Content}>

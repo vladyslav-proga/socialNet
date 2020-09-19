@@ -1,0 +1,48 @@
+.Post 
+{   
+    width: 45rem;
+    border-radius: 10px;
+    border: 1px solid #3b0062;
+    padding: 30px 30px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.Post img 
+{
+    width: 64px;
+    height: 64px;
+    border-radius: 5px;
+    float: left;
+}
+
+.Post header:after 
+{
+    content: " ";
+	display: table;
+	clear: both;
+}
+
+.Post h3
+{
+    float: left;
+    margin-left: 10px;
+}
+
+.Post h3 span
+{
+    font-weight: normal;
+    color: #707070;
+    font-size: 0.8rem;
+}
+
+.Post h1 
+{
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.PostControls
+{
+    text-align: right;
+}

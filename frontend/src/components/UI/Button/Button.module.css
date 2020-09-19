@@ -1,0 +1,67 @@
+.Button
+{
+    font: inherit;
+    border: 1px solid #3b0062;
+    color: #3b0062;
+    background: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+
+.Button:focus
+{
+    outline: none;
+}
+
+.Button:disabled 
+{
+    background: #ccc;
+    color: #888888;
+    cursor: not-allowed;
+    border: #ccc;
+    box-shadow: none;
+}
+
+.Button:disabled:hover,
+.Button:disabled:active 
+{
+    background: #ccc;
+    color: #888888;
+    border: #ccc;
+}
+
+.Button:hover,
+.Button:active 
+{
+  background: #3b0062;
+  color: white;
+}
+
+/* Button with FLAT mode*/
+.flat 
+{
+    border: none;
+}
+  
+.flat:hover,
+.flat:active 
+{
+    background: rgba(59, 0, 98, 0.3);
+    color: #3b0062;
+}
+
+/* Button with DANGER design*/
+.danger 
+{
+    border-color: #a30000;
+    color: #a30000;
+}
+  
+.danger:hover,
+.danger:active 
+{
+    background: #a30000;
+    color: white;
+}

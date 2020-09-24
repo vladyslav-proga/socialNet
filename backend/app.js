@@ -6,13 +6,10 @@ const app = express();
 
 app.use(cors());
 
-db.execute('SELECT * FROM users')
-    .then(result => {
-        console.log(result[0]);
-    })
-    .catch(err => {
-        console.log(err);
-    });
+db.execute(`SELECT * FROM users`)
+    .then(res => console.log(res[0]))
+    .catch(err => console.log(err));
+
 
 app.use('/auth', (req, res, next) => {
     res.json({name: '1'});

@@ -11,13 +11,15 @@ class Main extends Component {
             .then((res) => {
                 console.log(res);
             })
-            .catch();
+            .catch((err) => {
+                console.log(err);
+            });
     }
 
     render() {
         return (
             <div>
-                <Post />
+              <Post />  
             </div>
         );
     }

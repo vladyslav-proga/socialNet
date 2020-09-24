@@ -1,7 +1,10 @@
 const express = require('express');
 const db = require('./util/database');
+const cors = require('cors');
 
 const app = express();
+
+app.use(cors());
 
 db.execute('SELECT * FROM users')
     .then(result => {
@@ -11,8 +14,12 @@ db.execute('SELECT * FROM users')
         console.log(err);
     });
 
+app.use('/auth', (req, res, next) => {
+    res.json({name: '1'});
+})
+
 app.use((req, res, next) => {
-    
+    console.log('main')
 });
 
-app.listen(6000);
+app.listen(5000);

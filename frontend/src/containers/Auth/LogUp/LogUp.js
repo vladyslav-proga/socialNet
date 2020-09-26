@@ -13,6 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 
 import { checkValidaty } from '../../../util/checkValidaty';
+import axios from 'axios';
 
 const useStyles = (theme) => ({
   paper: {
@@ -114,7 +115,10 @@ class SignUp extends Component {
   }
 
   onSubmitHandler = (event) => {
-    event.preventDefault();
+    axios.post('http://localhost:5000/auth/signup', {
+      email: this.state.controls.email.value,
+      password: this.state.controls.password.value
+    });
   }
 
   render() {
@@ -189,7 +193,7 @@ class SignUp extends Component {
           </Grid>
           <Button
             disabled={!this.state.formIsValid}
-            onClick={this.submitHandler}
+            onClick={this.onSubmitHandler}
             fullWidth
             variant="contained"
             color="primary"

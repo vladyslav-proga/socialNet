@@ -18,7 +18,6 @@ class Auth extends Component {
     }
 
     render() {
-        console.log(this.state);
         return (
             <div>
                 {this.state.authMode === 'sign-in' && <LogIn onChangeMod={this.onChangeAuthMod}/>}

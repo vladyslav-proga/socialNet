@@ -52,7 +52,7 @@ class SignIn extends Component {
 
   state = {
     controls: {
-      email : {
+      email: {
         value: '',
         validation: {
           required: true
@@ -60,7 +60,7 @@ class SignIn extends Component {
         valid: false,
         touched: false
       },
-      password : {
+      password: {
         value: '',
         validation: {
           required: true
@@ -75,16 +75,16 @@ class SignIn extends Component {
   onInputChangedHandler = (event, controlName) => {
     const updatedControls = {
       ...this.state.controls,
-      [controlName] : {
+      [controlName]: {
         ...this.state.controls[controlName],
         value: event.target.value,
         touched: true,
-        valid: checkValidaty( event.target.value, this.state.controls[controlName].validation)
+        valid: checkValidaty(event.target.value, this.state.controls[controlName].validation)
       }
     }
     let formIsValid = true;
     for (let elem in updatedControls) {
-      if ( !updatedControls[elem].valid ) {
+      if (!updatedControls[elem].valid) {
         formIsValid = false;
       }
     }
@@ -97,7 +97,7 @@ class SignIn extends Component {
   }
 
   render() {
-    
+
     const { classes } = this.props;
 
     return (
@@ -112,7 +112,7 @@ class SignIn extends Component {
           </Typography>
           <form className={classes.form} noValidate>
             <TextField
-              onChange={ (event) => this.onInputChangedHandler(event, 'email')}
+              onChange={(event) => this.onInputChangedHandler(event, 'email')}
               value={this.state.controls.email.value}
               error={!this.state.controls.email.valid && this.state.controls.email.touched}
               variant="outlined"
@@ -123,7 +123,7 @@ class SignIn extends Component {
               autoComplete="email"
             />
             <TextField
-              onChange={ (event) => this.onInputChangedHandler(event, 'password')}
+              onChange={(event) => this.onInputChangedHandler(event, 'password')}
               value={this.state.controls.password.value}
               error={!this.state.controls.password.valid && this.state.controls.password.touched}
               variant="outlined"
@@ -146,8 +146,8 @@ class SignIn extends Component {
             </Button>
             <Grid container>
               <Grid item>
-                <p style={{color: '#3f51b5', cursor: 'pointer', textAlign: 'center'}} onClick={this.props.onChangeMod}>
-                Don't have an account? Sign Up
+                <p style={{ color: '#3f51b5', cursor: 'pointer', textAlign: 'center' }} onClick={this.props.onChangeMod}>
+                  Don't have an account? Sign Up
                 </p>
               </Grid>
             </Grid>

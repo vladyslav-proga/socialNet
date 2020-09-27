@@ -10,18 +10,18 @@ class Auth extends Component {
     }
 
     onChangeAuthMod = () => {
-        if ( this.state.authMode === 'sign-up' ) {
-            this.setState({ authMode: 'sign-in'});
+        if (this.state.authMode === 'sign-up') {
+            this.setState({ authMode: 'sign-in' });
         } else {
-            this.setState({ authMode: 'sign-up'});
+            this.setState({ authMode: 'sign-up' });
         }
     }
 
     render() {
         return (
             <div>
-                {this.state.authMode === 'sign-in' && <LogIn onChangeMod={this.onChangeAuthMod}/>}
-                {this.state.authMode === 'sign-up' && <LogUp onChangeMod={this.onChangeAuthMod}/>}
+                {this.state.authMode === 'sign-in' && <LogIn onChangeMod={this.onChangeAuthMod} />}
+                {this.state.authMode === 'sign-up' && <LogUp onChangeMod={this.onChangeAuthMod} />}
             </div>
         );
     }

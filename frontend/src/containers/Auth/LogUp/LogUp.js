@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -51,63 +52,63 @@ function Copyright() {
 class SignUp extends Component {
 
   state = {
-      controls: {
-        firstName : {
-          value: '',
-          validation: {
-            required: true,
-            minLength: 2,
-            maxLength: 15
-          },
-          valid: false,
-          touched: false
+    controls: {
+      firstName: {
+        value: '',
+        validation: {
+          required: true,
+          minLength: 2,
+          maxLength: 15
         },
-        lastName : {
-          value: '',
-          validation: {
-            required: true,
-            minLength: 2,
-            maxLength: 15
-          },
-          valid: false,
-          touched: false
-        },
-        email : {
-          value: '',
-          validation: {
-            required: true,
-            isEmail: true
-          },
-          valid: false,
-          touched: false
-        },
-        password : {
-          value: '',
-          validation: {
-            required: true,
-            minLength: 6,
-            maxLength: 20
-          },
-          valid: false,
-          touched: false
-        },
+        valid: false,
+        touched: false
       },
-      formIsValid: false
+      lastName: {
+        value: '',
+        validation: {
+          required: true,
+          minLength: 2,
+          maxLength: 15
+        },
+        valid: false,
+        touched: false
+      },
+      email: {
+        value: '',
+        validation: {
+          required: true,
+          isEmail: true
+        },
+        valid: false,
+        touched: false
+      },
+      password: {
+        value: '',
+        validation: {
+          required: true,
+          minLength: 6,
+          maxLength: 20
+        },
+        valid: false,
+        touched: false
+      },
+    },
+    formIsValid: false
   };
 
   onInputChangedHandler = (event, controlName) => {
     const updatedControls = {
       ...this.state.controls,
-      [controlName] : {
+      [controlName]: {
         ...this.state.controls[controlName],
         value: event.target.value,
         touched: true,
-        valid: checkValidaty( event.target.value, this.state.controls[controlName].validation)
+        valid: checkValidaty(event.target.value, this.state.controls[controlName].validation)
       }
     }
     let formIsValid = true;
     for (let elem in updatedControls) {
-      if ( !updatedControls[elem].valid ) {
+      if (!updatedControls[elem].valid) {
         formIsValid = false;
       }
     }
@@ -116,6 +117,8 @@ class SignUp extends Component {
 
   onSubmitHandler = (event) => {
     axios.post('http://localhost:5000/auth/signup', {
+      fname: this.state.controls.firstName.value,
+      lname: this.state.controls.lastName.value,
       email: this.state.controls.email.value,
       password: this.state.controls.password.value
     });
@@ -127,93 +130,93 @@ class SignUp extends Component {
 
     return (
       <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign up
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Sign up
         </Typography>
-        <form className={classes.form}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                onChange={ (event) => this.onInputChangedHandler(event, 'firstName')}
-                value={this.state.controls.firstName.value}
-                error={!this.state.controls.firstName.valid && this.state.controls.firstName.touched}
-                helperText={!this.state.controls.firstName.valid && this.state.controls.firstName.touched ? 'Should be from 2 to 15 symbols' : null}
-                autoComplete="fname"
-                variant="outlined"
-                required
-                fullWidth
-                label="First Name"
-              />
+          <form className={classes.form}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  onChange={(event) => this.onInputChangedHandler(event, 'firstName')}
+                  value={this.state.controls.firstName.value}
+                  error={!this.state.controls.firstName.valid && this.state.controls.firstName.touched}
+                  helperText={!this.state.controls.firstName.valid && this.state.controls.firstName.touched ? 'Should be from 2 to 15 symbols' : null}
+                  autoComplete="fname"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  label="First Name"
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  onChange={(event) => this.onInputChangedHandler(event, 'lastName')}
+                  value={this.state.controls.lastName.value}
+                  error={!this.state.controls.lastName.valid && this.state.controls.lastName.touched}
+                  helperText={!this.state.controls.lastName.valid && this.state.controls.lastName.touched ? 'Should be from 2 to 15 symbols' : null}
+                  variant="outlined"
+                  required
+                  fullWidth
+                  label="Last Name"
+                  autoComplete="lname"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  onChange={(event) => this.onInputChangedHandler(event, 'email')}
+                  value={this.state.controls.email.value}
+                  error={!this.state.controls.email.valid && this.state.controls.email.touched}
+                  helperText={!this.state.controls.email.valid && this.state.controls.email.touched ? 'enter correct email' : null}
+                  variant="outlined"
+                  required
+                  fullWidth
+                  label="Email Address"
+                  autoComplete="email"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  onChange={(event) => this.onInputChangedHandler(event, 'password')}
+                  value={this.state.controls.password.value}
+                  error={!this.state.controls.password.valid && this.state.controls.password.touched}
+                  helperText={!this.state.controls.password.valid && this.state.controls.password.touched ? 'password must be from 6 to 20 symbols' : null}
+                  variant="outlined"
+                  required
+                  fullWidth
+                  label="Password"
+                  type="password"
+                  autoComplete="current-password"
+                />
+              </Grid>
             </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                onChange={ (event) => this.onInputChangedHandler(event, 'lastName')}
-                value={this.state.controls.lastName.value}
-                error={!this.state.controls.lastName.valid && this.state.controls.lastName.touched}
-                helperText={!this.state.controls.lastName.valid && this.state.controls.lastName.touched ? 'Should be from 2 to 15 symbols' : null}
-                variant="outlined"
-                required
-                fullWidth
-                label="Last Name"
-                autoComplete="lname"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                onChange={ (event) => this.onInputChangedHandler(event, 'email')}
-                value={this.state.controls.email.value}
-                error={!this.state.controls.email.valid && this.state.controls.email.touched}
-                helperText={!this.state.controls.email.valid && this.state.controls.email.touched ? 'enter correct email' : null}
-                variant="outlined"
-                required
-                fullWidth
-                label="Email Address"
-                autoComplete="email"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                onChange={ (event) => this.onInputChangedHandler(event, 'password')}
-                value={this.state.controls.password.value}
-                error={!this.state.controls.password.valid && this.state.controls.password.touched}
-                helperText={!this.state.controls.password.valid && this.state.controls.password.touched ? 'password must be from 6 to 20 symbols' : null}
-                variant="outlined"
-                required
-                fullWidth
-                label="Password"
-                type="password"
-                autoComplete="current-password"
-              />
-            </Grid>
-          </Grid>
-          <Button
-            disabled={!this.state.formIsValid}
-            onClick={this.onSubmitHandler}
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Sign Up
+            <Button
+              disabled={!this.state.formIsValid}
+              onClick={this.onSubmitHandler}
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Sign Up
           </Button>
-          <Grid container justify="flex-end">
-            <Grid item>
-              <p style={{color: '#3f51b5', cursor: 'pointer', textAlign: 'center'}} onClick={this.props.  onChangeMod}>
-              Already have an account? Sign in
+            <Grid container justify="flex-end">
+              <Grid item>
+                <p style={{ color: '#3f51b5', cursor: 'pointer', textAlign: 'center' }} onClick={this.props.onChangeMod}>
+                  Already have an account? Sign in
               </p>
+              </Grid>
             </Grid>
-          </Grid>
-        </form>
-      </div>
-      <Box mt={5}>
-        <Copyright />
-      </Box>
-    </Container>
+          </form>
+        </div>
+        <Box mt={5}>
+          <Copyright />
+        </Box>
+      </Container>
     );
   }
 };

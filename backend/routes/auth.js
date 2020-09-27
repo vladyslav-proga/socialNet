@@ -7,4 +7,3 @@ router.post('/auth/signup', (req, res, next) => {
         errorMessage: 'something go wrong'
     })
 });
-

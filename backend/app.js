@@ -25,7 +25,7 @@ app.post('/auth/signup', (req, res, next) => {
     ).save();
 })
 
-db.execute(`select * from users`)
+db.execute(`desc users`)
     .then(result => {
         console.log(result[0]);
     })

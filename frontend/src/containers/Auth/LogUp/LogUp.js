@@ -1,5 +1,5 @@
+
 import React, { Component } from 'react';
-import axios from 'axios';
 import { withStyles } from '@material-ui/core/styles';
 
 import Avatar from '@material-ui/core/Avatar';
@@ -14,6 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 
 import { checkValidaty } from '../../../util/checkValidaty';
+import axios from 'axios';
 
 const useStyles = (theme) => ({
   paper: {
@@ -115,13 +116,11 @@ class SignUp extends Component {
   }
 
   onSubmitHandler = (event) => {
-    event.preventDefault();
     axios.post('http://localhost:5000/auth/signup', {
       fname: this.state.controls.firstName.value,
       lname: this.state.controls.lastName.value,
       email: this.state.controls.email.value,
       password: this.state.controls.password.value
-
     });
   }
 

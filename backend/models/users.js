@@ -15,28 +15,28 @@ module.exports = class Users {
   };
   // ----------------------------------------- fetching -----------------------------------
   static fetchAll(limit, offset) {
-    return db.execute(`SELECT * FROM user LIMIT ${limit} OFFSET ${offset}`);
+    return db.execute(`SELECT * FROM users LIMIT ${limit} OFFSET ${offset}`);
   }
 
   // ----------------------------updating---------------------------
 
   static updateById(fname, lname, email, password, id) {
-    return db.execute('UPDATE user SET fname = (?), lname = (?), email = (?), password = (?)  WHERE id = (?)',
+    return db.execute('UPDATE users SET fname = (?), lname = (?), email = (?), password = (?)  WHERE id = (?)',
       [fname, lname, email, password, id]);
   }
 
   // ----------------------------finding -------------------------------------
   static findOneByEmail(email) {
-    return db.execute('SELECT * FROM user WHERE email = (?)', [email]);
+    return db.execute('SELECT * FROM users WHERE email = (?)', [email]);
   }
 
 
   static findById(id) {
-    return db.execute('SELECT * FROM user WHERE id = (?)', [id]);
+    return db.execute('SELECT * FROM users WHERE id = (?)', [id]);
   }
 
   // -----------------------------deleting--------------------------------
   static deleteById(id) {
-    return db.execute('DELETE FROM user WHERE id = (?)', [id]);
+    return db.execute('DELETE FROM users WHERE id = (?)', [id]);
   }
 }

@@ -1,0 +1,16 @@
+CREATE TABLE users
+(
+  id INT NOT NULL
+  AUTO_INCREMENT PRIMARY KEY,
+  fname varchar
+  (255) NOT NULL,
+  lname VARCHAR
+  (255) NOT NULL,
+  email VARCHAR
+  (255) NOT NULL,
+  password VARCHAR
+  (255) NOT NULL,
+  status VARCHAR
+  (255) NOT NULL DEFAULT 'USER',
+  reg_time TIMESTAMP CURRENT_TIMESTAMP,
+)

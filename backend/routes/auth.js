@@ -1,9 +1,11 @@
 const express = require('express');
 const router = express.Router();
+const authController = require('../controllers/auth');
 
-router.post('/auth/signup', (req, res, next) => {
-    res.status(404);
-    res.body({
-        errorMessage: 'something go wrong'
-    })
-});
+// -- http://localhost:5000/auth/signup
+router.post('/signup', authController.signUp);
+
+// -- http://localhost:5000/auth/signin
+router.post('/signin', authController.signIn);
+
+module.exports = router;

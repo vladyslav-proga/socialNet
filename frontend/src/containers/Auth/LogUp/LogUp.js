@@ -121,7 +121,7 @@ class SignUp extends Component {
       lname: this.state.controls.lastName.value,
       email: this.state.controls.email.value,
       password: this.state.controls.password.value
-    });
+    }).then(res => console.log(res));
   }
 
   render() {

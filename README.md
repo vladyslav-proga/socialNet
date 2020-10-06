@@ -5,9 +5,9 @@
 
 [Петрук Петро](https://github.com/17etro)
 
-[Дыников Данил](https://github.com/ddynikov)
+[Диніков Даніїл](https://github.com/ddynikov)
 
-[Склипис Владислав](https://github.com/vladyslav-proga)
+[Скліпісь Владислав](https://github.com/vladyslav-proga)
 
 [Небелиця Микола](https://github.com/HohenzoIIern)
 

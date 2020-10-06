@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { withStyles } from '@material-ui/core/styles';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -11,9 +12,9 @@ import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import { withStyles } from '@material-ui/core/styles';
 
 import { checkValidaty } from '../../../util/checkValidaty';
+import CSSclasses from '../Auth.module.css';
 
 function Copyright() {
   return (
@@ -55,7 +56,8 @@ class SignIn extends Component {
       email: {
         value: '',
         validation: {
-          required: true
+          required: true,
+          isEmail: true
         },
         valid: false,
         touched: false
@@ -69,7 +71,8 @@ class SignIn extends Component {
         touched: false
       }
     },
-    formIsValid: false
+    formIsValid: false,
+    error: ''
   }
 
   onInputChangedHandler = (event, controlName) => {
@@ -96,6 +99,12 @@ class SignIn extends Component {
     axios.post('http://localhost:5000/auth/signin', {
             email: this.state.controls.email.value,
             password: this.state.controls.password.value
+    })
+    .then(res => {
+
+    })
+    .catch(err => {
+      this.setState({error: err.response.data.message});
     });
   }
 
@@ -113,11 +122,13 @@ class SignIn extends Component {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
+          {this.state.error && <p className={CSSclasses.Error}>{this.state.error}</p>}
           <form className={classes.form} noValidate>
             <TextField
               onChange={(event) => this.onInputChangedHandler(event, 'email')}
               value={this.state.controls.email.value}
               error={!this.state.controls.email.valid && this.state.controls.email.touched}
+              helperText={!this.state.controls.email.valid && this.state.controls.email.touched ? 'enter correct email' : null}
               variant="outlined"
               margin="normal"
               required

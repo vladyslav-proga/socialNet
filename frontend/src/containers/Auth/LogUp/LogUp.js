@@ -1,6 +1,7 @@
-
+import axios from 'axios';
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
+import { Redirect } from 'react-router';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -13,8 +14,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 
+import CSSclasses from '../Auth.module.css';
 import { checkValidaty } from '../../../util/checkValidaty';
-import axios from 'axios';
 
 const useStyles = (theme) => ({
   paper: {
@@ -93,7 +94,9 @@ class SignUp extends Component {
         touched: false
       },
     },
-    formIsValid: false
+    formIsValid: false,
+    error: '',
+    redirected: false
   };
 
   onInputChangedHandler = (event, controlName) => {
@@ -121,15 +124,25 @@ class SignUp extends Component {
       lname: this.state.controls.lastName.value,
       email: this.state.controls.email.value,
       password: this.state.controls.password.value
+    })
+    .then(res => {
+      this.setState({
+        redirected: true,
+        error: ''
+      });
+    })
+    .catch(err => {
+      this.setState({error: err.response.data.message});
     });
   }
 
   render() {
-
+    console.log(this.state.redirected);
     const { classes } = this.props;
 
     return (
       <Container component="main" maxWidth="xs">
+        {this.state.redirected && <Redirect to="/" />}
         <CssBaseline />
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
@@ -138,6 +151,7 @@ class SignUp extends Component {
           <Typography component="h1" variant="h5">
             Sign up
         </Typography>
+          {this.state.error && <p className={CSSclasses.Error}>{this.state.error}</p>}
           <form className={classes.form}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>

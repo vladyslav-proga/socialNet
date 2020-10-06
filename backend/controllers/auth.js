@@ -15,5 +15,8 @@ exports.signUp = ( req, res, next) => {
 };
 
 exports.signIn = ( req, res, next) => {
-    console.log('log in start');
+    const candidate = User.findOneByEmail(req.body.email)
+        .then( result => {
+            console.log(result[0]);
+        })
 }

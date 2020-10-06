@@ -93,7 +93,10 @@ class SignIn extends Component {
 
   onSubmitHandler = (event) => {
     event.preventDefault();
-    axios.post('http://localhost:5000/signin')
+    axios.post('http://localhost:5000/auth/signin', {
+            email: this.state.controls.email.value,
+            password: this.state.controls.password.value
+    });
   }
 
   render() {

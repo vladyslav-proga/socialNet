@@ -8,3 +8,5 @@
 [Склипис Владислав](https://github.com/vladyslav-proga)
 
 [Небелиця Микола](https://github.com/HohenzoIIern)
+
+[ТЗ](https://github.com/vladyslav-proga/socialNet/blob/master/requirement.md)

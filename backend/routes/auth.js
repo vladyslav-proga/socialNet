@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+
 const authController = require('../controllers/auth');
 
 // -- http://localhost:5000/auth/signup

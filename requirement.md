@@ -2,7 +2,7 @@
 1. [Вступ](https://github.com/vladyslav-proga/socialNet/blob/master/requirement.md#1-%D0%B2%D1%81%D1%82%D1%83%D0%BF)	
    * [1.1 Мета](https://github.com/vladyslav-proga/socialNet/blob/master/requirement.md#11-%D0%BC%D0%B5%D1%82%D0%B0)
    * [1.2 Контекст ](https://github.com/vladyslav-proga/socialNet/blob/master/requirement.md#12-%D0%BA%D0%BE%D0%BD%D1%82%D0%B5%D0%BA%D1%81%D1%82)	
-2. [Короткий опис проекту](https://github.com/vladyslav-proga/socialNet/blob/master/requirement.md#2-%D0%BA%D0%BE%D1%80%D0%BE%D1%82%D0%BA%D0%B8%D0%B9-%D0%BE%D0%B3%D0%BB%D1%8F%D0%B4-%D0%BF%D1%80%D0%BE%D0%B4%D1%83%D0%BA%D1%82%D1%83)
+2. [Короткий опис проекту](https://github.com/vladyslav-proga/socialNet/blob/master/requirement.md#2-%D0%BA%D0%BE%D1%80%D0%BE%D1%82%D0%BA%D0%B8%D0%B9-%D0%BE%D0%BF%D0%B8%D1%81-%D0%BF%D1%80%D0%BE%D0%B4%D1%83%D0%BA%D1%82%D1%83)
 3. [Використання](https://github.com/vladyslav-proga/socialNet/blob/master/requirement.md#3-%D1%85%D0%B0%D1%80%D0%B0%D0%BA%D1%82%D0%B5%D1%80%D0%B8%D1%81%D1%82%D0%B8%D0%BA%D0%B0-%D0%B4%D1%96%D0%BB%D0%BE%D0%B2%D0%B8%D1%85-%D0%BF%D1%80%D0%BE%D1%86%D0%B5%D1%81%D1%96%D0%B2)	
     * [3.1 Призначення системи](https://github.com/vladyslav-proga/socialNet/blob/master/requirement.md#31-%D0%BF%D1%80%D0%B8%D0%B7%D0%BD%D0%B0%D1%87%D0%B5%D0%BD%D0%BD%D1%8F-%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B8)
    * [3.2 Взаємодія з користувачами](https://github.com/vladyslav-proga/socialNet/blob/master/requirement.md#32-%D0%B2%D0%B7%D0%B0%D1%94%D0%BC%D0%BE%D0%B4%D1%96%D1%8F-%D0%B7-%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D1%83%D0%B2%D0%B0%D1%87%D0%B0%D0%BC%D0%B8)
@@ -13,6 +13,10 @@
    * [4.3 Пошук користувачів](https://github.com/vladyslav-proga/socialNet/blob/master/requirement.md#43-%D0%BF%D0%BE%D1%88%D1%83%D0%BA-%D0%BA%D0%BE%D1%80%D0%B8%D1%81%D1%82%D1%83%D0%B2%D0%B0%D1%87%D1%96%D0%B2)
    * [4.4 Взаємодія зі сторінкою](https://github.com/vladyslav-proga/socialNet/blob/master/requirement.md#44-%D0%B2%D0%B7%D0%B0%D1%94%D0%BC%D0%BE%D0%B4%D1%96%D1%8F-%D0%B7%D1%96-%D1%81%D1%82%D0%BE%D1%80%D1%96%D0%BD%D0%BA%D0%BE%D1%8E)
    * [4.5 Адміністрування](https://github.com/vladyslav-proga/socialNet/blob/master/requirement.md#45-%D0%B0%D0%B4%D0%BC%D1%96%D0%BD%D1%96%D1%81%D1%82%D1%80%D1%83%D0%B2%D0%B0%D0%BD%D0%BD%D1%8F)
+   * [4.6 Взаємодія користувача з системою]()
+     * [4.6.1 Анонімний користувач]()
+     * [4.6.2 Зареєстрований користувач]()
+     * [4.6.3 Адміністратор]()
 5. [Доступність](https://github.com/vladyslav-proga/socialNet/blob/master/requirement.md#5-%D0%B4%D0%BE%D1%81%D1%82%D1%83%D0%BF%D0%BD%D1%96%D1%81%D1%82%D1%8C)
    * [5.1. Локалізація](https://github.com/vladyslav-proga/socialNet/blob/master/requirement.md#51-%D0%BB%D0%BE%D0%BA%D0%B0%D0%BB%D1%96%D0%B7%D0%B0%D1%86%D1%96%D1%8F)
    * [5.2. Інтерфейс](https://github.com/vladyslav-proga/socialNet/blob/master/requirement.md#52-%D1%96%D0%BD%D1%82%D0%B5%D1%80%D1%84%D0%B5%D0%B9%D1%81)
@@ -59,6 +63,26 @@
 
 ## 4.5 Адміністрування
 Будь-який член адміністрування може проглядати всю інформацію профіля користувача але не може маніпулювати нею(при знаходженні інформації забороненої регламентом  адміністрації, буде надіслане попередження на почту користувача). Члени адміністрації мають право видаляти пости незадовільного або забороненого характеру без відома користувача. При регулярному порушені регламенту профіль користувача може бути заблокований або зовсім видалений з ресурсу.
+
+## 4.6 Функціонал користувачів та їх типи
+###### 4.6.1 Анонімний користувач
+Це стандартний користувач не пройшовший реєстрації, він має такі права:
+- Пошук та перегляд у Системі даних у вільному доступі про будь-кого зареєстрованого
+- Подати запит на реєстрацію
+
+###### 4.6.2 Зареєстрований користувач
+Для отримання цього статусу, корситувач повинен пройти реєстрацію у системі та підтвердити єлектронну пошту, він може:
+- Переглядати та змінюавти всю інформацію про себе
+- Опубліковувати пости зі своєї сторінки
+- Ставити "вподобайки" під іншими постами
+- Додавати у друзі інших зареєстрований користувачів
+
+###### 4.6.2 Адміністратор
+Щоб стати адміністратором, користувач повинен бути підвищений до цього рівня іншим адміністратором. Окрім вищесказаного він також може:
+- Видаляти та змінювати пости
+- Зміна та видалення всіх даних користувача(стутус, ім'я, пароль, фотографія тощо)
+- Призначати користувачам статус адміністратора
+
 
 # 5. Доступність.
 ## 5.1. Локалізація

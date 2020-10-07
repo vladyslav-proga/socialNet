@@ -1,5 +1,8 @@
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+
 const User = require('../models/users');
+const Data = require('../util/data');
 
 const salt = bcrypt.genSaltSync(10);
 
@@ -43,13 +46,22 @@ exports.signIn = ( req, res, next) => {
         .then( result => {
 
             const candidate = result[0][0];
+            console.log(candidate);
 
             if ( candidate ) {
                 // Пользователь существует, идет проверка пароля
                 const comparePasswordsResult = bcrypt.compareSync(req.body.password, candidate.password);
                 if ( comparePasswordsResult ) {
                     // Пароли совпали, генерируем jwt token
-
+                    const token = jwt.sign({
+                        email: candidate.email,
+                        userId: candidate.id
+                    }, Data.jwt, { expiresIn: 3600});
+                    res.status(200).json({
+                        token: `Bearer ${token}`,
+                        userId: candidate.id,
+                        expiresIn: 3600
+                    });
                 } else {
                     // Пароли не совпадают, ошибка
                     res.status(401).json({

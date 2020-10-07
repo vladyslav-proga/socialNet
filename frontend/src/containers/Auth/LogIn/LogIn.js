@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import { Redirect } from 'react-router-dom'
 import { withStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -12,9 +13,11 @@ import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+import Spinner from '../../../components/UI/Spinner/Spinner';
 
 import { checkValidaty } from '../../../util/checkValidaty';
 import CSSclasses from '../Auth.module.css';
+import * as actions from '../../../store/actions/index';
 
 function Copyright() {
   return (
@@ -72,7 +75,8 @@ class SignIn extends Component {
       }
     },
     formIsValid: false,
-    error: ''
+    error: '',
+    redirected: false
   }
 
   onInputChangedHandler = (event, controlName) => {
@@ -95,17 +99,22 @@ class SignIn extends Component {
   }
 
   onSubmitHandler = (event) => {
-    event.preventDefault();
-    axios.post('http://localhost:5000/auth/signin', {
-            email: this.state.controls.email.value,
-            password: this.state.controls.password.value
-    })
-    .then(res => {
-
-    })
-    .catch(err => {
-      this.setState({error: err.response.data.message});
-    });
+    const userData = {
+      email: this.state.controls.email.value,
+      password: this.state.controls.password.value
+    };
+    this.props.onLogIn(userData);
+    // event.preventDefault();
+    // axios.post('http://localhost:5000/auth/signin', {
+    //         email: this.state.controls.email.value,
+    //         password: this.state.controls.password.value
+    // })
+    // .then(res => {
+    //   this.setState({redirected: true});
+    // })
+    // .catch(err => {
+    //   this.setState({error: err.response.data.message});
+    // });
   }
 
   render() {
@@ -113,66 +122,92 @@ class SignIn extends Component {
     const { classes } = this.props;
 
     return (
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Sign in
-          </Typography>
-          {this.state.error && <p className={CSSclasses.Error}>{this.state.error}</p>}
-          <form className={classes.form} noValidate>
-            <TextField
-              onChange={(event) => this.onInputChangedHandler(event, 'email')}
-              value={this.state.controls.email.value}
-              error={!this.state.controls.email.valid && this.state.controls.email.touched}
-              helperText={!this.state.controls.email.valid && this.state.controls.email.touched ? 'enter correct email' : null}
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              label="Email Address"
-              autoComplete="email"
-            />
-            <TextField
-              onChange={(event) => this.onInputChangedHandler(event, 'password')}
-              value={this.state.controls.password.value}
-              error={!this.state.controls.password.valid && this.state.controls.password.touched}
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              label="Password"
-              type="password"
-              autoComplete="current-password"
-            />
-            <Button
-              disabled={!this.state.formIsValid}
-              onClick={this.onSubmitHandler}
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-            >
-              Sign In
-            </Button>
-            <Grid container>
-              <Grid item>
-                <p style={{ color: '#3f51b5', cursor: 'pointer', textAlign: 'center' }} onClick={this.props.onChangeMod}>
-                  Don't have an account? Sign Up
-                </p>
-              </Grid>
+      <>
+      {this.props.successLogedIn && <Redirect to="/" />}
+      {this.props.loading ? <Spinner />
+      : <Container component="main" maxWidth="xs">
+      {this.state.redirected && <Redirect to="/" />}
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Avatar className={classes.avatar}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Sign in
+        </Typography>
+
+        {this.props.successLogedUp && !this.props.error && 
+        <p className={CSSclasses.Success}>Successfully loged up!</p>}
+
+        {this.props.error && <p className={CSSclasses.Error}>{this.props.error}</p>}
+        <form className={classes.form} noValidate>
+
+          <TextField
+            onChange={(event) => this.onInputChangedHandler(event, 'email')}
+            value={this.state.controls.email.value}
+            error={!this.state.controls.email.valid && this.state.controls.email.touched}
+            helperText={!this.state.controls.email.valid && this.state.controls.email.touched ? 'enter correct email' : null}
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            label="Email Address"
+            autoComplete="email"
+          />
+          <TextField
+            onChange={(event) => this.onInputChangedHandler(event, 'password')}
+            value={this.state.controls.password.value}
+            error={!this.state.controls.password.valid && this.state.controls.password.touched}
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            label="Password"
+            type="password"
+            autoComplete="current-password"
+          />
+          <Button
+            disabled={!this.state.formIsValid}
+            onClick={this.onSubmitHandler}
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+          >
+            Sign In
+          </Button>
+          <Grid container>
+            <Grid item>
+              <p style={{ color: '#3f51b5', cursor: 'pointer', textAlign: 'center' }} onClick={this.props.switchModeToSignIn}>
+                Don't have an account? Sign Up
+              </p>
             </Grid>
-          </form>
-        </div>
-        <Box mt={8}>
-          <Copyright />
-        </Box>
-      </Container>
+          </Grid>
+        </form>
+      </div>
+      <Box mt={8}>
+        <Copyright />
+      </Box>
+    </Container>}
+      </>
     );
   }
 };
 
-export default withStyles(useStyles)(SignIn);
+const mapStateToProps = state => {
+  return {
+    successLogedUp: state.auth.successLogedUp,
+    error: state.auth.error,
+    loading: state.auth.loading,
+    successLogedIn: state.auth.successLogIn
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    switchModeToSignIn: () => dispatch(actions.changeModToSignUp()),
+    onLogIn: (userData) => dispatch(actions.logIn(userData))
+  }
+}
+
+export default withStyles(useStyles)(connect(mapStateToProps, mapDispatchToProps)(SignIn));

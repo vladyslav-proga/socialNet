@@ -3,10 +3,10 @@ const DATA = require('./data');
 
 
 const pool = mysql.createPool({
-    host: DATA.host,
-    user: DATA.user,
-    database: DATA.database,
-    password: DATA.password
+    host: DATA.data.host,
+    user: DATA.data.user,
+    database: DATA.data.database,
+    password: DATA.data.password
 });
 
 module.exports = pool.promise();

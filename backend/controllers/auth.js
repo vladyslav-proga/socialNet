@@ -49,6 +49,7 @@ exports.signIn = ( req, res, next) => {
             console.log(candidate);
 
             if ( candidate ) {
+                console.log(candidate);
                 // Пользователь существует, идет проверка пароля
                 const comparePasswordsResult = bcrypt.compareSync(req.body.password, candidate.password);
                 if ( comparePasswordsResult ) {
@@ -60,6 +61,7 @@ exports.signIn = ( req, res, next) => {
                     res.status(200).json({
                         token: `Bearer ${token}`,
                         userId: candidate.id,
+                        userName: candidate.fname + " " + candidate.lname,
                         expiresIn: 3600
                     });
                 } else {

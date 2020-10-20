@@ -4,6 +4,7 @@ import classes from './NavigationItems.module.css';
 import { connect } from 'react-redux';
 
 import NavigationItem from './NavigationItem/NavigationItem';
+import AvatarItem from './AvatarItem/AvatarItem';
 
 
 const navigationItems = ( props ) => {
@@ -18,7 +19,7 @@ const navigationItems = ( props ) => {
         content = (
         <>
         <NavigationItem link="/"> Main </NavigationItem>
-        <NavigationItem link="/profile"> Your profile </NavigationItem>
+        <AvatarItem link="/profile" userName="Petro Petruk"></AvatarItem>
         <NavigationItem link="/logout"> Logout </NavigationItem>
         </>
         );

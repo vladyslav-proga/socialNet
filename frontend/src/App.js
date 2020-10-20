@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -7,32 +7,43 @@ import Main from './containers/Main/Main';
 import Auth from './containers/Auth/Auth';
 import Logout from './containers/Auth/Logout/Logout';
 
-const App = (props) => {
+import * as actions from './store/actions/index';
 
-  let routes = (
-    <Switch>
-      <Route path="/" exact component={ Main }/>
-      <Route path="/auth" exact component={ Auth }/>
-      <Redirect to="/" />
-    </Switch>
-  );
-  if (props.isAuthenticated) {
-    routes = (
-      <Switch>
-      <Route path="/" exact component={ Main }/>
-      <Route path="/logout"  component={Logout} />
-      <Redirect to="/" />
-    </Switch>
-    );
+class App extends Component {
+
+  componentDidMount() {
+    this.props.autoSignIn();
   }
 
-  return (
-    <div>
-      <Layout>
-        { routes }
-      </Layout>
-    </div>
-  );
+  render() {
+
+    let routes = (
+      <Switch>
+        <Route path="/" exact component={ Main }/>
+        <Route path="/auth" exact component={ Auth }/>
+        <Redirect to="/" />
+      </Switch>
+    );
+    if (this.props.isAuthenticated) {
+      routes = (
+        <Switch>
+        <Route path="/" exact component={ Main } />
+        <Route path="/profile" exact component={ Main } />
+        <Route path="/logout"  component={Logout} />
+        <Redirect to="/" />
+      </Switch>
+      );
+    }
+
+    return (
+      <div>
+        <Layout>
+          { routes }
+        </Layout>
+      </div>
+    );
+
+  }
 }
 
 const mapStateToProps = state => {
@@ -41,4 +52,10 @@ const mapStateToProps = state => {
   }
 };
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    autoSignIn: (token, userId) => dispatch(actions.authCheckState())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

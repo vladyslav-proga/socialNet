@@ -3,10 +3,11 @@ import * as actionTypes from '../actions/actionTypes';
 const initialState = {
     token: null,
     userId: null,
+    userName: null,
     successLogedUp: false,
     loading: false,
     error: null,
-    mod: 'sign-up',
+    mod: 'sign-in',
     successLogIn: false
 };
 
@@ -39,6 +40,7 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 token: action.token,
                 userId: action.userId,
+                userName: action.userName,
                 error: null,
                 loading: false,
                 successLogIn: true,
@@ -61,6 +63,13 @@ const reducer = (state = initialState, action) => {
                 userId: null,
                 successLogedUp: false,
                 successLogIn: false
+            }
+        case actionTypes.RESET_USERDATA:
+            return {
+                ...state,
+                token: action.token,
+                userId: action.userId,
+                userName: action.userName
             }
         default:
             return state;

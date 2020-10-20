@@ -3,5 +3,6 @@ export {
     logIn,
     changeModToSignIn,
     changeModToSignUp,
-    logout
+    logout,
+    authCheckState
 } from './auth';

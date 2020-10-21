@@ -25,18 +25,18 @@ export const logUpSuccess = () => {
 };
 
 // Успешный вход
-export const logInSuccess = ( token, userId ) => {
+export const logInSuccess = ( socialData ) => {
     return {
         type: actionTypes.LOG_IN_SUCCESS,
-        token: token,
-        userId: userId
+        token: socialData.token,
+        userId: socialData.userId,
+        fName: socialData.fName,
+        lName: socialData.lName
     }
 };
 
 export const logout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('expirationDate');
-    localStorage.removeItem('userId');
+    localStorage.removeItem('social-data');
     return {
         type: actionTypes.AUTH_LOGOUT
     }
@@ -75,6 +75,14 @@ export const logUp = (userData) => {
     }
 };
 
+export const authCheckTimeout = (expirationTime) => {
+    return dispatch => {
+        setTimeout(() => {
+            dispatch(logout())
+        }, expirationTime * 1000)
+    }
+};
+
 export const logIn = (userData) => {
     return dispatch => {
         dispatch(authStart());
@@ -85,10 +93,18 @@ export const logIn = (userData) => {
         })
         .then(response => {
             const expirationTime = new Date(new Date().getTime() + response.data.expiresIn * 1000);
-                localStorage.setItem('token', response.data.token);
-                localStorage.setItem('expirationDate', expirationTime);
-                localStorage.setItem('userId', response.data.userId);
-                dispatch(logInSuccess(response.data.token, response.data.userId));
+
+                const socialData = {
+                    token: response.data.token,
+                    expirationDate: expirationTime,
+                    userId: response.data.userId,
+                    fName: response.data.fName,
+                    lName: response.data.lName
+                };
+                localStorage.setItem('social-data', JSON.stringify(socialData));
+                
+                dispatch(logInSuccess(socialData));
+                dispatch(authCheckTimeout(response.data.expiresIn));
         })
         .catch(error => {
             dispatch(authFail(error.response.data.message));
@@ -96,4 +112,31 @@ export const logIn = (userData) => {
     }
 }
 
+export const resetUserData = (socialData) => {
+    return {
+        type: actionTypes.RESET_USERDATA,
+        token: socialData.token,
+        userId: socialData.userId,
+        fName: socialData.fName,
+        lName: socialData.lName
+    }
+}
+
+export const authCheckState = () => {
+    return dispatch => {
+        const socialData = JSON.parse(localStorage.getItem('social-data')) || {};
+        const token = socialData.token;
+        if (!token) {
+            dispatch(logout());
+        } else {
+            const experationDate = new Date(socialData.expirationDate);
+            if (experationDate <= new Date()) {
+                dispatch(logout());
+            } else {
+                dispatch(resetUserData(socialData));
+                dispatch(authCheckTimeout((experationDate.getTime() - new Date().getTime()) / 1000));
+            }
+        }
+    };
+};
 

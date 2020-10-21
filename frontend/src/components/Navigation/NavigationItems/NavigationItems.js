@@ -4,6 +4,7 @@ import classes from './NavigationItems.module.css';
 import { connect } from 'react-redux';
 
 import NavigationItem from './NavigationItem/NavigationItem';
+import AvatarItem from './AvatarItem/AvatarItem';
 
 
 const navigationItems = ( props ) => {
@@ -18,7 +19,10 @@ const navigationItems = ( props ) => {
         content = (
         <>
         <NavigationItem link="/"> Main </NavigationItem>
-        <NavigationItem link="/profile"> Your profile </NavigationItem>
+        <AvatarItem 
+            link="/profile" 
+            fName={props.fName}
+            lName={props.lName}></AvatarItem>
         <NavigationItem link="/logout"> Logout </NavigationItem>
         </>
         );
@@ -32,7 +36,9 @@ const navigationItems = ( props ) => {
 
 const mapStateToProps = state => {
     return {
-        isAuthenticated: state.auth.token !== null
+        isAuthenticated: state.auth.token !== null,
+        fName: state.auth.fName,
+        lName: state.auth.lName
     }
 }
 export default connect(mapStateToProps)(navigationItems);

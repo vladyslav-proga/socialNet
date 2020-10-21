@@ -61,7 +61,8 @@ exports.signIn = ( req, res, next) => {
                     res.status(200).json({
                         token: `Bearer ${token}`,
                         userId: candidate.id,
-                        userName: candidate.fname + " " + candidate.lname,
+                        fName: candidate.fname,
+                        lName: candidate.lname,
                         expiresIn: 3600
                     });
                 } else {

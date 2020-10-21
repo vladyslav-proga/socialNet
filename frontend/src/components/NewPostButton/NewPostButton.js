@@ -2,8 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button } from '@material-ui/core';
 
-import classesCSS from './NewPostButton.module.css';
-import Avatar from '../../assets/avatars/default.png';
+import classes from './NewPostButton.module.css';
 
 const useStyles = makeStyles({
     newButton: {
@@ -20,12 +19,16 @@ const useStyles = makeStyles({
 
 const NewPostButton = (props) => {
 
-    const classes = useStyles();
+    const materialClasses = useStyles();
+
+    const initials = [ props.fName[0], props.lName[0] ].join("");
 
     return (
-        <div className={classesCSS.NewPostBlock}>
-            <img src={Avatar} className={classesCSS.Avatar} alt='Avatar'/>
-            <Button variant="contained" color="primary" className={classes.newButton}>
+        <div className={classes.NewPostBlock}>
+            <div className={classes.Avatar}>
+                {initials}
+            </div>
+            <Button variant="contained" color="primary" className={materialClasses.newButton}>
                 Share you news...
             </Button>
         </div>

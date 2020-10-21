@@ -23,6 +23,12 @@ const AvatarItem = ( props ) => {
 
     const classes = useStyles();
 
+    const initials = [ props.fName[0], props.lName[0] ].join("");
+    let userName = props.fName + " " + props.lName;
+    if ( userName.length >= 10 ) {
+        userName = props.fName + " " + props.lName[0] + ".";
+    }
+
     return (
         <li className={classesCSS.NavigationItem}>
         <NavLink
@@ -31,9 +37,9 @@ const AvatarItem = ( props ) => {
         activeClassName={classesCSS.active}>
             <div className={classes.div}>
             <Avatar aria-label="recipe" className={classes.avatar}>
-                PP
+                {initials}
             </Avatar>
-            {props.userName}
+                {userName}
             </div>
         </NavLink>
     </li>

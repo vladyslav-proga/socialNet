@@ -25,20 +25,18 @@ export const logUpSuccess = () => {
 };
 
 // Успешный вход
-export const logInSuccess = ( token, userId, userName ) => {
+export const logInSuccess = ( socialData ) => {
     return {
         type: actionTypes.LOG_IN_SUCCESS,
-        token: token,
-        userId: userId,
-        userName: userName
+        token: socialData.token,
+        userId: socialData.userId,
+        fName: socialData.fName,
+        lName: socialData.lName
     }
 };
 
 export const logout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('expirationDate');
-    localStorage.removeItem('userId');
-    localStorage.removeItem('userName');
+    localStorage.removeItem('social-data');
     return {
         type: actionTypes.AUTH_LOGOUT
     }
@@ -95,11 +93,17 @@ export const logIn = (userData) => {
         })
         .then(response => {
             const expirationTime = new Date(new Date().getTime() + response.data.expiresIn * 1000);
-                localStorage.setItem('token', response.data.token);
-                localStorage.setItem('expirationDate', expirationTime);
-                localStorage.setItem('userId', response.data.userId);
-                localStorage.setItem('userName', response.data.userName);
-                dispatch(logInSuccess(response.data.token, response.data.userId, response.data.userName));
+
+                const socialData = {
+                    token: response.data.token,
+                    expirationDate: expirationTime,
+                    userId: response.data.userId,
+                    fName: response.data.fName,
+                    lName: response.data.lName
+                };
+                localStorage.setItem('social-data', JSON.stringify(socialData));
+                
+                dispatch(logInSuccess(socialData));
                 dispatch(authCheckTimeout(response.data.expiresIn));
         })
         .catch(error => {
@@ -108,28 +112,28 @@ export const logIn = (userData) => {
     }
 }
 
-export const resetUserData = (token, userId, userName) => {
+export const resetUserData = (socialData) => {
     return {
         type: actionTypes.RESET_USERDATA,
-        token: token,
-        userId: userId,
-        userName: userName
+        token: socialData.token,
+        userId: socialData.userId,
+        fName: socialData.fName,
+        lName: socialData.lName
     }
 }
 
 export const authCheckState = () => {
     return dispatch => {
-        const token = localStorage.getItem('token');
+        const socialData = JSON.parse(localStorage.getItem('social-data')) || {};
+        const token = socialData.token;
         if (!token) {
             dispatch(logout());
         } else {
-            const experationDate = new Date(localStorage.getItem('expirationDate'));
+            const experationDate = new Date(socialData.expirationDate);
             if (experationDate <= new Date()) {
                 dispatch(logout());
             } else {
-                const userId = localStorage.getItem('userId');
-                const userName = localStorage.getItem('userName');
-                dispatch(resetUserData(token, userId, userName));
+                dispatch(resetUserData(socialData));
                 dispatch(authCheckTimeout((experationDate.getTime() - new Date().getTime()) / 1000));
             }
         }

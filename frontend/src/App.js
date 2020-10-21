@@ -6,6 +6,7 @@ import Layout from './hoc/Layout/Layout';
 import Main from './containers/Main/Main';
 import Auth from './containers/Auth/Auth';
 import Logout from './containers/Auth/Logout/Logout';
+import Profile from './containers/Profile/Profile';
 
 import * as actions from './store/actions/index';
 
@@ -28,7 +29,7 @@ class App extends Component {
       routes = (
         <Switch>
         <Route path="/" exact component={ Main } />
-        <Route path="/profile" exact component={ Main } />
+        <Route path="/profile" exact component={ Profile } />
         <Route path="/logout"  component={Logout} />
         <Redirect to="/" />
       </Switch>

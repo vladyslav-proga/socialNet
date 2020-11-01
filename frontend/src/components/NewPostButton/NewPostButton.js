@@ -28,7 +28,11 @@ const NewPostButton = (props) => {
             <div className={classes.Avatar}>
                 {initials}
             </div>
-            <Button variant="contained" color="primary" className={materialClasses.newButton}>
+            <Button 
+            variant="contained" 
+            color="primary" 
+            className={materialClasses.newButton}
+            onClick={props.onClick} >
                 Share you news...
             </Button>
         </div>

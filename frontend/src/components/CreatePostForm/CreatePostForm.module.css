@@ -1,0 +1,94 @@
+.wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+.upload_container {
+    flex: 0 1 150px;
+    align-self: center;
+}
+
+.upload_container__upload_area {
+    background-color: #dff1f6;
+    width: 200px;
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+}
+
+.border_container {
+    width: 190px;
+    height: 190px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.label {
+    font-weight: bold;
+}
+
+.label:hover {
+    cursor: pointer;
+	text-decoration: underline;
+}
+
+.border_container input[type=file] {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	position: absolute;
+	z-index: -10;
+}
+
+.post_data_area {
+    flex: 0 1 70%;
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.text_area {
+    height: 180px;
+    padding: 5px;
+    width: calc(100% - 20px);
+    resize: none;
+    min-width: 200px;
+}
+
+.progressBar {
+    margin-top: 3px;
+    padding: 0 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.formButtons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media ( max-width: 700px ) {
+    .wrapper {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .upload_container {
+        flex: 0 1 50%;
+        align-self: center;
+        padding-bottom: 5px;
+        margin-bottom: 5px;
+        border-bottom: 2px solid #b0b0b0;
+    }
+    
+}

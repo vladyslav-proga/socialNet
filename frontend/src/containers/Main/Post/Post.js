@@ -28,10 +28,10 @@ const useStyles = (theme) => ({
 
 class Post extends Component {
 
-    state = {
-        showMore: false,
-        extended: false,
-    }
+        state = {
+            showMore: false,
+            extended: false,
+        }
 
     onClickShowMoreButton = () => {
         this.setState((prevState) => ({
@@ -47,8 +47,11 @@ class Post extends Component {
 
     render() {
 
+        const style = this.props.style;
+
         const materialClasses = this.props.classes;
 
+        // устанавливаем цсс для иконок
         let extendClasses = [materialClasses.expand];
         if (this.state.extended) {
           extendClasses = [materialClasses.expandOpen, materialClasses.expand];
@@ -59,9 +62,19 @@ class Post extends Component {
             showMoreButtonClasses = [classes.accordion, classes.open]
         }
 
+        const postContent = this.props.postContent;
+        let postContextTextLength = 0;
+        if ( postContent ) {
+            for (let i = 0; i < postContent.length; i++ ) {
+                postContextTextLength += postContent[i].length;
+            }
+        }
 
         return (
-            <div className={classes.post}>
+            <>
+            
+            {!this.props.hidden && 
+            (<div className={classes.post} style={style}>
 
                 <div className={classes.post__header}>
                     <div>
@@ -80,7 +93,7 @@ class Post extends Component {
                     <div className={classes["post__three-dots"]}>
                         <IconButton 
                         aria-label="settings"
-                        onClick={this.onClickShowMoreButton}>
+                        onClick={this.props.example ? null : this.onClickShowMoreButton}>
                             <MoreVertIcon/>
                         </IconButton>
                         <div className={showMoreButtonClasses.join(" ")}>
@@ -93,9 +106,19 @@ class Post extends Component {
                 </div>
 
                 <div className={classes.post__content}>
-                        <img src="https://i.pinimg.com/originals/11/f0/92/11f0921a299f3efa622ccf06609986e0.jpg" alt='postImage' className={classes.post__media}/>
-                        <p className={classes.post__subtitle}>Lorem ipsum 
-                        dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        {this.props.media && 
+                        (
+                            <img src={this.props.media} alt='postImage' className={classes.post__media}/>
+                        )
+                        }
+                        <div className={classes.post__subtitle}>
+                            {postContent && postContent.map((el, index) => {
+                                if ( index < 4 ) {
+                                    return <p className={classes.paragraph}>{el}</p>
+                                }
+                                return null;
+                            })}
+                        </div>
                 </div>
 
                 <div className={classes.post__footer}>
@@ -107,18 +130,24 @@ class Post extends Component {
                     <CommentIcon />
                 </IconButton>
                 </div>
-                <IconButton 
-                style={{marginRight: '10px'}} 
-                onClick={this.onClickExtendButton}
-                className={extendClasses.join(" ")}
-                >
-                    <ExpandMoreIcon />
-                </IconButton>
+                {postContent && (postContent.length > 4 || postContextTextLength > 224) && 
+                (
+                    <IconButton 
+                        style={{marginRight: '10px'}} 
+                        onClick={this.onClickExtendButton}
+                        className={extendClasses.join(" ")}
+                    >
+                        <ExpandMoreIcon />
+                    </IconButton>
+                )}
                 </div>
                 <Collapse in={this.state.extended} timeout="auto" unmountOnExit>
-                    <p className={classes['post__extended-text']}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <div className={classes['post__extended-text']}>
+                        {postContent && postContent.map(el => <p className={classes.paragraph}>{el}</p>)}
+                    </div>
                 </Collapse>
-            </div>
+            </div>)}
+            </>
         );
     }
 };

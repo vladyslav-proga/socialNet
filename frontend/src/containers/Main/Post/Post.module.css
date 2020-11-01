@@ -113,6 +113,8 @@
     line-height: 1.43;
     letter-spacing: 0.01071em;
     color: rgba(0, 0, 0, 0.54);
+    max-height: 90px;
+    overflow-y: hidden;
 }
 
 
@@ -123,9 +125,13 @@
 }
 
 .post__extended-text {
-    margin: 10px 30px 20px 30px;
+    padding: 10px 20px;
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.43;
     letter-spacing: 0.01071em;
+}
+
+.paragraph {
+    overflow-wrap: break-word;
 }

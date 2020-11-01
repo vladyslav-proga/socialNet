@@ -14,7 +14,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 15px 0px 15px 15px;
+    margin: 15px 0px 15px 0px;
     font-size: 1.25rem;
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
     color: #fff;

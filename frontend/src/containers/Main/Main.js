@@ -3,10 +3,23 @@ import { connect } from 'react-redux';
 
 import Post from './Post/Post';
 import NewPostButton from '../../components/NewPostButton/NewPostButton';
+import CreatePostForm from '../../components/CreatePostForm/CreatePostForm';
+import Modal from '../../components/UI/Modal/Modal';
+
 import classes from './Main.module.css';
 
 
 class Main extends Component {
+
+    state = {
+      formOpened: false,
+    }
+
+    onChangeFormOpenedState = () => {
+      this.setState((prevState) => ({
+        formIsOpen: !prevState.formIsOpen
+      }));
+    }
 
     render() {
         return (
@@ -14,17 +27,23 @@ class Main extends Component {
               {this.props.isAuthenticated && 
               <NewPostButton 
               fName={this.props.fName}
-              lName={this.props.lName} />}
+              lName={this.props.lName}
+              onClick={this.onChangeFormOpenedState} />}
               <div className={classes.posts}>
                 <Post 
                 initials="PP"
                 author="Саша Петрук"
-                date="October 16, 2020"/> 
-                <Post 
-                initials="PP"
-                author="Petruk Petro"
-                date="October 16, 2020"/> 
+                date="October 16, 2020"
+                media="https://images2.alphacoders.com/902/902946.png"
+                postContent={['hkvxkjknfbnjjckvb', 'ajkjvnkbxnkvnjkxnknvbbheibxvbkjxkj', 'bjbvjbjkbkjabvjkbkdbvkjv', 'khbjhbdfhjvbdbfvbbjfvbj', 'nvbfjvknjkfvbxbf']}/> 
               </div>
+
+                <Modal
+                  show={this.state.formIsOpen}
+                  modalClosed={this.onChangeFormOpenedState}
+                  >
+                    <CreatePostForm />
+                </Modal>
             </>
         );
     }

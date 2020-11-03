@@ -104,6 +104,7 @@ class SignIn extends Component {
       password: this.state.controls.password.value
     };
     this.props.onLogIn(userData);
+    
     // event.preventDefault();
     // axios.post('http://localhost:5000/auth/signin', {
     //         email: this.state.controls.email.value,

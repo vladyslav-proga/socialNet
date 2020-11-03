@@ -9,6 +9,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import Post from '../../containers/Main/Post/Post';
 
 import classes from './CreatePostForm.module.css';
+import axios from 'axios';
 
 const useStyles = (theme) => ({
     newButton: {
@@ -31,7 +32,8 @@ class CreatePostForm extends React.Component {
         imagePreviewUrl: null,
         postContent: '',
         limitTextPercent: 0,
-        postExampleHidden: true
+        postExampleHidden: true,
+        splittedPostContent: []
     }
 
     onSelectImageHandler = ( event ) => {
@@ -50,10 +52,12 @@ class CreatePostForm extends React.Component {
     onChangeTextAreaHandler = (event) => {
 
         const newLimitTextPercent = (event.target.value.length / 2000 ) * 100;
+        const updatedSplittedPostContent = event.target.value.split('\n');
         if (newLimitTextPercent <= 100) {
             this.setState({
                 postContent: event.target.value,
-                limitTextPercent: newLimitTextPercent
+                limitTextPercent: newLimitTextPercent,
+                splittedPostContent: updatedSplittedPostContent
              });
         }
     }
@@ -67,29 +71,16 @@ class CreatePostForm extends React.Component {
 
     onSubmitFormHandler = (event) => {
         event.preventDefault();
+
+        axios.post('http://localhost:5000/post/create-new', {
+                file: this.state.file,
+                postContent: this.state.splittedPostContent
+        });
     }
 
     render() {
 
         const materialClasses = this.props.classes;
-
-        let splittedPostContent;
-        if ( this.state.postContent ) {
-            splittedPostContent = document.getElementById("textarea").innerHTML.split('\n');
-
-            // let maxLineCount = 50;
-            // let inBetweenArray;
-
-            // for (let i = 0 ; i < splittedPostContent.length; i++ ) {
-            //     inBetweenArray = [];
-            //     if ( splittedPostContent[i].length > maxLineCount ) {
-            //         for (let i = 0; i < splittedPostContent[i].length; i += maxLineCount ) {
-            //             inBetweenArray.push(splittedPostContent[i].slice(i, i + maxLineCount));
-            //         }
-            //         splittedPostContent.splice(i, 1, inBetweenArray);
-            //     }
-            // }
-        }
 
         return (
             <form>
@@ -117,8 +108,8 @@ class CreatePostForm extends React.Component {
                         <textarea
                         id="textarea" 
                         className={classes.text_area} 
-                        onChange={(e) => this.onChangeTextAreaHandler(e)}
-                        value={this.state.postContent}/>
+                        value={this.state.postContent}
+                        onChange={(e) => this.onChangeTextAreaHandler(e)}/>
                             <div 
                                 className={classes.progressBar}
                                 style={{ opacity: this.state.postContent ? '1' : '0' }}>
@@ -144,7 +135,7 @@ class CreatePostForm extends React.Component {
                     example 
                     media={this.state.imagePreviewUrl}
                     style={{ marginTop: '20px' }}
-                    postContent={splittedPostContent}/>
+                    postContent={this.state.splittedPostContent}/>
                     <Button 
                     variant="contained" 
                     color="primary"

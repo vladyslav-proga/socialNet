@@ -71,11 +71,10 @@ class CreatePostForm extends React.Component {
 
     onSubmitFormHandler = (event) => {
         event.preventDefault();
-
-        axios.post('http://localhost:5000/post/create-new', {
-                file: this.state.file,
-                postContent: this.state.splittedPostContent
-        });
+        let formData = new FormData();
+            formData.append('postContent', this.state.splittedPostContent);
+            formData.append('file', this.state.file)
+        axios.post('http://localhost:5000/post/create-new', formData);
     }
 
     render() {

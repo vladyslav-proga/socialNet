@@ -1,0 +1,8 @@
+export const AUTH_START = "AUTH_START";
+export const AUTH_FAIL = "AUTH_FAIL";
+export const LOG_UP_SUCCESS = "LOG_UP_SUCCESS";
+export const LOG_IN_SUCCESS = "LOG_IN_SUCCESS";
+export const SWITCH_MOD_TO_SIGN_IN = 'SWITCH_MOD_TO_SIGN_IN';
+export const SWITCH_MOD_TO_SIGN_UP = 'SWITCH_MOD_TO_SIGN_UP';
+export const AUTH_LOGOUT = 'AUTH_LOGOUT';
+export const RESET_USERDATA = 'RESET_USERDATA';

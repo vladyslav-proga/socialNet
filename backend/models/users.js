@@ -3,11 +3,11 @@
 const db = require('../util/database');
 
 module.exports = class Users {
-  constructor(fname, lname, email, password) {
-    this.fname = fname;
-    this.lname = lname;
-    this.email = email;
-    this.password = password;
+  constructor(data) {
+    this.fname = data.fname;
+    this.lname = data.lname;
+    this.email = data.email;
+    this.password = data.password;
   }
   save() {
     return db.execute('INSERT INTO users (fname, lname, email, password) VALUES (?,?,?,?)',

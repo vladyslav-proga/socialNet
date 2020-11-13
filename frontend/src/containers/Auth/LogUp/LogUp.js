@@ -207,7 +207,7 @@ class SignUp extends Component {
             <Grid container justify="flex-end">
               <Grid item>
                 <p style={{ color: '#3f51b5', cursor: 'pointer', textAlign: 'center' }} onClick={this.props.onChangeMod}>
-                  Already have an account? Sign in
+                 Already have an account? Sign in
               </p>
               </Grid>
             </Grid>

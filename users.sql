@@ -7,6 +7,19 @@ CREATE TABLE users
   password VARCHAR(255) NOT NULL,
   status VARCHAR(255) NOT NULL DEFAULT 'USER',
   reg_time DATETIME DEFAULT CURRENT_TIMESTAMP
+<<<<<<< HEAD
+=======
+);
+
+CREATE TABLE posts
+(
+  post_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  user_id INT NOT NULL,
+  media VARCHAR(1000),
+  post_content VARCHAR(2100),
+  date DATETIME DEFAULT CURRENT_TIMESTAMP
+  -- доделать лайки и посты
+>>>>>>> d7bcb70469806f27e37db336b6cbbb0b6a5cea70
 );
 
 CREATE TABLE posts

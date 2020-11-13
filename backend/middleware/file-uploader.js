@@ -3,17 +3,19 @@ const path = require('path');
 const aws = require('aws-sdk');
 const multerS3 = require('multer-s3');
 
+const { amazonKeys } = require('../util/data');
+
 const s3 = new aws.S3({
-    accessKeyId: 'AKIAZEV2VUWLW3BXFOU5',
-    secretAccessKey: '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',
-    
+    accessKeyId: amazonKeys.accesKeyId,
+    secretAccessKey: amazonKeys.secretAccessKey, 
 });
 
 
 const Mime_Type_Map = {
     'image/png': 'png',
     'image/jpg': 'jpg',
-    'image/jpeg': 'jpeg'
+    'image/jpeg': 'jpeg',
+    'image/gif': 'gif',
 }
 
 exports.fileUploader = multer({

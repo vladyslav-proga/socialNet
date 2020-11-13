@@ -46,10 +46,8 @@ exports.signIn = ( req, res, next) => {
         .then( result => {
 
             const candidate = result[0][0];
-            console.log(candidate);
 
             if ( candidate ) {
-                console.log(candidate);
                 // Пользователь существует, идет проверка пароля
                 const comparePasswordsResult = bcrypt.compareSync(req.body.password, candidate.password);
                 if ( comparePasswordsResult ) {

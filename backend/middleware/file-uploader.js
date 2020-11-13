@@ -7,15 +7,15 @@ const { amazonKeys } = require('../util/data');
 
 const s3 = new aws.S3({
     accessKeyId: amazonKeys.accesKeyId,
-    secretAccessKey: amazonKeys.secretAccessKey,
-    
+    secretAccessKey: amazonKeys.secretAccessKey, 
 });
 
 
 const Mime_Type_Map = {
     'image/png': 'png',
     'image/jpg': 'jpg',
-    'image/jpeg': 'jpeg'
+    'image/jpeg': 'jpeg',
+    'image/gif': 'gif',
 }
 
 exports.fileUploader = multer({

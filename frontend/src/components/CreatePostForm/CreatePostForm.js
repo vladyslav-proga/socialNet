@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import { Button, Paper } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
@@ -72,9 +73,21 @@ class CreatePostForm extends React.Component {
     onSubmitFormHandler = (event) => {
         event.preventDefault();
         let formData = new FormData();
-            formData.append('postContent', this.state.splittedPostContent);
-            formData.append('file', this.state.file)
-        axios.post('http://localhost:5000/post/create-new', formData);
+            formData.append('postContent', JSON.stringify(this.state.splittedPostContent));
+            formData.append('file', this.state.file);
+            formData.append('userId', this.props.userId);
+            try {
+                axios.post('http://localhost:5000/post/create-new', formData);
+            } finally {
+                this.props.history.push('/reload');
+            }
+    }
+
+    deleteImageHandler = () => {
+        this.setState({
+            file: null,
+            imagePreviewUrl: null
+        });
     }
 
     render() {
@@ -130,6 +143,16 @@ class CreatePostForm extends React.Component {
                 </div>
                 </Paper>
                 <div className={classes.formButtons}>
+                    <Button 
+                        variant="contained" 
+                        color="primary"
+                        style={{ 
+                            display: this.state.file ? 'block' : 'none',
+                            marginTop: '25px' }}
+                        onClick={this.deleteImageHandler}
+                        className={materialClasses.newButton}>
+                            Delete Picture
+                    </Button>
                     <Post 
                     example 
                     media={this.state.imagePreviewUrl}
@@ -138,6 +161,7 @@ class CreatePostForm extends React.Component {
                     <Button 
                     variant="contained" 
                     color="primary"
+                    disabled={ !this.state.imagePreviewUrl && !this.state.postContent }
                     className={materialClasses.newButton}
                     onClick={(e) => this.onSubmitFormHandler(e)}>
                         Create Post
@@ -150,4 +174,10 @@ class CreatePostForm extends React.Component {
     }
 };
 
-export default withStyles(useStyles)(CreatePostForm);
+const mapStateToProps = (state) => {
+    return {
+        userId: state.auth.userId
+    };
+}
+
+export default connect(mapStateToProps)(withStyles(useStyles)(CreatePostForm));

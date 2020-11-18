@@ -1,1 +1,1 @@
-![](https://github.com/vladyslav-proga/socialNet/blob/Danil-Dynikov-IP-95/documentation/ENTITES-model/e-model.svg)
+![]https://github.com/vladyslav-proga/socialNet/blob/master/documentation/ENTITES-model/Er-model.svg

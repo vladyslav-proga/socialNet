@@ -141,7 +141,7 @@ class Post extends Component {
                 </IconButton>
                 <div style={{flex: '1 1 auto'}}>
                 <IconButton aria-label="share">
-                    <CommentIcon />
+                    <CommentIcon /> 
                 </IconButton>
                 </div>
                 {postContent && (postContent.length > 4 || postContextTextLength > 224) && 

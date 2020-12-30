@@ -7,8 +7,21 @@ exports.save = (postData) => {
     const postContent = postData.postContent;
 
     return db.execute('INSERT INTO posts ( user_id, media, post_content ) VALUES (?,?,?)',
-    [ userId, media, postContent ]);
+        [userId, media, postContent]);
 };
+
+// exports.edit = (postData) => {
+
+// };
+
+exports.delete = (postData) => {
+    const postId = postData.postId;
+
+    return db.execute('DELETE FROM posts WHERE id = (post_id) VALUES (?)',
+    [postId]);
+};
+
+
 
 // fetch all posts
 exports.fetchAll = () => {

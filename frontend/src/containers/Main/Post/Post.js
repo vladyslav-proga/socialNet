@@ -83,10 +83,14 @@ class Post extends Component {
                         </div>
                     </div>
                     <div className={classes.post__title}>
-                        <p className={classes.post__author}>
+                        <p 
+                        key={'p-1'}
+                        className={classes.post__author}>
                             {this.props.author}
                         </p>
-                        <p className={classes.post__date}>
+                        <p
+                        key={'p-2'}
+                        className={classes.post__date}>
                             {this.props.date}
                         </p>
                     </div>
@@ -98,8 +102,18 @@ class Post extends Component {
                         </IconButton>
                         <div className={showMoreButtonClasses.join(" ")}>
                             <ul>
-                                <li className={classes.green}>edit</li>
-                                <li className={classes.danger}>delete</li>
+                                <li 
+                                key={'li-1'}
+                                onClick={this.props.onEdit}
+                                className={classes.green}>
+                                    edit
+                                </li>
+                                <li 
+                                ley={'li-2'}
+                                onClick={this.props.onDelete}
+                                className={classes.danger}>
+                                    delete
+                                </li>
                             </ul>
                         </div>
                     </div>

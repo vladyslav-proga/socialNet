@@ -39,3 +39,34 @@ exports.showAll = ( req, res, next ) => {
             })
         })
 };
+
+exports.deleteById = (req, res, next) => {
+
+    console.log(req.body);
+    const postId = req.body.id;
+    postActions.deleteById(postId);
+    res.status(200).json({
+        message: 'OK'
+    });
+}
+
+exports.editById = async (req, res, next) => {
+    console.log(req.body);
+
+    const postId = req.body.id;
+    const postContent = req.body.postContent;
+    await postActions.editById( postId, postContent );
+    return res.json({
+        message: 'OK'
+    })
+}
+
+exports.getById = async (req, res, next) => {
+
+    const postId = req.params.id;
+    const post = await postActions.getById(postId);
+    
+    return res.json({
+        post: post[0][0]
+    });
+}

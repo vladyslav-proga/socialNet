@@ -16,11 +16,16 @@ class Main extends Component {
     state = {
       formOpened: false,
       loading: true,
+      modalForSuccessAdd: false,
       posts: {}
     }
 
     componentDidMount() {
       this.setState({ loading: true });
+
+      if (this.props.location.search === '?success-changed=true') {
+        this.setState({ modalForSuccessAdd: true });
+      }
 
       axios.get('http://localhost:5000/post/show-all')
         .then(response => {
@@ -39,6 +44,25 @@ class Main extends Component {
       this.setState((prevState) => ({
         formIsOpen: !prevState.formIsOpen
       }));
+    }
+
+    onEditPost = (id) => {
+      this.props.history.push(`/update-post/${id}`)
+    }
+
+    onDeletePost = (id) => {
+      this.setState({ loading: true });
+      axios.post('http://localhost:5000/post/delete', {
+        id: id
+      })
+      .then((res) => {
+        window.location.reload();
+        this.setState({loading: false})
+      })
+      .catch((err) => {
+        console.log(err);
+        this.setState({loading: false})
+      });
     }
 
     render() {
@@ -60,8 +84,12 @@ class Main extends Component {
                   const author = el.fname + " " + el.lname;
                   const date = el.date;
                   const media = el.media;
+                  console.log(el);
                   const postContent = JSON.parse(el.post_content);
                     return <Post
+                            key={el.post_id}
+                            onEdit={() => this.onEditPost(el.post_id)}
+                            onDelete={() => this.onDeletePost(el.post_id)}
                             initials={initials}
                             author={author}
                             date={date}
@@ -71,7 +99,14 @@ class Main extends Component {
                           />
                         })}
               </div>
-
+                <Modal
+                show={this.state.modalForSuccessAdd}
+                modalClosed={() => {
+                  this.setState({ modalForSuccessAdd: false });
+                  this.props.history.push('/');
+                }}>
+                  <p style={{textAlign: 'center'}}>{'You successfully updated post'}</p>
+                </Modal>
                 <Modal
                   show={this.state.formIsOpen}
                   modalClosed={this.onChangeFormOpenedState}

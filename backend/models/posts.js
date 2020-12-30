@@ -19,4 +19,23 @@ exports.fetchAll = () => {
     ON posts.user_id = users.id
     ORDER BY date DESC
     `);
+};
+
+exports.getById = (id) => {
+    return db.execute(`
+        SELECT * FROM posts WHERE post_id = (?)
+        `, [id]);
 }
+
+
+exports.deleteById = (id) => {
+    return db.execute(`
+        DELETE FROM posts WHERE post_id = (?)
+    `, [id]);
+};
+
+exports.editById = ( id, post_content ) => {
+    return db.execute(`
+        UPDATE posts SET post_content = (?) WHERE post_id = (?)
+    `, [ post_content, id ]);
+};

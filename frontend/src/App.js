@@ -7,6 +7,7 @@ import Main from './containers/Main/Main';
 import Auth from './containers/Auth/Auth';
 import Logout from './containers/Auth/Logout/Logout';
 import Profile from './containers/Profile/Profile';
+import UpdatePost from './containers/UpdatePost/UpdatePost';
 
 import * as actions from './store/actions/index';
 
@@ -22,7 +23,7 @@ class App extends Component {
       <Switch>
         <Route path="/" exact component={ Main }/>
         <Route path="/auth" exact component={ Auth }/>
-        <Redirect to="/" />
+        <Redirect from="/auth" to="/" />
       </Switch>
     );
     if (this.props.isAuthenticated) {
@@ -30,8 +31,8 @@ class App extends Component {
         <Switch>
         <Route path="/" exact component={ Main } />
         <Route path="/profile" exact component={ Profile } />
+        <Route path="/update-post/:id" component={UpdatePost} />
         <Route path="/logout"  component={Logout} />
-        <Redirect to="/" />
       </Switch>
       );
     }

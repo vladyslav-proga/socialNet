@@ -79,7 +79,7 @@ class CreatePostForm extends React.Component {
             try {
                 axios.post('http://localhost:5000/post/create-new', formData);
             } finally {
-                this.props.history.push('/reload');
+                window.location.reload();
             }
     }
 
